@@ -1,0 +1,127 @@
+Perfecto — voy a explicarte la teoría del raycasting de forma didáctica y dividirla en pasos pequeños que haremos uno a uno. Dime cuando avanzar al siguiente paso.
+
+Resumen general (qué hace el raycasting)
+- Para cada columna de píxeles de la pantalla se lanza un rayo desde la posición del jugador y se atraviesa la rejilla del mapa hasta golpear un muro. Con la distancia al muro calculamos la altura proyectada del muro en esa columna y pintamos una tira vertical.
+
+Sistema de coordenadas
+- Mapa: rejilla de tiles indexada por enteros (i, j). Cada tile tiene tamaño `tile_size` (en tu código `g->map.tile_size`).
+- Mundo: coordenadas continuas en píxeles: la posición del jugador es (`player_x`, `player_y`) en píxeles.
+- Ángulos/dir: la dirección del jugador `player_dir` (radianes). Usaremos vectores unitarios para dirección.
+
+Conceptos clave
+1. Vector dirección del jugador:
+   - `dir_x = cos(player_dir)`
+   - `dir_y = sin(player_dir)`
+
+2. Plano de cámara (para campo de visión):
+   - Es un vector perpendicular a la dirección que determina el FOV. Para una cámara 2D:
+     - `plane_x = -dir_y * scale`
+     - `plane_y =  dir_x * scale`
+   - `scale` se calcula a partir del FOV. Por ejemplo, para FOV ≈ 60°: `scale = tan(FOV/2)`. Con esto puedes obtener rayos que cubren la pantalla horizontalmente.
+
+3. Dirección del rayo por columna x (pantalla con anchura `W`):
+   - Normalizar la coordenada de columna: $x_{cam} = 2 \cdot \frac{col}{W} - 1$ (va de -1 a 1).
+   - Dirección del rayo:
+     $$ray\_dir_x = dir\_x + plane\_x \cdot x_{cam}$$
+     $$ray\_dir_y = dir\_y + plane\_y \cdot x_{cam}$$
+
+4. Preparación para DDA (Digital Differential Analyzer)
+   - Determinar la casilla del mapa donde está el jugador:
+     `map_x = floor(player_x / tile_size)`, `map_y = floor(player_y / tile_size)`
+   - Calcular `deltaDist` = cuánto avanza el rayo en distancia real al moverse 1 casilla en x o en y:
+     $$\deltaDistX = \sqrt{1 + (ray\_dir\_y / ray\_dir\_x)^2}$$
+     $$\deltaDistY = \sqrt{1 + (ray\_dir\_x / ray\_dir\_y)^2}$$
+   - Calcular `stepX`/`stepY` (±1) según signo de `ray_dir_x`/`ray_dir_y`.
+   - Calcular `sideDistX`/`sideDistY` = distancia desde la posición del jugador hasta el primer borde de rejilla en x/y:
+     - Si `ray_dir_x < 0`: `sideDistX = (player_world_x - map_x * tile_size) * deltaDistX / tile_size`
+     - Si `ray_dir_x >= 0`: `sideDistX = ((map_x + 1) * tile_size - player_world_x) * deltaDistX / tile_size`
+     - Análogo para `sideDistY`.
+
+   (Nota: si trabajas con world coords en píxeles, hay dos opciones: convertir todo a unidades "tiles" dividiendo por `tile_size` y usar deltaDist simple, o adaptar fórmulas para píxeles; lo habitual es trabajar en unidades de tiles, así deltaDist ya resulta directo.)
+
+5. Bucle DDA (paso a paso)
+- Mientras no hay impacto:
+  - Si `sideDistX < sideDistY`:
+    - `sideDistX += deltaDistX`
+    - `map_x += stepX`
+    - `side = 0` (impacto en vertical)
+  - Else:
+    - `sideDistY += deltaDistY`
+    - `map_y += stepY`
+    - `side = 1` (impacto en horizontal)
+  - Comprobar `map[map_y][map_x]` si es muro (`'1'`), si sí detener.
+
+6. Calcular distancia perpendicular al plano de cámara (evitar fish-eye)
+- Si `side == 0`:
+  $$perpDist = (map\_x - pos\_x + (1 - stepX)/2) / ray\_dir\_x$$
+- Si `side == 1`:
+  $$perpDist = (map\_y - pos\_y + (1 - stepY)/2) / ray\_dir\_y$$
+- (Aquí `pos_x,pos_y` en unidades de tiles — convierte si trabajas en píxeles).
+
+7. Altura de la línea proyectada
+- `lineHeight = (int)(screen_height / perpDist)`
+- Determinar `drawStart = -lineHeight/2 + screen_height/2`, `drawEnd = lineHeight/2 + screen_height/2` y recortarlos al rango de la pantalla.
+
+8. Texturizado (opcional en primera iteración)
+- Calcular coordenada X en la textura según punto de impacto dentro del tile.
+- Calcular paso de textura y muestrear por cada píxel de la columna.
+
+Pequeños pasos propuestos (cada uno lo hacemos y esperas feedback)
+1. Confirmar coordenadas de trabajo: ¿prefieres trabajar en unidades de tiles (dividiendo `player_x/player_y` por `tile_size`) o en píxeles? Recomiendo unidades de tiles (más simple).
+2. Diseñar las variables que necesitamos añadir a `t_game` (o localmente en la función de raycasting): `dir_x, dir_y, plane_x, plane_y`. Hacemos esto sólo en diseño (sin tocar archivos todavía).
+3. Escribir pseudocódigo del bucle completo DDA (columna por columna).
+4. Implementar un prototipo en una función separada (por ejemplo `void render_rays(t_game *g)`), primero dibujando solo líneas verticales sólidas (sin texturas).
+5. Probar integrando con `render_g` y ajustando parámetros (FOV, tile_size).
+6. Añadir texturas y optimizaciones (opcional).
+
+Preguntas rápidas para ti
+- ¿Quieres trabajar en unidades de tiles o en píxeles?
+- ¿Qué FOV prefieres? (60° es el estándar inicial)
+- ¿Prefieres primero ver rayos debug (líneas sobre el mapa) o directamente la proyección 3D en pantalla?
+
+Di cuál opción eliges y sigo con el siguiente paso (diseñar variables y pseudocódigo).
+
+---
+
+Excelente pregunta — esto es fundamental para entender el raycasting.
+
+Trabajar en tiles vs píxeles
+
+En tu caso:
+- **Mapa**: 10×8 tiles (ancho × alto)
+- **Tamaño de tile**: `g->map.tile_size = 64` píxeles (tú defines esto)
+- **Mundo en píxeles**: coordenadas van de 0 a 640 (10 × 64) en X, y 0 a 512 (8 × 64) en Y
+- **Mundo en tiles**: coordenadas van de 0 a 10 en X, y 0 a 8 en Y
+
+Trabajar en tiles simplifica el raycasting:
+- Al avanzar el rayo, incrementas el contador de tiles (en lugar de píxeles), lo que hace el DDA más limpio.
+- Comprobar colisión es directo: `mapa[map_y_tiles][map_x_tiles]`
+- Las fórmulas de distancia resultan simples (no cargadas de factor `tile_size`).
+
+Conversión fácil:
+
+```
+coords_pixels → coords_tiles:  x_tiles = x_pixels / tile_size
+coords_tiles → coords_pixels:  x_pixels = x_tiles * tile_size
+```
+
+En tu código actual:
+```
+g->player_x = (4.5 * g->map.tile_size);  // = 4.5 * 64 = 288 píxeles
+g->player_y = (6.5 * g->map.tile_size);  // = 6.5 * 64 = 416 píxeles
+```
+
+Luego durante raycasting convertiríamos al inicio:
+```
+double pos_x = g->player_x / g->map.tile_size;    // = 4.5 tiles
+double pos_y = g->player_y / g->map.tile_size;    // = 6.5 tiles
+```
+
+El `tile_size` es tu elección, pero debe coincidir con cómo definiste el mapa. En tu caso es 64; podrías haber elegido 32, 128, etc. Es el factor de escala que decides.
+
+¿Claro? Entonces:\
+✓ Trabajamos en tiles (coordenadas normalizadas por `tile_size`)\
+✓ FOV = 60° (estándar)\
+✓ ¿Rayos debug o directamente 3D? (rayos debug = dibuja líneas sobre el mapa mientras avanzas; 3D = proyección vertical de muros)
+
+¿Cuál eliges para ver primero: debug de rayos o proyección 3D?

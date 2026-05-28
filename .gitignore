@@ -6,6 +6,7 @@ cub3d
 
 # Ignore MiniLibX build artifacts
 minilibx-linux/*
+minilib-linux
 
 # Ignore generic object files
 *.o

@@ -3,7 +3,7 @@ CC = gcc
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror -I include -I minilibx-linux
 MLX_DIR = minilibx-linux
-MLX_LIB = -L$(MLX_DIR) -lmlx -lXext -lX11
+MLX_LIB = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 SRC_DIR = srcs
 OBJ_DIR = objects
 SRCS = $(wildcard $(SRC_DIR)/*.c)
@@ -12,7 +12,7 @@ OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 all: $(NAME)
 
 $(NAME): $(OBJS) $(MLX_DIR)/libmlx.a
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(MLX_LIB)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(MLX_LIB) -lm
 
 $(MLX_DIR)/libmlx.a:
 	@if [ ! -d $(MLX_DIR) ]; then \

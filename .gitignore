@@ -10,4 +10,3 @@ minilib-linux
 
 # Ignore generic object files
 *.o
-

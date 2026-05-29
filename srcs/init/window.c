@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:38:27 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/05/28 12:00:17 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/05/29 14:00:12 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include <stdlib.h>
 #include "../minilibx-linux/mlx.h"
 
-/*escribe un color (ARGB) en la posición (x,y) dentro del buffer de mlx usando addr, bpp y line_len
-esta funcion solo solo coloca un valor de color en una posición exacta de memoria que
- despues render_g mandara a la pantalla
+/*escribe un color (ARGB) en la posición (x,y) dentro del buffer de mlx
+ usando addr, bpp y line_len esta funcion solo solo coloca un valor de color
+  en una posición exacta de memoria quedespues render_g mandara a la pantalla
  dst es la dirección de memoria donde se va a guardar un pixel concreto*/
 void	pixel_put(t_img *img, int x, int y, int color)
 {
@@ -28,8 +28,8 @@ void	pixel_put(t_img *img, int x, int y, int color)
 	*(unsigned int *)dst = (unsigned int)color;
 }
 
-/*Dibujar en el buffer de la imagen todo el frame: cielo, suelo, muros (raycasting), texturas y sprites,
- y finalmente enviar la imagen a la ventana*/
+/*Dibujar en el buffer de la imagen todo el frame: cielo, suelo, muros
+(raycasting), texturas y sprites, y finalmente enviar la imagen a la ventana*/
 int	render_g(t_game	*g)
 {
 	int	x;
@@ -50,7 +50,7 @@ int	render_g(t_game	*g)
 		y++;
 	}
 	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);
-	return  (0);
+	return (0);
 }
 
 int	init_image(t_game *g)
@@ -58,8 +58,10 @@ int	init_image(t_game *g)
 	g->img.img = mlx_new_image(g->mlx, g->width, g->height); //crear imagen en RAM
 	if (!g->img.img)
 		return (-1);
-	g->img.addr = mlx_get_data_addr(g->img.img, &g->img.bpp, &g->img.line_len, &g->img.endian);// guardar puntero de la imagen
-	return (0);//ademas rellena automaticamente las variales de img -> bbp, line_len y endian
+	g->img.addr = mlx_get_data_addr(g->img.img, &g->img.bpp,
+		&g->img.line_len, &g->img.endian);// guardar puntero de la imagen
+	return (0);//ademas rellena automaticamente las variales de img -> bbp,
+	// line_len y endian
 }
 
 int	init_window(t_game *g)

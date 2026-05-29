@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 13:34:06 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/05/29 13:39:20 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/05/29 16:37:34 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	init_raycasting(t_game *g)
 	g->cam_y = g->dir_x * scale;
 }
 
-/* convierte el valor de la columna dependiendo el ancho  en un numero entre -1 y 1*/
+/* convierte el valor de la columna dependiendo el ancho  en un
+ numero entre -1 y 1*/
 double	calculate_camera_x(int column, int width)
 {
 	double	camera_x;
@@ -53,15 +54,47 @@ double	calculate_camera_x(int column, int width)
 	return (camera_x);
 }
 
-void	calculate_ray_dir(t_game *g)
+void	init_ray_values(t_game *g)
 {
 	g->ray.ray_dir_x = g->dir_x + g->cam_x * g->ray.camera_x;
 	g->ray.ray_dir_y = g->dir_y + g->cam_y * g->ray.camera_x;
+	g->ray.map_x = (int)(g->player_x / g->map.tile_size);
+	g->ray.map_y = (int)(g->player_y / g->map.tile_size);
+	if (g->ray.ray_dir_x == 0)
+		g->ray.delta_dist_x = INFINITY;
+	else
+		g->ray.delta_dist_x = fabs(1.0 / g->ray.ray_dir_x);
+	if (g->ray.ray_dir_y == 0)
+		g->ray.delta_dist_y = INFINITY;
+	else
+		g->ray.delta_dist_y = fabs(1.0 / g->ray.ray_dir_y);
+	init_ray_values2(g);
 }
 
-void	init_ray_values(t_game *g)
+void	init_ray_values2(t_game *g)
 {
-	
+	if (g->ray.ray_dir_x < 0)
+		g->ray.step_x = -1;
+	else
+		g->ray.step_x = 1;
+	if (g->ray.ray_dir_y < 0)
+		g->ray.step_y = -1;
+	else
+		g->ray.step_y = 1;
+	if (g->ray.step_x == -1)
+		g->ray.side_dist_x = ((g->player_x / g->map.tile_size) - g->ray.map_x)
+		* g->ray.delta_dist_x;
+	else
+		g->ray.side_dist_x = (g->ray.map_x + 1.0 - (g->player_x / g->map.tile_size))
+		* g->ray.delta_dist_x;
+	if (g->ray.step_y == -1)
+		g->ray.side_dist_y = ((g->player_y / g->map.tile_size) - g->ray.map_y)
+		* g->ray.delta_dist_y;
+	else
+		g->ray.side_dist_y = (g->ray.map_y + 1.0 - (g->player_y / g->map.tile_size))
+		* g->ray.delta_dist_y;
+	g->ray.hit = 0;
+	g->ray.side = 0;
 }
 
 /*Procesamos una columna
@@ -84,7 +117,6 @@ void	render_raycasting(t_game *g)
 	while (column < g->width)
 	{
 		g->ray.camera_x = calculate_camera_x(column, g->width);
-		calculate_ray_dir(g);
 		init_ray_values(g);
 		column++;
 	}

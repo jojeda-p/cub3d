@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/05/28 16:57:53 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/05/29 12:41:22 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_game
 	void	*win;
 	t_img	img;
 	t_map	map;
+	t_ray	ray;
 	int		width;
 	int		height;
 	double	player_x;

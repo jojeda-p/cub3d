@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 17:29:46 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/01 17:31:36 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/01 18:22:35 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	temp_init_map(t_game *g, char *file)
 	g->player_x = (7.5 * g->map.tile_size);
 	g->player_y = (8.5 * g->map.tile_size);
 	g->player_dir = 4.0;
-	g->move_speed = 4.0;
+	g->move_speed = 3;
 	g->rot_speed = 0.08;
 	return (0);
 }

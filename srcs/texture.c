@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:30:48 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/01 17:59:14 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/01 18:21:40 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ t_tex	get_wall_texture(t_game *g)
 		return (g->tex[0]);
 	return (g->tex[1]);
 }
-int	get_tex_color(t_game *g, t_tex texture,int tex_x, int tex_y)
+/* int	get_tex_color(t_game *g, t_tex texture,int tex_x, int tex_y)
 {
 	
-}
+} */
 
 /*Calcula la coordenada horizontal de la textura (columna) correspondiente
  al impacto de la pared por el rayo actual. Devuelve un entero en el

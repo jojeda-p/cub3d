@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/01 17:37:06 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/01 18:19:19 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,11 @@ void	init_ray_values(t_game *g);
 void	init_ray_values2(t_game *g);
 void	dda_loop(t_game *g);
 void	calculate_wall_projection(t_game *g);
-void	draw_wall_column(t_game *g, int column);
+void	draw_wall_column(t_game *g, int column, t_tex texture);
 
 /*raycasting.c*/
 void	render_raycasting(t_game *g);
+
 
 /* window.c */
 int		init_window(t_game *data);
@@ -125,6 +126,11 @@ void	pixel_put(t_img *img, int x, int y, int color);
 
 /* map.c */
 int		temp_init_map(t_game *g, char *file);
+
+/*input*/
+int key_press(int keycode, t_game *g);
+int key_release(int keycode, t_game *g);
+
 
 /* movement.c */
 void	move_forward(char c, t_game *g);
@@ -138,7 +144,5 @@ void	update_player(t_game *g);
 t_tex	get_wall_texture(t_game *g);
 int		get_tex_color(t_game *g, t_tex texture,int tex_x, int tex_y);
 int		get_tex_x(t_game *g, t_tex texture);
-int		get_tex_y(t_game *g, t_tex texture)
 
 #endif
-

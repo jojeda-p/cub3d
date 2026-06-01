@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 13:34:06 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/01 18:05:04 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/01 18:20:56 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 void	draw_wall_column(t_game *g, int column, t_tex texture)
 {
 	int	y;
-	int	tex_x;
+	/* int	tex_x; */
 	int	tex_y;
 
 	if (column < 0 || column >= g->width)
@@ -25,7 +25,7 @@ void	draw_wall_column(t_game *g, int column, t_tex texture)
 	if (g->ray.draw_start > g->ray.draw_end)
 		return;
 	y = g->ray.draw_start;
-	tex_x = get_tex_x(g, texture);
+	/* tex_x = get_tex_x(g, texture); */
 	while (y <= g->ray.draw_end)
 	{
 		tex_y = (int)((y - g->ray.draw_start) * (double)texture.height / g->ray.line_height);
@@ -33,7 +33,8 @@ void	draw_wall_column(t_game *g, int column, t_tex texture)
 			tex_y = 0;
 		if (tex_y >= texture.height)
 			tex_y = texture.height - 1;
-		pixel_put(&g->img, column, y, get_tex_color(g, texture, tex_x, tex_y));
+		pixel_put(&g->img, column, y, 0x3a486e);
+		/* pixel_put(&g->img, column, y, get_tex_color(g, texture, tex_x, tex_y)); */
 		y++;
 	}
 }

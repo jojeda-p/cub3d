@@ -38,7 +38,8 @@ SRC_FILES   =	main.c \
 				parse/parse.c \
 				input/input.c \
 				init/init.c \
-				init/window.c
+				init/window.c \
+				texture.c
 
 
 SRCS        = $(addprefix $(SRC_DIR)/, $(SRC_FILES))

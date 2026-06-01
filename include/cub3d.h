@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/01 16:47:38 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/01 16:56:03 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void	move_backward(char c, t_game *g);
 void	move_left(char c, t_game *g);
 void	move_right(char c, t_game *g);
 void	rotate_camera(char c, t_game *g);
+void	update_player(t_game *g);
 
 #endif
 

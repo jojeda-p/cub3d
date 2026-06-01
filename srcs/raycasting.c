@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 13:34:06 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/05/29 16:37:34 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/01 13:17:46 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,87 +14,71 @@
 #include <stdio.h>
 #include <math.h>
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
-
-
-/*cam es perpendicular a dir, por eso -dir_y e dir_x (rotación 90°)
-scale determina el campo de visión (cuanto más grande, más FOV)
-Inicializa la dirección del jugador y el plano de cámara (FOV) calculando
- dir_x, dir_y, cam_x y cam_y a partir del ángulo del jugador*/
-void	init_raycasting(t_game *g)
+void	draw_wall_column(t_game *g, int column)
 {
-	double	fov;// FOV en grados
-	double	fov_rad;// FOV en radianes
-	double	scale;// Escala del plano
+	int	y;
 
-	g->dir_x = cos(g->player_dir);
-	g->dir_y = sin(g->player_dir);
-	fov = 60.0;
-	fov_rad = fov * M_PI / 180.0;
-	scale = tan(fov_rad / 2.0);
-	g->cam_x = -g->dir_y * scale;
-	g->cam_y = g->dir_x * scale;
+	if (column < 0 || column >= g->width)
+		return;
+	if (g->ray.draw_start > g->ray.draw_end)
+		return;
+	y = g->ray.draw_start;
+	while (y <= g->ray.draw_end)
+	{
+		pixel_put(&g->img, column, y, 0xFF0000);
+		y++;
+	}
 }
 
-/* convierte el valor de la columna dependiendo el ancho  en un
- numero entre -1 y 1*/
-double	calculate_camera_x(int column, int width)
+/*Esta funcin calcula 3 datos principales
+
+Distancia perpendicular a la pared(evita ojo de pez)
+	map_x, map_y son la celda donde terminó el DDA
+	step_x, step_y dicen hacia qué lado avanzaba el rayo
+	ray_dir_x, ray_dir_y es la dirección del rayo
+Altura de la pared en pantalla
+Inicio y fin de la columna a dibujar
+*/
+void	calculate_wall_projection(t_game *g)
 {
-	double	camera_x;
-	double	d_column;
-	double	d_width;
+	if (g->ray.side == 0)
+		g->ray.perp_dist = (g->ray.map_x - (g->player_x / g->map.tile_size) + (1.0 - (double)g->ray.step_x) / 2.0) / g->ray.ray_dir_x;
+	else
+		g->ray.perp_dist = (g->ray.map_y - (g->player_y / g->map.tile_size) + (1.0 - (double)g->ray.step_y) / 2.0) / g->ray.ray_dir_y;
+	if (!isfinite(g->ray.perp_dist) || g->ray.perp_dist <= 0.0)
+		g->ray.perp_dist = 1e-6;
+	g->ray.line_height = (int)((double)g->height / g->ray.perp_dist);
+	g->ray.draw_start = (int)(-((double)g->ray.line_height) / 2.0 + (double)g->height / 2.0);
+	g->ray.draw_end   = (int)(((double)g->ray.line_height) / 2.0 + (double)g->height / 2.0);
+	if (g->ray.draw_start < 0)
+		g->ray.draw_start = 0;
+	if (g->ray.draw_end >= g->height)
+		g->ray.draw_end = g->height - 1;
+}
+
+void	dda_loop(t_game *g)
+{
+	while (g->ray.hit == 0)
+	{
+		if (g->ray.side_dist_x < g->ray.side_dist_y)//golpeo lado vertical
+		{
+			g->ray.side_dist_x = g->ray.delta_dist_x + g->ray.side_dist_x;
+			g->ray.map_x = g->ray.step_x + g->ray.map_x;
+			g->ray.side = 0;
+		}
+		else
+		{
+			g->ray.side_dist_y = g->ray.delta_dist_y + g->ray.side_dist_y;
+			g->ray.map_y = g->ray.step_y + g->ray.map_y;
+			g->ray.side = 1;
+		}
+		if (g->ray.map_x < 0 || g->ray.map_x >= g->map.width ||
+   			g->ray.map_y < 0 || g->ray.map_y >= g->map.height)
+    		g->ray.hit = 1;
+		else if (g->map.grid[g->ray.map_y][g->ray.map_x] == '1')
+			g->ray.hit = 1;
+	}
 	
-	if (width <= 0)
-		return (0);
-	d_column = (double)column;
-	d_width = (double)width;
-	camera_x = d_column / d_width * 2 - 1;
-	return (camera_x);
-}
-
-void	init_ray_values(t_game *g)
-{
-	g->ray.ray_dir_x = g->dir_x + g->cam_x * g->ray.camera_x;
-	g->ray.ray_dir_y = g->dir_y + g->cam_y * g->ray.camera_x;
-	g->ray.map_x = (int)(g->player_x / g->map.tile_size);
-	g->ray.map_y = (int)(g->player_y / g->map.tile_size);
-	if (g->ray.ray_dir_x == 0)
-		g->ray.delta_dist_x = INFINITY;
-	else
-		g->ray.delta_dist_x = fabs(1.0 / g->ray.ray_dir_x);
-	if (g->ray.ray_dir_y == 0)
-		g->ray.delta_dist_y = INFINITY;
-	else
-		g->ray.delta_dist_y = fabs(1.0 / g->ray.ray_dir_y);
-	init_ray_values2(g);
-}
-
-void	init_ray_values2(t_game *g)
-{
-	if (g->ray.ray_dir_x < 0)
-		g->ray.step_x = -1;
-	else
-		g->ray.step_x = 1;
-	if (g->ray.ray_dir_y < 0)
-		g->ray.step_y = -1;
-	else
-		g->ray.step_y = 1;
-	if (g->ray.step_x == -1)
-		g->ray.side_dist_x = ((g->player_x / g->map.tile_size) - g->ray.map_x)
-		* g->ray.delta_dist_x;
-	else
-		g->ray.side_dist_x = (g->ray.map_x + 1.0 - (g->player_x / g->map.tile_size))
-		* g->ray.delta_dist_x;
-	if (g->ray.step_y == -1)
-		g->ray.side_dist_y = ((g->player_y / g->map.tile_size) - g->ray.map_y)
-		* g->ray.delta_dist_y;
-	else
-		g->ray.side_dist_y = (g->ray.map_y + 1.0 - (g->player_y / g->map.tile_size))
-		* g->ray.delta_dist_y;
-	g->ray.hit = 0;
-	g->ray.side = 0;
 }
 
 /*Procesamos una columna
@@ -118,6 +102,9 @@ void	render_raycasting(t_game *g)
 	{
 		g->ray.camera_x = calculate_camera_x(column, g->width);
 		init_ray_values(g);
+		dda_loop(g);
+		calculate_wall_projection(g);
+		draw_wall_column(g, column);
 		column++;
 	}
 }

@@ -18,11 +18,11 @@ INC_DIR     = include
 #                            MINILIBX (linux)                                  #
 # ============================================================================ #
 
-MLX_DIR     = include/minilibx-linux
+MLX_DIR     = minilibx-linux
 MLX_LIB     = -L$(MLX_DIR) -lmlx -lXext -lX11
 
 INCLUDES    = -I$(INC_DIR) -I$(MLX_DIR)
-LIBS        = $(MLX_LIB)
+LIBS        = $(MLX_LIB) -lm
 
 # ============================================================================ #
 #                                 SOURCES                                     #
@@ -30,8 +30,10 @@ LIBS        = $(MLX_LIB)
 # Norma: todos los .c deben estar listados explícitamente (sin wildcard)
 
 SRC_FILES   =	main.c \
+				ray_init.c \
+				raycasting.c \
 				utils/utils.c \
-				render/map.c \
+				map.c \
 				parse/parse.c \
 				input/input.c \
 				init/init.c \
@@ -79,7 +81,7 @@ $(MLX_DIR)/libmlx.a:
 	@$(MAKE) -C $(MLX_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(dir $@)
 	@echo "$(CYAN)Compilando: $(GRAY)$<$(DEF_COLOR)"
 	@$(CC) $(CFLAGS) $(DEPFLAGS) $(INCLUDES) -c $< -o $@
 

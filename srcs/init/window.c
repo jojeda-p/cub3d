@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:38:27 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/05/29 14:00:12 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/01 13:24:25 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	render_g(t_game	*g)
 		}
 		y++;
 	}
+	render_raycasting(g);
 	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);
 	return (0);
 }
@@ -93,5 +94,6 @@ int	key_hook(int keycode, t_game *g)
 {
 	if (keycode == 65307)
 		close_window(g);
+	if (keycode == )
 	return (0);
 }

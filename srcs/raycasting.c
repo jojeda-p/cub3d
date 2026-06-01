@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 13:34:06 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/01 15:10:32 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/01 18:05:04 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,31 @@
 #include <stdio.h>
 #include <math.h>
 
-void	draw_wall_column(t_game *g, int column)
+void	draw_wall_column(t_game *g, int column, t_tex texture)
 {
 	int	y;
+	int	tex_x;
+	int	tex_y;
 
 	if (column < 0 || column >= g->width)
 		return;
 	if (g->ray.draw_start > g->ray.draw_end)
 		return;
 	y = g->ray.draw_start;
+	tex_x = get_tex_x(g, texture);
 	while (y <= g->ray.draw_end)
 	{
-		pixel_put(&g->img, column, y, 0xFF0000);
+		tex_y = (int)((y - g->ray.draw_start) * (double)texture.height / g->ray.line_height);
+		if (tex_y < 0)
+			tex_y = 0;
+		if (tex_y >= texture.height)
+			tex_y = texture.height - 1;
+		pixel_put(&g->img, column, y, get_tex_color(g, texture, tex_x, tex_y));
 		y++;
 	}
 }
 
-/*Esta funcin calcula 3 datos principales
+/*Esta funcion calcula 3 datos principales
 
 Distancia perpendicular a la pared(evita ojo de pez)
 	map_x, map_y son la celda donde terminó el DDA
@@ -95,7 +103,8 @@ Pasamos a la siguiente columna*/
 /* dibujar la columna en la imagen */
 void	render_raycasting(t_game *g)
 {
-	int	column;
+	int		column;
+	t_tex	texture;
 
 	column = 0;
 	while (column < g->width)
@@ -103,8 +112,9 @@ void	render_raycasting(t_game *g)
 		g->ray.camera_x = calculate_camera_x(column, g->width);
 		init_ray_values(g);
 		dda_loop(g);
+		texture = get_wall_texture(g);
 		calculate_wall_projection(g);
-		draw_wall_column(g, column);
+		draw_wall_column(g, column, texture);
 		column++;
 	}
 }

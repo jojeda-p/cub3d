@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/01 16:56:03 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/01 17:37:06 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,17 @@ typedef struct s_img
 	int		line_len;
 	int		endian;
 }	t_img;
+
+typedef struct s_tex
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+	int		width;
+	int		height;
+}	t_tex;
 
 typedef struct s_map
 {
@@ -67,12 +78,17 @@ typedef struct s_input
 /*por que se usan double- Permiten posiciones y velocidades fraccionarias (sub‑píxel)
  para acumular movimiento suave sin perder la parte decimal.
 Ofrecen la precisión necesaria para ángulos/trigonometría y para multiplicar por delta time,
- evitando truncamientos y jitter.*/
+ evitando truncamientos y jitter.
+tex[0] → norte
+tex[1] → sur
+tex[2] → este
+tex[3] → oeste*/
 typedef struct s_game
 {
 	void	*mlx;
 	void	*win;
 	t_img	img;
+	t_tex	tex[4];
 	t_map	map;
 	t_ray	ray;
 	t_input	input;
@@ -117,6 +133,12 @@ void	move_left(char c, t_game *g);
 void	move_right(char c, t_game *g);
 void	rotate_camera(char c, t_game *g);
 void	update_player(t_game *g);
+
+/*texture.c*/
+t_tex	get_wall_texture(t_game *g);
+int		get_tex_color(t_game *g, t_tex texture,int tex_x, int tex_y);
+int		get_tex_x(t_game *g, t_tex texture);
+int		get_tex_y(t_game *g, t_tex texture)
 
 #endif
 

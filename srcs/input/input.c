@@ -6,13 +6,13 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 16:08:23 by julepere          #+#    #+#             */
-/*   Updated: 2026/06/01 16:47:39 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/01 17:08:47 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void key_press(int keycode, t_game *g)
+int key_press(int keycode, t_game *g)
 {
 	if (keycode == 65307)
 		return (close_window(g));
@@ -28,9 +28,10 @@ void key_press(int keycode, t_game *g)
 		g->input.arrow_left = 1;
 	if (keycode == 65363)
 		g->input.arrow_right = 1;
+	return (0);
 }
 
-void key_release(int keycode, t_game *g)
+int key_release(int keycode, t_game *g)
 {
 	if (keycode == 119)
 		g->input.up = 0;
@@ -44,4 +45,5 @@ void key_release(int keycode, t_game *g)
 		g->input.arrow_left = 0;
 	if (keycode == 65363)
 		g->input.arrow_right = 0;
+	return (0);
 }

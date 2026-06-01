@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:38:27 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/01 16:45:20 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/01 17:14:21 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	init_window(t_game *g)
 	if (init_image(g) == -1)
 		return (-1);
 	mlx_loop_hook(g->mlx, render_g, g);
+	mlx_hook(g->win, 17, 0, close_window, g);
 	mlx_hook(g->win, 2, 1L<<0, key_press, g);
 	mlx_hook(g->win, 3, 1L<<1, key_release, g);
 	mlx_loop(g->mlx);

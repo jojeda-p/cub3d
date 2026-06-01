@@ -6,9 +6,10 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:10:05 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/01 16:52:44 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/01 17:38:37 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "cub3d.h"
 
@@ -69,8 +70,8 @@ void	move_left(char c, t_game *g)
 	
 	if (c == 'a')
 	{
-		new_x = g->player_x + (-g->dir_y) * g->move_speed;
-		new_y = g->player_y + (g->dir_x) * g->move_speed;
+		new_x = g->player_x + (g->dir_y) * g->move_speed;
+		new_y = g->player_y - (g->dir_x) * g->move_speed;
 		map_x = (int)(new_x / g->map.tile_size);
 		map_y = (int)(new_y / g->map.tile_size);
 		if (map_x < 0 || map_x >= g->map.width || map_y < 0 || map_y >= g->map.height)
@@ -93,8 +94,8 @@ void	move_right(char c, t_game *g)
 	
 	if (c == 'd')
 	{
-		new_x = g->player_x - (-g->dir_y) * g->move_speed;
-		new_y = g->player_y - (g->dir_x) * g->move_speed;
+		new_x = g->player_x - (g->dir_y) * g->move_speed;
+		new_y = g->player_y + (g->dir_x) * g->move_speed;
 		map_x = (int)(new_x / g->map.tile_size);
 		map_y = (int)(new_y / g->map.tile_size);
 		if (map_x < 0 || map_x >= g->map.width || map_y < 0 || map_y >= g->map.height)
@@ -122,9 +123,21 @@ void	rotate_camera(char c, t_game *g)
 
 void update_player(t_game *g)
 {
-	int forwad;
+	int forward;
 	int strafe;
 
-	forward = (g->input.up != 0) - (g->input.up != 0)
-	strafe = (g->input.left != 0) - (g->input.right != 0)
+	forward = (g->input.up != 0) - (g->input.down != 0);
+	strafe = (g->input.right != 0) - (g->input.left != 0);
+	if(forward == 1)
+		move_forward('w', g);
+	else if(forward == -1)
+		move_backward('s', g);	
+	if (strafe == 1)
+		move_right('d', g);
+	else if (strafe == -1)
+		move_left('a', g);
+	if (g->input.arrow_left && !g->input.arrow_right)
+		rotate_camera('l', g);
+	else if (g->input.arrow_right && !g->input.arrow_left)
+		rotate_camera('r', g);
 }

@@ -3,12 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/01 13:37:26 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/01 16:47:38 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef CUB3D_H
+# define CUB3D_H
 
 /*addr-dirección base de la imagen en memoria, dónde empieza la imagen
 line_len-número de bytes que ocupa una fila completa de la imagen, cuánto avanza una fila
@@ -57,6 +60,8 @@ typedef struct s_input
 	int down;
 	int left;
 	int right;
+	int arrow_left;
+	int arrow_right;
 } t_input;
 
 /*por que se usan double- Permiten posiciones y velocidades fraccionarias (sub‑píxel)
@@ -104,4 +109,13 @@ void	pixel_put(t_img *img, int x, int y, int color);
 
 /* map.c */
 int		temp_init_map(t_game *g, char *file);
+
+/* movement.c */
+void	move_forward(char c, t_game *g);
+void	move_backward(char c, t_game *g);
+void	move_left(char c, t_game *g);
+void	move_right(char c, t_game *g);
+void	rotate_camera(char c, t_game *g);
+
+#endif
 

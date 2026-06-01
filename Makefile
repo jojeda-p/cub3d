@@ -7,7 +7,7 @@ NAME        = cub3d
 CC          = cc
 RM          = rm -f
 
-CFLAGS      = -Wall -Wextra -Werror -I include -I minilibx-linux
+CFLAGS      = -Wall -Wextra -Werror
 DEPFLAGS    = -MMD -MP
 
 SRC_DIR     = srcs
@@ -18,7 +18,7 @@ INC_DIR     = include
 #                            MINILIBX (linux)                                  #
 # ============================================================================ #
 
-MLX_DIR     = minilibx-linux
+MLX_DIR     = include/minilibx-linux
 MLX_LIB     = -L$(MLX_DIR) -lmlx -lXext -lX11
 
 INCLUDES    = -I$(INC_DIR) -I$(MLX_DIR)
@@ -34,6 +34,7 @@ SRC_FILES   =	main.c \
 				raycasting.c \
 				utils/utils.c \
 				map.c \
+				movement.c \
 				parse/parse.c \
 				input/input.c \
 				init/init.c \

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:38:27 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/01 15:10:53 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/01 16:45:20 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "cub3d.h"
 #include <stdlib.h>
-#include "../minilibx-linux/mlx.h"
+#include "mlx.h"
 
 /*escribe un color (ARGB) en la posición (x,y) dentro del buffer de mlx
  usando addr, bpp y line_len esta funcion solo solo coloca un valor de color
@@ -35,6 +35,7 @@ int	render_g(t_game	*g)
 	int	x;
 	int	y;
 
+	update_player(g);
 	y = 0;
 	while (y < g->height)
 	{
@@ -76,8 +77,8 @@ int	init_window(t_game *g)
 	if (init_image(g) == -1)
 		return (-1);
 	mlx_loop_hook(g->mlx, render_g, g);
-	mlx_key_hook(g->win, key_hook, g);
-	mlx_hook(g->win, 17, 0, close_window, g);
+	mlx_hook(g->win, 2, 1L<<0, key_press, g);
+	mlx_hook(g->win, 3, 1L<<1, key_release, g);
 	mlx_loop(g->mlx);
 	return (0);
 }
@@ -90,21 +91,3 @@ int	close_window(t_game *g)
 	return (0);
 }
 
-int	key_hook(int keycode, t_game *g)
-{
-	if (keycode == 65307)
-		return (close_window(g), 0);
-	if (keycode == 119)
-		move_player('w', g);
-	if (keycode == 115)
-		move_player('s', g);
-	if (keycode == 97)
-		move_player('a', g);
-	if (keycode == 100)
-		move_player('d', g);
-	if (keycode == 65361)
-		rotate_camera('l', g);
-	if (keycode == 65363)
-		rotate_camera('r', g);
-	return (0);
-}

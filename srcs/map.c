@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 17:29:46 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/01 13:20:39 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/01 15:38:24 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "cub3d.h"
 #include <stddef.h>
 
 static char	*const	g_temp_map[] =

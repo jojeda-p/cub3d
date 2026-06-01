@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:10:05 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/01 15:27:57 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/01 16:52:44 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+
 
 void	move_forward(char c, t_game *g)
 {
@@ -67,7 +69,17 @@ void	move_left(char c, t_game *g)
 	
 	if (c == 'a')
 	{
-		new = g->player_y + g->dir_y * g->move_speed;
+		new_x = g->player_x + (-g->dir_y) * g->move_speed;
+		new_y = g->player_y + (g->dir_x) * g->move_speed;
+		map_x = (int)(new_x / g->map.tile_size);
+		map_y = (int)(new_y / g->map.tile_size);
+		if (map_x < 0 || map_x >= g->map.width || map_y < 0 || map_y >= g->map.height)
+			return ;
+		if (g->map.grid[map_y][map_x] != '1')
+		{
+			g->player_x = new_x;
+			g->player_y = new_y;
+		}
 	}
 	
 }
@@ -81,12 +93,23 @@ void	move_right(char c, t_game *g)
 	
 	if (c == 'd')
 	{
-		new = g->player_y - g->dir_y * g->move_speed;
+		new_x = g->player_x - (-g->dir_y) * g->move_speed;
+		new_y = g->player_y - (g->dir_x) * g->move_speed;
+		map_x = (int)(new_x / g->map.tile_size);
+		map_y = (int)(new_y / g->map.tile_size);
+		if (map_x < 0 || map_x >= g->map.width || map_y < 0 || map_y >= g->map.height)
+			return ;
+		if (g->map.grid[map_y][map_x] != '1')
+		{
+			g->player_x = new_x;
+			g->player_y = new_y;
+		}
 	}
 }
 
 void	rotate_camera(char c, t_game *g)
 {
+	(void)g;
 	if (c == 'l')
 	{
 		
@@ -95,4 +118,13 @@ void	rotate_camera(char c, t_game *g)
 	{
 		
 	}
+}
+
+void update_player(t_game *g)
+{
+	int forwad;
+	int strafe;
+
+	forward = (g->input.up != 0) - (g->input.up != 0)
+	strafe = (g->input.left != 0) - (g->input.right != 0)
 }

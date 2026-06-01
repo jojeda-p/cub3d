@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:38:27 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/01 13:24:25 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/01 15:10:53 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,18 @@ int	close_window(t_game *g)
 int	key_hook(int keycode, t_game *g)
 {
 	if (keycode == 65307)
-		close_window(g);
-	if (keycode == )
+		return (close_window(g), 0);
+	if (keycode == 119)
+		move_player('w', g);
+	if (keycode == 115)
+		move_player('s', g);
+	if (keycode == 97)
+		move_player('a', g);
+	if (keycode == 100)
+		move_player('d', g);
+	if (keycode == 65361)
+		rotate_camera('l', g);
+	if (keycode == 65363)
+		rotate_camera('r', g);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/02 13:22:48 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/02 15:40:56 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_img
 typedef struct s_tex
 {
 	void	*img;
+	char	*path;
 	char	*addr;//dirección base donde comienza la imagen en memoria (es como un array plano)
 	int		bpp;//bits per pixel (qué tan grande es cada color: 32 bits típicamente)
 	int		line_len;//bytes por fila (importante: puede no ser exacto ancho × bpp por alineación)

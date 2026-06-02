@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:30:48 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/02 13:49:45 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/02 15:50:04 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,22 @@
 #include <math.h>
 #include "mlx.h"
 
-void	load_textures(t_game *g, char *paths[4])
+/* void	init_texture(t_game *g)
+{	
+
+	load_textures(g);
+} */
+
+/* void	load_textures(t_game *g)
 {
 	int	i;
 	
 	i = 0;
-	while (i < 3)
+	while (i < 4)
 	{
-		mlx_xpm_file_to_image(g->mlx, paths[i], &g->)
+		mlx_xpm_file_to_image(g->mlx, &g->tex[i].path, &g->tex[i].width, &g->tex[i].height);
 	}
-}
+} */
 
 t_tex	get_wall_texture(t_game *g)
 {
@@ -37,7 +43,7 @@ t_tex	get_wall_texture(t_game *g)
 		return (g->tex[0]);
 	return (g->tex[1]);
 }
-/*teniendo la*/
+/*calculando la direccion del pixel movemos los bits de los 4 bytes que lo componen y los extraemos*/
 int	get_tex_color(t_tex texture,int tex_x, int tex_y)
 {
 	int				offset;

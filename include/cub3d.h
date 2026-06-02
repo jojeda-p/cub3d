@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/01 18:19:19 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/02 13:22:48 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ typedef struct s_img
 typedef struct s_tex
 {
 	void	*img;
-	char	*addr;
-	int		bpp;
-	int		line_len;
+	char	*addr;//dirección base donde comienza la imagen en memoria (es como un array plano)
+	int		bpp;//bits per pixel (qué tan grande es cada color: 32 bits típicamente)
+	int		line_len;//bytes por fila (importante: puede no ser exacto ancho × bpp por alineación)
 	int		endian;
 	int		width;
 	int		height;
@@ -142,7 +142,7 @@ void	update_player(t_game *g);
 
 /*texture.c*/
 t_tex	get_wall_texture(t_game *g);
-int		get_tex_color(t_game *g, t_tex texture,int tex_x, int tex_y);
+int	get_tex_color(t_tex texture,int tex_x, int tex_y);
 int		get_tex_x(t_game *g, t_tex texture);
 
 #endif

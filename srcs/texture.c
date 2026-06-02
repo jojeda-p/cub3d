@@ -3,15 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:30:48 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/01 18:21:40 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/02 13:49:45 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <math.h>
+#include "mlx.h"
+
+void	load_textures(t_game *g, char *paths[4])
+{
+	int	i;
+	
+	i = 0;
+	while (i < 3)
+	{
+		mlx_xpm_file_to_image(g->mlx, paths[i], &g->)
+	}
+}
 
 t_tex	get_wall_texture(t_game *g)
 {
@@ -25,10 +37,33 @@ t_tex	get_wall_texture(t_game *g)
 		return (g->tex[0]);
 	return (g->tex[1]);
 }
-/* int	get_tex_color(t_game *g, t_tex texture,int tex_x, int tex_y)
+/*teniendo la*/
+int	get_tex_color(t_tex texture,int tex_x, int tex_y)
 {
-	
-} */
+	int				offset;
+	unsigned int	color;
+	unsigned char	*pixel;
+	int			i;
+
+	if (tex_x < 0 || tex_x >= texture.width || tex_y < 0 ||
+		 tex_y >= texture.height)
+		return (0);
+	offset = tex_y * texture.line_len + tex_x * (texture.bpp / 8);
+	pixel = (unsigned char *)texture.addr + offset;
+	if ((texture.bpp / 8) == 4)
+		color = *(unsigned int *)pixel;
+	else
+	{
+		color = 0;
+		i = 0;
+		while (i < (texture.bpp / 8))
+		{
+			color |= ((unsigned int)pixel[i]) << (8 * i);
+			i++;
+		}
+	}
+	return ((int)color);
+}
 
 /*Calcula la coordenada horizontal de la textura (columna) correspondiente
  al impacto de la pared por el rayo actual. Devuelve un entero en el

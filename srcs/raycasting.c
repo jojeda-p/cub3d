@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 13:34:06 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/02 15:56:22 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/02 16:52:05 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,27 @@
 
 void	draw_wall_column(t_game *g, int column, t_tex texture)
 {
-	int	y;
-	int	tex_x;
-	int	tex_y;
+	int		y;
+	int		tex_x;
+	int		tex_y;
+	double	step;
+	double	tex_pos;
 
-	if (column < 0 || column >= g->width)
-		return;
-	if (g->ray.draw_start > g->ray.draw_end)
-		return;
 	y = g->ray.draw_start;
 	tex_x = get_tex_x(g, texture);
+	if (g->ray.line_height <= 0 || texture.height <= 0)
+		return ;
+	step = (double)texture.height / (double)g->ray.line_height;
+	tex_pos = ((double)g->ray.draw_start - (double)g->height / 2.0 + (double)g->ray.line_height / 2.0) * step;
 	while (y <= g->ray.draw_end)
 	{
-		tex_y = (int)((y - g->ray.draw_start) * (double)texture.height / g->ray.line_height);
+		tex_y = (int)tex_pos;
 		if (tex_y < 0)
 			tex_y = 0;
 		if (tex_y >= texture.height)
 			tex_y = texture.height - 1;
 		pixel_put(&g->img, column, y, get_tex_color(texture, tex_x, tex_y));
+		tex_pos += step;
 		y++;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/02 16:03:15 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/02 16:17:07 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,5 +150,6 @@ void	update_player(t_game *g);
 t_tex	get_wall_texture(t_game *g);
 int		get_tex_color(t_tex texture,int tex_x, int tex_y);
 int		get_tex_x(t_game *g, t_tex texture);
+void	load_textures(t_game *g);
 
 #endif

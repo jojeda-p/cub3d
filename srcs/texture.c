@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:30:48 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/02 15:50:04 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/02 16:08:13 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,26 @@
 #include <math.h>
 #include "mlx.h"
 
-/* void	init_texture(t_game *g)
-{	
-
-	load_textures(g);
-} */
-
-/* void	load_textures(t_game *g)
+void	load_textures(t_game *g)
 {
 	int	i;
 	
+	g->tex[0].path = "./assets/cris.xpm";
+	g->tex[1].path = "./assets/naranjito.xpm";
+	g->tex[2].path = "./assets/epti.xpm";
+	g->tex[3].path = "./assets/download.xpm";
 	i = 0;
 	while (i < 4)
 	{
-		mlx_xpm_file_to_image(g->mlx, &g->tex[i].path, &g->tex[i].width, &g->tex[i].height);
+		g->tex[i].img = mlx_xpm_file_to_image(g->mlx, g->tex[i].path, &g->tex[i].width, &g->tex[i].height);
+		if (!g->tex[i].img)
+			return ;
+		g->tex[i].addr = mlx_get_data_addr(g->tex[i].img, &g->tex[i].bpp, &g->tex[i].line_len, &g->tex[i].endian);
+		if (!g->tex[i].addr)
+			return ;
+		i++;
 	}
-} */
+}
 
 t_tex	get_wall_texture(t_game *g)
 {

@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:10:05 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/02 16:15:04 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/02 17:52:27 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,17 +127,30 @@ void	rotate_camera(double angle, t_game *g)
 
 double update_mouse(t_game *g)
 {
-	int x;
-	int y;
-	int delta_x;
-	double angle;
+    int     x;
+    int     y;
+    int     delta_x;
+    double  angle;
 
-	mlx_mouse_get_pos(g->mlx, g->win, &x, &y);
-	delta_x = x - g->prev_mouse_x;
-	angle = delta_x * g->mouse_sensitivity;
-	g->prev_mouse_x = x;
-	return (angle);
+    mlx_mouse_get_pos(g->mlx, g->win, &x, &y);
+    if (g->mouse_warped || g->last_mouse_x == -1)
+    {
+        g->mouse_warped = 0;
+        g->last_mouse_x = x;
+        return (0);
+    }
+    delta_x = x - g->last_mouse_x;
+    angle = delta_x * g->mouse_sensitivity;
+    g->last_mouse_x = x;
+    if (x < 1 || x > g->width - 1 || y < 1 || y > g->height - 1)
+    {
+        mlx_mouse_move(g->mlx, g->win, g->width / 2, g->height / 2);
+        g->last_mouse_x = g->width / 2;
+        g->mouse_warped = 1;
+    }
+    return (angle);
 }
+
 void update_player(t_game *g)
 {
 	int forward;
@@ -145,7 +158,6 @@ void update_player(t_game *g)
 	double angle;
 
 	mlx_mouse_hide(g->mlx, g->win);
-	g->mouse_sensitivity = 0.002;
 	angle = 0;
 	forward = (g->input.up != 0) - (g->input.down != 0);
 	strafe = (g->input.right != 0) - (g->input.left != 0);

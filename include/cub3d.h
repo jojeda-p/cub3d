@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/02 16:17:07 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/02 17:43:53 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,12 @@ typedef struct s_game
 	t_input	input;
 	int		width;
 	int		height;
+	/*mouse temporalmente aqui*/
 	int		mouse_x;
 	int		mouse_y;
-	int prev_mouse_x;
-	int prev_mouse_y;
+	int		last_mouse_x;
+	int		mouse_warped;
+
 	double	player_x;
 	double	player_y;
 	double	dir_x;
@@ -110,6 +112,9 @@ typedef struct s_game
 	double	rot_speed;
 	double	mouse_sensitivity;
 }	t_game;
+
+/*init.c*/
+void	init_game(t_game *g);
 
 /*ray_init.c*/
 void	init_raycasting(t_game *g);
@@ -134,8 +139,8 @@ void	pixel_put(t_img *img, int x, int y, int color);
 int		temp_init_map(t_game *g, char *file);
 
 /*input*/
-int key_press(int keycode, t_game *g);
-int key_release(int keycode, t_game *g);
+int		key_press(int keycode, t_game *g);
+int		key_release(int keycode, t_game *g);
 
 
 /* movement.c */

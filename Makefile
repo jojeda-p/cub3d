@@ -30,6 +30,7 @@ LIBS        = $(MLX_LIB) -lm
 # Norma: todos los .c deben estar listados explícitamente (sin wildcard)
 
 SRC_FILES   =	main.c \
+				init/init.c \
 				ray_init.c \
 				raycasting.c \
 				utils/utils.c \
@@ -37,7 +38,6 @@ SRC_FILES   =	main.c \
 				movement.c \
 				parse/parse.c \
 				input/input.c \
-				init/init.c \
 				init/window.c \
 				texture.c
 

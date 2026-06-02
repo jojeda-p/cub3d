@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 15:44:01 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/01 18:18:10 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/02 17:09:01 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	main(int argc, char **argv)
 	g = (t_game){0};//inicilizacion a 0 de toda la estructura
 	g.height = 1000;
 	g.width = 1500;
+	init_game(&g);
 	temp_init_map(&g, argv[1]);
 	init_raycasting(&g);
 	init_window(&g);

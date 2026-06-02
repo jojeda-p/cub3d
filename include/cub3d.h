@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/02 15:40:56 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/02 16:03:15 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,10 @@ typedef struct s_game
 	t_input	input;
 	int		width;
 	int		height;
+	int		mouse_x;
+	int		mouse_y;
+	int prev_mouse_x;
+	int prev_mouse_y;
 	double	player_x;
 	double	player_y;
 	double	dir_x;
@@ -104,6 +108,7 @@ typedef struct s_game
 	double	player_dir;
 	double	move_speed;
 	double	rot_speed;
+	double	mouse_sensitivity;
 }	t_game;
 
 /*ray_init.c*/
@@ -138,12 +143,12 @@ void	move_forward(char c, t_game *g);
 void	move_backward(char c, t_game *g);
 void	move_left(char c, t_game *g);
 void	move_right(char c, t_game *g);
-void	rotate_camera(char c, t_game *g);
+void	rotate_camera(double angle, t_game *g);
 void	update_player(t_game *g);
 
 /*texture.c*/
 t_tex	get_wall_texture(t_game *g);
-int	get_tex_color(t_tex texture,int tex_x, int tex_y);
+int		get_tex_color(t_tex texture,int tex_x, int tex_y);
 int		get_tex_x(t_game *g, t_tex texture);
 
 #endif

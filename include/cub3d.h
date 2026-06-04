@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/02 17:43:53 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/03 18:19:20 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,14 @@ typedef struct s_game
 	void	*mlx;
 	void	*win;
 	t_img	img;
-	t_tex	tex[4];
+	t_tex	tex[4];//0->NORTE,1->SUR,2->ESTE,3->OESTE
 	t_map	map;
 	t_ray	ray;
 	t_input	input;
 	int		width;
 	int		height;
+	int		floor_color;
+	int		ceiling_color;
 	/*mouse temporalmente aqui*/
 	int		mouse_x;
 	int		mouse_y;
@@ -151,10 +153,25 @@ void	move_right(char c, t_game *g);
 void	rotate_camera(double angle, t_game *g);
 void	update_player(t_game *g);
 
-/*texture.c*/
+/* texture.c */
 t_tex	get_wall_texture(t_game *g);
 int		get_tex_color(t_tex texture,int tex_x, int tex_y);
 int		get_tex_x(t_game *g, t_tex texture);
 void	load_textures(t_game *g);
+
+/* utils.c */
+int		ft_strlen(char *s);
+void	free_matrix(char **matrix);
+char	*ft_strdup(char *s);
+int		parse_permisions(char	*file);
+
+/* parse.c */
+int		parser(char *file, t_game *g);
+
+/* parse_matrix.c */
+char	**parse_content(char *file, t_game *g);
+
+/* parse_error.c */
+int		print_error(int	code, char *s);
 
 #endif

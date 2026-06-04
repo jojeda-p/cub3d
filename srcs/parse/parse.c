@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 17:42:35 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 16:52:53 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/04 18:13:33 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	parse_permisions(char *file)
 	if (fd < 0)
 	{
 		if (errno == ENOENT)
-       		return (print_error(2, file));
+       		return (print_error(3, file));
     	else if (errno == EACCES)
-        	return (print_error(3, file));
+        	return (print_error(2, file));
     	else if (errno == EISDIR)
         	return (print_error(4, file));
 	}
@@ -50,6 +50,7 @@ int	parse_file(char *file)
 int	parser(char *file, t_game *g)
 {
 	char	**matrix;
+
 	if (parse_file(file) == 1)
 		return (1);
 	matrix = parse_content(file);

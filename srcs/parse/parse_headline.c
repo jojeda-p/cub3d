@@ -6,11 +6,12 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:22:25 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 14:57:15 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/04 18:06:10 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <stdio.h>
 
 /*pone el path en la estructura final y comprueba que no se repita la textura*/
 static int	get_texture_path(t_game *g, char *s, int *found, char *path)
@@ -46,7 +47,7 @@ int	parse_texture_name(char *path)
 {
 	int	i;
 
-	i = ft_strlen(path);
+	i = ft_strlen(path) - 1;
 	if (path[i] != 'm' || path[i - 1] != 'p'  || path[i - 2] != 'x' ||
 		path[i - 3] != '.')
 		return (print_error(1, path));
@@ -96,6 +97,7 @@ static int	get_color_hex(char *color, char *s)
 	g = ft_atoi_color(color + i + 1);
 	if (g == -1)
 		return (print_error(9, s));
+	i++;
 	while (color[i] && ft_isnum(color[i]))
 		i++;
 	b = ft_atoi_color(color + i + 1);
@@ -109,8 +111,8 @@ int	parse_color(char **matrix, t_game *g, char *s)
 	int		i;
 	char	*color;
 
-	i = 4;
-	while(i < 6)
+	i = 5;
+	while(i < 7)
 	{
 		if (matrix[i][0] == s[0])
 		{
@@ -125,7 +127,6 @@ int	parse_color(char **matrix, t_game *g, char *s)
 	}
 	return (print_error(6, s));
 }
-
 
 int	parse_headline(char **matrix, t_game *g)
 {

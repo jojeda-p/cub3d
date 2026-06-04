@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 13:03:49 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 16:14:17 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/04 18:13:53 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ void	free_matrix(char **matrix)
 		return ;
 	i = 0;
 	while (matrix[i])
-		free(matrix[i++]);
+	{
+		free(matrix[i]);
+		i++;
+	}
 	free(matrix);
 }
 
@@ -40,8 +43,10 @@ char	*ft_strdup(char *s)
 {
 	char	*dup;
 	int		i;
+	int		j;
 
 	i = 0;
+	j = 0;
 	dup = malloc(sizeof(char) * (ft_strlen(s) + 1));
 	if (!dup)
 		return (NULL);
@@ -49,11 +54,12 @@ char	*ft_strdup(char *s)
 	{
 		if (s[i] != '\n')
 		{
-			dup[i] = s[i];
-			i++;
+			dup[j] = s[i];
+			j++;
 		}
+		i++;
 	}
-	dup[i] = '\0';
+	dup[j] = '\0';
 	return (dup);
 }
 
@@ -76,7 +82,7 @@ int	ft_atoi_color(char *color)
 		result = result * 10 + color[i] - '0';
 		i++;
 	}
-	if (color[i] != ',' && color[i] != '\n')
-		return (-1);
+	if (color[i] != ',' && color[i] != '\n' && color[i] != '\0')
+    	return (-1);
 	return (result);
 }

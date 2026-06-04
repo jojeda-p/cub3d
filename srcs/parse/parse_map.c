@@ -6,11 +6,12 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 14:58:04 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 16:45:20 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/04 16:56:18 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <stdlib.h>
 
 static int	map_char_parse(char **matrix)
 {
@@ -38,27 +39,18 @@ void	malloc_grid(char **matrix, t_game *g)
 {
 	int		i;
 	int		j;
-	int		longest;
 
 	i = 0;
 	while (matrix[i])
 		i++;
 	g->map.grid = malloc(sizeof(char *) * (i - 8));
 	i = 0;
-	longest = 0;
 	while (matrix[i])
 	{
 		j = 0;
 		while (matrix[i][j])
 			j++;
-		if (longest < j)
-			longest = j;
-		i++;
-	}
-	i = 0;
-	while (matrix[i])
-	{
-		g->map.grid[i] = malloc(sizeof(char) * longest);
+		g->map.grid[i] = malloc(sizeof(char) * j);
 		i++;
 	}
 }
@@ -74,17 +66,22 @@ int	matrix_to_grid(char **matrix, t_game *g)
 		j = 0;
 		while (matrix[i][j])
 		{
-			
+			if (matrix[i][j] == '\n')
+				g->map.grid[i][j] = '\0';
+			else
+				g->map.grid[i][j] = matrix[i][j];
 			j++;
 		}
 		i++;
 	}
+	return (0);
 }
 
 int	parse_map(char **matrix, t_game *g)
 {
 	if (map_char_parse(matrix) == 1)
 		return (1);
-	if (matrix_to_grid == 1)
+	if (matrix_to_grid(matrix, g) == 1)
 		return (1);
+	return (0);
 }

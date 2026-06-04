@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 16:22:18 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/04 16:54:43 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,7 @@ int		key_press(int keycode, t_game *g);
 int		key_release(int keycode, t_game *g);
 
 /* movement.c */
+/* void	inertia(t_game *g); */
 void	rotate_camera(double angle, t_game *g);
 void	update_player(t_game *g);
 
@@ -248,6 +249,9 @@ int		parser(char *file, t_game *g);
 
 /* parse_headline.c */
 int		parse_headline(char **matrix, t_game *g);
+
+/* parse_map.c */
+int		parse_map(char **matrix, t_game *g);
 
 /* parse_matrix.c */
 char	**parse_content(char *file);

@@ -36,9 +36,12 @@ SRC_FILES   =	main.c \
 				utils/utils.c \
 				map.c \
 				movement.c \
-				parse/parse.c \
 				input/input.c \
 				init/window.c \
+				parse/parse.c \
+				parse/parse_error.c \
+				parse/parse_headline.c \
+				parse/parse_matrix.c \
 				texture.c
 
 

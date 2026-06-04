@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 13:03:49 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/03 17:54:34 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/04 12:41:17 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <stdlib.h>
+#include <unistd.h>
 
 int	ft_strlen(char *s)
 {
@@ -81,5 +82,6 @@ int	parse_permisions(char	*file)
     	else if (errno == EISDIR)
         	return (print_error(4, file));
 	}
+	close(fd);
 	return (0);
 }

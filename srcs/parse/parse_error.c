@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:14:37 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/03 18:25:52 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/04 12:55:25 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <stdio.h>
 
 int	print_error(int	code, char *s)
 {
@@ -26,4 +27,5 @@ int	print_error(int	code, char *s)
 		return (printf("Error: texture %s not found.\n", s), 1);
 	if (code == 6)
 		return (printf("Error: %s color not found.\n", s), 1);
+	return (1);
 }

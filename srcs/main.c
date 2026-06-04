@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 15:44:01 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 12:05:09 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/04 12:57:13 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (0);
 	init_game(&g);
-	if (parser(argv[1], &g) == 1)
-		return (1);
+	/* if (parser(argv[1], &g) == 1)
+		return (1); */
 	temp_init_map(&g, argv[1]);
 	init_raycasting(&g);
 	init_window(&g);

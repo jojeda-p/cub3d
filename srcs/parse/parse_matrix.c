@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_matrix.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:13:11 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/03 17:17:30 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/04 12:42:54 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <stdlib.h>
 
 static void	without_newline(char ***dest, char **src, char *buf, int i)
 {
@@ -110,7 +111,7 @@ static char	**memmove_v2(char **src, char *buf)
 	return (dest);
 }
 
-char	**parse_content(char *file, t_game *g)
+char	**parse_content(char *file)
 {
 	int		fd;
 	char	**buffer;

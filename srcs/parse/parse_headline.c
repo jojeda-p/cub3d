@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:22:25 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 14:04:17 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/04 14:57:15 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,9 @@ int	parse_color(char **matrix, t_game *g, char *s)
 		{
 			color = ft_strdup(matrix[i] + 2);
 		 	if (s[0] == 'F')
-				g->floor_color = get_color_hex(color, s);
+				g->config.floor_color = get_color_hex(color, s);
 			else if (s[0] == 'C')
-				g->ceiling_color = get_color_hex(color, s);
+				g->config.ceiling_color = get_color_hex(color, s);
 			return (0);
 		}
 		i++;
@@ -141,6 +141,5 @@ int	parse_headline(char **matrix, t_game *g)
 		return (1);
 	if (parse_color(matrix, g, "C") != 0)
 		return (1);
-	/* process_textures();*/
 	return (0);
 }

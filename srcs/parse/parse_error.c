@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:14:37 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 13:56:27 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/04 15:34:14 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,9 @@ int	print_error(int	code, char *s)
 		return (printf("Error: %s texture is repeated.\n", s), 1);
 	if (code == 9)
 		return (printf("Error: %s color has wrong format.\n", s), 1);
+	if (code == 10)
+		return (printf("Error: forbidden character found in %s.\n", s), 1);
+	if (code == 11)
+		return (printf("Error: too many arguments.\n"), 1);
 	return (1);
 }

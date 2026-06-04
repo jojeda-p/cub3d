@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 13:03:49 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 13:55:36 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/04 16:14:17 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,6 @@
 #include <unistd.h>
 
 int	ft_strlen(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return i;
-}
-
-int	i_count(char **s)
 {
 	int	i;
 
@@ -57,8 +47,11 @@ char	*ft_strdup(char *s)
 		return (NULL);
 	while (s[i])
 	{
-		dup[i] = s[i];
-		i++;
+		if (s[i] != '\n')
+		{
+			dup[i] = s[i];
+			i++;
+		}
 	}
 	dup[i] = '\0';
 	return (dup);

@@ -1,0 +1,57 @@
+/* flowchart TD
+    A([Inicio parser]) --> B[Validar argc y ruta de archivo]
+    B --> C{Extension .cub valida?}
+    C -- No --> E1([Error: extension invalida])
+    C -- Si --> D[Leer archivo completo en memoria]
+
+    D --> E{Archivo vacio?}
+    E -- Si --> E2([Error: archivo vacio])
+    E -- No --> F[Separar cabecera y bloque de mapa]
+
+    F --> G[Parsear cabecera linea a linea]
+    G --> H{Linea de cabecera valida?}
+    H -- No --> E3([Error: identificador o formato invalido])
+    H -- Si --> I[Guardar NO/SO/WE/EA/F/C]
+
+    I --> J{Estan los 6 campos sin duplicados?}
+    J -- No --> E4([Error: faltan o sobran campos / duplicados])
+    J -- Si --> K[Validar texturas: ruta accesible + .xpm]
+
+    K --> L{Texturas validas?}
+    L -- No --> E5([Error: textura invalida])
+    L -- Si --> M[Validar colores F y C: R,G,B 0..255]
+
+    M --> N{Colores validos?}
+    N -- No --> E6([Error: color invalido])
+    N -- Si --> O[Detectar inicio real del mapa]
+
+    O --> P{Aparece cabecera despues del mapa?}
+    P -- Si --> E7([Error: orden invalido de secciones])
+    P -- No --> Q[Validar lineas y caracteres permitidos del mapa]
+
+    Q --> R{Caracter invalido o mapa inexistente?}
+    R -- Si --> E8([Error: mapa invalido])
+    R -- No --> S[Construir grid rectangular con padding]
+
+    S --> T[Buscar spawn N/S/E/W]
+    T --> U{Spawn unico?}
+    U -- No --> E9([Error: spawn inexistente o multiple])
+    U -- Si --> V[Reemplazar spawn por '0' y guardar pos/orientacion]
+
+    V --> W["Validar mapa cerrado (flood fill recomendado)"]
+    W --> X{Mapa cerrado?}
+    X -- No --> E10([Error: mapa abierto / fugas])
+    X -- Si --> Y[Calcular derivados: width, height]
+
+    Y --> Z([Parser OK])
+
+    E1 --> CL[Limpiar recursos parciales y salir]
+    E2 --> CL[Limpiar recursos parciales y salir]
+    E3 --> CL[Limpiar recursos parciales y salir]
+    E4 --> CL[Limpiar recursos parciales y salir]
+    E5 --> CL[Limpiar recursos parciales y salir]
+    E6 --> CL[Limpiar recursos parciales y salir]
+    E7 --> CL[Limpiar recursos parciales y salir]
+    E8 --> CL[Limpiar recursos parciales y salir]
+    E9 --> CL[Limpiar recursos parciales y salir]
+    E10 --> CL[Limpiar recursos parciales y salir] */

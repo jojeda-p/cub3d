@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_headline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:22:25 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 12:59:44 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/04 14:04:17 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,21 @@ static int	get_texture_path(t_game *g, char *s, int *found, char *path)
 		found[3] = 1;
 		return (0);
 	}
-	return (1);
+	return (print_error(8, s));
 }
 
-int	parse_texture(char **matrix, t_game *g, char *s)
+int	parse_texture_name(char *path)
+{
+	int	i;
+
+	i = ft_strlen(path);
+	if (path[i] != 'm' || path[i - 1] != 'p'  || path[i - 2] != 'x' ||
+		path[i - 3] != '.')
+		return (print_error(1, path));
+	return (0);
+}
+
+static int	parse_texture(char **matrix, t_game *g, char *s)
 {
 	int		i;
 	char	*path;
@@ -58,16 +69,42 @@ int	parse_texture(char **matrix, t_game *g, char *s)
 		if (matrix[i][0] == s[0] && matrix[i][1] == s[1])
 		{
 			path = ft_strdup(matrix[i] + 3);
+			if (parse_texture_name(path) == 1)
+				return (print_error(7, s));
 			if (parse_permisions(path) != 0)
 				return (1);
 			return (get_texture_path(g, s, found, path));
 		}
 		i++;
 	}
-	return (print_error(5, s), 1);
+	return (print_error(5, s));
 }
 
-/* int	parse_color(char **matrix, t_game *g, char *s)
+static int	get_color_hex(char *color, char *s)
+{
+	int	r;
+	int	g;
+	int	b;
+	int	i;
+	
+	r = ft_atoi_color(color);
+	if (r == -1)
+		return (print_error(9, s));
+	i = 0;
+	while (color[i] && ft_isnum(color[i]))
+		i++;
+	g = ft_atoi_color(color + i + 1);
+	if (g == -1)
+		return (print_error(9, s));
+	while (color[i] && ft_isnum(color[i]))
+		i++;
+	b = ft_atoi_color(color + i + 1);
+	if (b == -1)
+		return (print_error(9, s));
+	return ((r << 16) | (g << 8) | b);
+}
+
+int	parse_color(char **matrix, t_game *g, char *s)
 {
 	int		i;
 	char	*color;
@@ -78,16 +115,16 @@ int	parse_texture(char **matrix, t_game *g, char *s)
 		if (matrix[i][0] == s[0])
 		{
 			color = ft_strdup(matrix[i] + 2);
-		 	if (s == 'F')
-				g->floor_color = get_color_binary(color);
-			else if (s == 'C')
-				g->ceiling_color = get_color_binary(color);
+		 	if (s[0] == 'F')
+				g->floor_color = get_color_hex(color, s);
+			else if (s[0] == 'C')
+				g->ceiling_color = get_color_hex(color, s);
 			return (0);
 		}
 		i++;
 	}
-	return (print_error(6, s), 1);
-} */
+	return (print_error(6, s));
+}
 
 
 int	parse_headline(char **matrix, t_game *g)
@@ -100,10 +137,10 @@ int	parse_headline(char **matrix, t_game *g)
 		return (1);
 	if (parse_texture(matrix, g, "WE") != 0)
 		return (1);
-	/* if (parse_color(matrix, g, "F") != 0)
+	if (parse_color(matrix, g, "F") != 0)
 		return (1);
-	if (parse_floor(matrix, g, "C") != 0)
-		return (1); */
-	/* process_textures(); */
+	if (parse_color(matrix, g, "C") != 0)
+		return (1);
+	/* process_textures();*/
 	return (0);
 }

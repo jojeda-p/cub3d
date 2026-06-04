@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 17:42:35 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 12:58:42 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/04 13:30:16 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,25 @@
 #include <stdio.h>
 #include <errno.h>
 #include <unistd.h>
- 
+
+int	parse_permisions(char *file)
+{
+	int	fd;
+
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+	{
+		if (errno == ENOENT)
+       		return (print_error(2, file));
+    	else if (errno == EACCES)
+        	return (print_error(3, file));
+    	else if (errno == EISDIR)
+        	return (print_error(4, file));
+	}
+	close(fd);
+	return (0);
+}
+
 int	parse_file(char *file)
 {
 	int	i;

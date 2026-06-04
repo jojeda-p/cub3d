@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 14:00:09 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/04 14:05:18 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,5 +259,7 @@ int		ft_strlen(char *s);
 char	*ft_strdup(char *s);
 void	free_matrix(char **matrix);
 int		parse_permisions(char *file);
+int		ft_atoi_color(char *color);
+int		ft_isnum(char s);
 
 #endif

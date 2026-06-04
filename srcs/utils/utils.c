@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 13:03:49 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 12:41:17 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/04 13:55:36 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,26 @@ char	*ft_strdup(char *s)
 	return (dup);
 }
 
-#include <fcntl.h>
-#include <stdio.h>
-#include <errno.h>
-
-int	parse_permisions(char	*file)
+int	ft_isnum(char s)
 {
-	int	fd;
+	return (s <= '9' && s >= '0');
+}
 
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
+int	ft_atoi_color(char *color)
+{
+	int	result;
+	int	i;
+	
+	i = 0;
+	result = 0;
+	while (color[i] && color[i] != ',' && color[i] != '\n')
 	{
-		if (errno == ENOENT)
-       		return (print_error(2, file));
-    	else if (errno == EACCES)
-        	return (print_error(3, file));
-    	else if (errno == EISDIR)
-        	return (print_error(4, file));
+		if (!ft_isnum(color[i]))
+			return (-1);
+		result = result * 10 + color[i] - '0';
+		i++;
 	}
-	close(fd);
-	return (0);
+	if (color[i] != ',' && color[i] != '\n')
+		return (-1);
+	return (result);
 }

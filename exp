@@ -107,14 +107,14 @@ coords_tiles → coords_pixels:  x_pixels = x_tiles * tile_size
 
 En tu código actual:
 ```
-g->player_x = (4.5 * g->map.tile_size);  // = 4.5 * 64 = 288 píxeles
-g->player_y = (6.5 * g->map.tile_size);  // = 6.5 * 64 = 416 píxeles
+g->player.x = (4.5 * g->map.tile_size);  // = 4.5 * 64 = 288 píxeles
+g->player.y = (6.5 * g->map.tile_size);  // = 6.5 * 64 = 416 píxeles
 ```
 
 Luego durante raycasting convertiríamos al inicio:
 ```
-double pos_x = g->player_x / g->map.tile_size;    // = 4.5 tiles
-double pos_y = g->player_y / g->map.tile_size;    // = 6.5 tiles
+double pos_x = g->player.x / g->map.tile_size;    // = 4.5 tiles
+double pos_y = g->player.y / g->map.tile_size;    // = 6.5 tiles
 ```
 
 El `tile_size` es tu elección, pero debe coincidir con cómo definiste el mapa. En tu caso es 64; podrías haber elegido 32, 128, etc. Es el factor de escala que decides.

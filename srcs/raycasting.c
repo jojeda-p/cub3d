@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 13:34:06 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/02 16:52:05 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/04 16:35:08 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	draw_wall_column(t_game *g, int column, t_tex texture)
 	if (g->ray.line_height <= 0 || texture.height <= 0)
 		return ;
 	step = (double)texture.height / (double)g->ray.line_height;
-	tex_pos = ((double)g->ray.draw_start - (double)g->height / 2.0 + (double)g->ray.line_height / 2.0) * step;
+	tex_pos = ((double)g->ray.draw_start - (double)g->config.height / 2.0 + (double)g->ray.line_height / 2.0) * step;
 	while (y <= g->ray.draw_end)
 	{
 		tex_y = (int)tex_pos;
@@ -53,18 +53,18 @@ Inicio y fin de la columna a dibujar
 void	calculate_wall_projection(t_game *g)
 {
 	if (g->ray.side == 0)
-		g->ray.perp_dist = (g->ray.map_x - (g->player_x / g->map.tile_size) + (1.0 - (double)g->ray.step_x) / 2.0) / g->ray.ray_dir_x;
+		g->ray.perp_dist = (g->ray.map_x - (g->player.x / g->map.tile_size) + (1.0 - (double)g->ray.step_x) / 2.0) / g->ray.ray_dir_x;
 	else
-		g->ray.perp_dist = (g->ray.map_y - (g->player_y / g->map.tile_size) + (1.0 - (double)g->ray.step_y) / 2.0) / g->ray.ray_dir_y;
+		g->ray.perp_dist = (g->ray.map_y - (g->player.y / g->map.tile_size) + (1.0 - (double)g->ray.step_y) / 2.0) / g->ray.ray_dir_y;
 	if (!isfinite(g->ray.perp_dist) || g->ray.perp_dist <= 0.0)
 		g->ray.perp_dist = 1e-6;
-	g->ray.line_height = (int)((double)g->height / g->ray.perp_dist);
-	g->ray.draw_start = (int)(-((double)g->ray.line_height) / 2.0 + (double)g->height / 2.0);
-	g->ray.draw_end   = (int)(((double)g->ray.line_height) / 2.0 + (double)g->height / 2.0);
+	g->ray.line_height = (int)((double)g->config.height / g->ray.perp_dist);
+	g->ray.draw_start = (int)(-((double)g->ray.line_height) / 2.0 + (double)g->config.height / 2.0);
+	g->ray.draw_end   = (int)(((double)g->ray.line_height) / 2.0 + (double)g->config.height / 2.0);
 	if (g->ray.draw_start < 0)
 		g->ray.draw_start = 0;
-	if (g->ray.draw_end >= g->height)
-		g->ray.draw_end = g->height - 1;
+	if (g->ray.draw_end >= g->config.height)
+		g->ray.draw_end = g->config.height - 1;
 }
 
 void	dda_loop(t_game *g)
@@ -110,9 +110,9 @@ void	render_raycasting(t_game *g)
 	t_tex	texture;
 
 	column = 0;
-	while (column < g->width)
+	while (column < g->config.width)
 	{
-		g->ray.camera_x = calculate_camera_x(column, g->width);
+		g->ray.camera_x = calculate_camera_x(column, g->config.width);
 		init_ray_values(g);
 		dda_loop(g);
 		texture = get_wall_texture(g);

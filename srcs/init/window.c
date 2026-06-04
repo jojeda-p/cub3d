@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:38:27 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 13:13:34 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/04 16:38:41 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ int	render_g(t_game	*g)
 
 	update_player(g);
 	y = 0;
-	while (y < g->height)
+	while (y < g->config.height)
 	{
 		x = 0;
-		while (x < g->width)
+		while (x < g->config.width)
 		{
-			if (y < g->height / 2)
+			if (y < g->config.height / 2)
 				pixel_put(&g->img, x, y, 0x87CEEB);
 			else
 				pixel_put(&g->img, x, y, 0x000000);
@@ -57,7 +57,7 @@ int	render_g(t_game	*g)
 
 static int	init_image(t_game *g)
 {
-	g->img.img = mlx_new_image(g->mlx, g->width, g->height); //crear imagen en RAM
+	g->img.img = mlx_new_image(g->mlx, g->config.width, g->config.height); //crear imagen en RAM
 	if (!g->img.img)
 		return (-1);
 	g->img.addr = mlx_get_data_addr(g->img.img, &g->img.bpp,
@@ -71,7 +71,7 @@ int	init_window(t_game *g)
 	g->mlx = mlx_init();
 	if (!g->mlx)
 		return (-1);
-	g->win = mlx_new_window(g->mlx, g->width, g->height, "cub3d");
+	g->win = mlx_new_window(g->mlx, g->config.width, g->config.height, "cub3d");
 	if (!g->win)
 		return (-1);
 	if (init_image(g) == -1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:30:48 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/02 16:55:53 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/04 16:29:35 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ int	get_tex_x(t_game *g, t_tex texture)
 	int		tex_x;
 
 	if (g->ray.side == 0)
-		wall_x = g->player_y / g->map.tile_size + g->ray.perp_dist * g->ray.ray_dir_y;
+		wall_x = g->player.y / g->map.tile_size + g->ray.perp_dist * g->ray.ray_dir_y;
 	if (g->ray.side == 1)
-		wall_x = g->player_x / g->map.tile_size + g->ray.perp_dist * g->ray.ray_dir_x;
+		wall_x = g->player.x / g->map.tile_size + g->ray.perp_dist * g->ray.ray_dir_x;
 	wall_x = wall_x - floor(wall_x);
 	tex_x = (int)(wall_x * (double)texture.width);
 	if ((g->ray.side == 0 && g->ray.ray_dir_x > 0) ||

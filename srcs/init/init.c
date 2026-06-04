@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 17:05:46 by julepere          #+#    #+#             */
-/*   Updated: 2026/06/04 13:39:49 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/04 16:26:53 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	init_game(t_game *g)
 {
 	*g = (t_game){0};
 	g->config.width         = 1500;
-	g->config.height        = 1000;
+	g->config.height       	= 1000;
 	g->config.floor_color   = 0x3B2F2F;
 	g->config.ceiling_color = 0x87CEEB;
 	g->camera.fov           = 75.0;

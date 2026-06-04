@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 13:03:29 by julepere          #+#    #+#             */
-/*   Updated: 2026/06/04 13:15:57 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/04 14:50:48 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ void	move_forward(char c, t_game *g)
 
 	if (c == 'w')
 	{
-		new_x = g->player_x + g->dir_x * g->move_speed;
-		new_y = g->player_y + g->dir_y * g->move_speed;
+		new_x = g->player.x + g->player.dir_x * g->player.move_speed;
+		new_y = g->player.y + g->player.dir_y * g->player.move_speed;
 		map_x = (int)(new_x / g->map.tile_size);
 		map_y = (int)(new_y / g->map.tile_size);
 		if (map_x < 0 || map_x >= g->map.width || map_y < 0 || map_y >= g->map.height)
 			return ;
 		if (g->map.grid[map_y][map_x] != '1')
 		{
-			g->player_x = new_x;
-			g->player_y = new_y;
+			g->player.x = new_x;
+			g->player.y = new_y;
 		}
 	}
 }
@@ -45,16 +45,16 @@ void	move_backward(char c, t_game *g)
 
 	if (c == 's')
 	{
-		new_x = g->player_x - g->dir_x * g->move_speed;
-		new_y = g->player_y - g->dir_y * g->move_speed;
+		new_x = g->player.x - g->player.dir_x * g->player.move_speed;
+		new_y = g->player.y - g->player.dir_y * g->player.move_speed;
 		map_x = (int)(new_x / g->map.tile_size);
 		map_y = (int)(new_y / g->map.tile_size);
 		if (map_x < 0 || map_x >= g->map.width || map_y < 0 || map_y >= g->map.height)
 			return ;
 		if (g->map.grid[map_y][map_x] != '1')
 		{
-			g->player_x = new_x;
-			g->player_y = new_y;
+			g->player.x = new_x;
+			g->player.y = new_y;
 		}
 	}
 }
@@ -68,16 +68,16 @@ void	move_left(char c, t_game *g)
 	
 	if (c == 'a')
 	{
-		new_x = g->player_x + (g->dir_y) * g->move_speed;
-		new_y = g->player_y - (g->dir_x) * g->move_speed;
+		new_x = g->player.x + (g->player.dir_y) * g->player.move_speed;
+		new_y = g->player.y - (g->player.dir_x) * g->player.move_speed;
 		map_x = (int)(new_x / g->map.tile_size);
 		map_y = (int)(new_y / g->map.tile_size);
 		if (map_x < 0 || map_x >= g->map.width || map_y < 0 || map_y >= g->map.height)
 			return ;
 		if (g->map.grid[map_y][map_x] != '1')
 		{
-			g->player_x = new_x;
-			g->player_y = new_y;
+			g->player.x = new_x;
+			g->player.y = new_y;
 		}
 	}
 	
@@ -92,16 +92,16 @@ void	move_right(char c, t_game *g)
 	
 	if (c == 'd')
 	{
-		new_x = g->player_x - (g->dir_y) * g->move_speed;
-		new_y = g->player_y + (g->dir_x) * g->move_speed;
+		new_x = g->player.x - (g->player.dir_y) * g->player.move_speed;
+		new_y = g->player.y + (g->player.dir_x) * g->player.move_speed;
 		map_x = (int)(new_x / g->map.tile_size);
 		map_y = (int)(new_y / g->map.tile_size);
 		if (map_x < 0 || map_x >= g->map.width || map_y < 0 || map_y >= g->map.height)
 			return ;
 		if (g->map.grid[map_y][map_x] != '1')
 		{
-			g->player_x = new_x;
-			g->player_y = new_y;
+			g->player.x = new_x;
+			g->player.y = new_y;
 		}
 	}
 }

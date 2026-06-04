@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 14:05:18 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/04 16:22:18 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ typedef struct s_player
 {
 	double	x;
 	double	y;
+	double	dir;
 	double	dir_x;
 	double	dir_y;
 	double	vel_x;
@@ -144,7 +145,7 @@ typedef struct s_player
 /*
 ---------------------------------------------------------------------------------
 	t_camera — plano de proyección y configuración visual
-		plane    : vector perpendicular a dir (frustum del FOV)
+		cam    : vector perpendicular a dir (frustum del FOV)
 		fov      : campo de visión en radianes (plane_len = tan(fov/2))
 		sensitivity : velocidad de rotación con ratón
 */

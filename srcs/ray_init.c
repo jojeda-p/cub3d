@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 11:56:03 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 13:18:48 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/04 16:29:35 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ void	init_raycasting(t_game *g)
 	double	fov_rad;// FOV en radianes
 	double	scale;// Escala del plano
 
-	g->dir_x = cos(g->player_dir);
-	g->dir_y = sin(g->player_dir);
-	fov_rad = g->fov * M_PI / 180.0;
+	g->player.dir_x = cos(g->player.dir);
+	g->player.dir_y = sin(g->player.dir);
+	fov_rad = g->camera.fov * M_PI / 180.0;
 	scale = tan(fov_rad / 2.0);
-	g->cam_x = -g->dir_y * scale;
-	g->cam_y = g->dir_x * scale;
+	g->camera.plane_x = -g->player.dir_y * scale;
+	g->camera.plane_y = g->player.dir_x * scale;
 }
 
 /* convierte el valor de la columna dependiendo el ancho  en un
@@ -61,10 +61,10 @@ Side distances → distancia hasta el próximo gridline
 Steps → hacia dónde avanzar (-1 o 1)*/
 void	init_ray_values(t_game *g)
 {
-	g->ray.ray_dir_x = g->dir_x + g->cam_x * g->ray.camera_x;
-	g->ray.ray_dir_y = g->dir_y + g->cam_y * g->ray.camera_x;
-	g->ray.map_x = (int)(g->player_x / g->map.tile_size);
-	g->ray.map_y = (int)(g->player_y / g->map.tile_size);
+	g->ray.ray_dir_x = g->player.dir_x + g->camera.plane_x * g->ray.camera_x;
+	g->ray.ray_dir_y = g->player.dir_y + g->camera.plane_y * g->ray.camera_x;
+	g->ray.map_x = (int)(g->player.x / g->map.tile_size);
+	g->ray.map_y = (int)(g->player.y / g->map.tile_size);
 	if (g->ray.ray_dir_x == 0)
 		g->ray.delta_dist_x = INFINITY;
 	else
@@ -87,16 +87,16 @@ void	init_ray_values2(t_game *g)
 	else
 		g->ray.step_y = 1;
 	if (g->ray.step_x == -1)
-		g->ray.side_dist_x = ((g->player_x / g->map.tile_size) - g->ray.map_x)
+		g->ray.side_dist_x = ((g->player.x / g->map.tile_size) - g->ray.map_x)
 		* g->ray.delta_dist_x;
 	else
-		g->ray.side_dist_x = (g->ray.map_x + 1.0 - (g->player_x / g->map.tile_size))
+		g->ray.side_dist_x = (g->ray.map_x + 1.0 - (g->player.x / g->map.tile_size))
 		* g->ray.delta_dist_x;
 	if (g->ray.step_y == -1)
-		g->ray.side_dist_y = ((g->player_y / g->map.tile_size) - g->ray.map_y)
+		g->ray.side_dist_y = ((g->player.y / g->map.tile_size) - g->ray.map_y)
 		* g->ray.delta_dist_y;
 	else
-		g->ray.side_dist_y = (g->ray.map_y + 1.0 - (g->player_y / g->map.tile_size))
+		g->ray.side_dist_y = (g->ray.map_y + 1.0 - (g->player.y / g->map.tile_size))
 		* g->ray.delta_dist_y;
 	g->ray.hit = 0;
 	g->ray.side = 0;

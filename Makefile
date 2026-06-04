@@ -35,7 +35,8 @@ SRC_FILES   =	main.c \
 				raycasting.c \
 				utils/utils.c \
 				map.c \
-				movement.c \
+				movement/movement.c \
+				movement/directions.c \
 				input/input.c \
 				init/window.c \
 				parse/parse.c \

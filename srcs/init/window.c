@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:38:27 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/02 17:05:36 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/04 13:13:34 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	render_g(t_game	*g)
 	return (0);
 }
 
-int	init_image(t_game *g)
+static int	init_image(t_game *g)
 {
 	g->img.img = mlx_new_image(g->mlx, g->width, g->height); //crear imagen en RAM
 	if (!g->img.img)

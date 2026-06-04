@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:10:05 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 16:31:43 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/04 17:59:17 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,39 @@
 #include <math.h>
 #include "mlx.h"
 
-int inertia();
-
-void	rotate_camera(double angle, t_game *g)
+/* void	inertia(t_game *g, int v)
 {
-	double old_dir_x;
-	double old_dir_y;
-	double old_cam_x;
-	double old_cam_y;
+	while(g->player.move_speed > 0)
+		g->player.move_speed == g->player.move_speed - (g->player.inertia * v);
+} */
+void	update_velocity(t_game *g)
+{
+	double move_x;
+	double move_y;
+	double len;
+	double speed;
 
-	old_dir_x = g->player.dir_x;
-	old_dir_y = g->player.dir_y;
-	old_cam_x = g->camera.plane_x;
-	old_cam_y = g->camera.plane_y;
+	g->player.vel_x;
+	g->player.vel_y;
+}
+void	move_player(t_game *g)
+{
+	double	new_x;
+	double	new_y;
+	int	map_x;
+	int	map_y;
 
-	g->player.dir_x = old_dir_x * cos(angle) - old_dir_y * sin(angle);
-	g->player.dir_y = old_dir_x * sin(angle) + old_dir_y * cos(angle);
-	g->camera.plane_x = old_cam_x * cos(angle) - old_cam_y * sin(angle);
-	g->camera.plane_y = old_cam_x * sin(angle) + old_cam_y * cos(angle);
+	new_x = g->player.x + g->player.vel_x;
+	new_y = g->player.y + g->player.vel_y;
+	map_x = (int)(new_x / g->map.tile_size);
+	map_y = (int)(new_y / g->map.tile_size);
+	if (map_x < 0 || map_x >= g->map.width || map_y < 0 || map_y >= g->map.height)
+		return ;
+	if (g->map.grid[map_y][map_x] != '1')
+		{
+			g->player.x = new_x;
+			g->player.y = new_y;
+		}
 }
 
 double update_mouse(t_game *g)
@@ -65,11 +80,15 @@ void update_player(t_game *g)
 	int forward;
 	int strafe;
 	double angle;
+	double	move_x;
+	double	move_y;
 
-	mlx_mouse_hide(g->mlx, g->win);
+	move_x = 0;
+	move_y = 0;
 	angle = 0;
 	forward = (g->input.up != 0) - (g->input.down != 0);
 	strafe = (g->input.right != 0) - (g->input.left != 0);
+	mlx_mouse_hide(g->mlx, g->win);
 	if(forward == 1)
 		move_forward('w', g);
 	else if(forward == -1)

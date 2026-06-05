@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 17:05:46 by julepere          #+#    #+#             */
-/*   Updated: 2026/06/04 17:53:48 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/05 12:43:11 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	init_game(t_game *g)
 	*g = (t_game){0};
 	g->config.width = 1500;
 	g->config.height = 1000;
-	g->config.floor_color = 0x3B2F2F;
-	g->config.ceiling_color = 0x87CEEB;
 	g->camera.fov  = 75.0;
 	g->camera.sensitivity = 0.0012;
 	g->camera.last_mouse_x = -1;

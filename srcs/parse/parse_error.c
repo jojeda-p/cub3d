@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:14:37 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 17:16:22 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/05 14:06:33 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,9 @@ int	print_error(int	code, char *s)
 		return (printf("Error: forbidden character found in %s.\n", s), 1);
 	if (code == 11)
 		return (printf("Error: too many arguments.\n"), 1);
+	if (code == 12)
+		return (printf("Error: wrong spawn.\n"), 1);
+	if (code == 13)
+		return (printf("Error: map not closed.\n"), 1);
 	return (1);
 }

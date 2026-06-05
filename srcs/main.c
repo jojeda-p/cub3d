@@ -6,11 +6,12 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 15:44:01 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 17:30:36 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/05 12:49:29 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <stdio.h>
 
 int	main(int argc, char **argv)
 {

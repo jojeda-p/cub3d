@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_matrix.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:13:11 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 12:42:54 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/05 10:26:51 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,15 @@ static void	with_newline(char ***dest, char **src, char *buf)
 		(*dest)[i][j] = '\0';
 		i++;
 	}
-	(*dest)[i] = malloc(sizeof(char) * 2);
-	(*dest)[i][0] = buf[0];
-	(*dest)[i][1] = '\0';
-	(*dest)[i + 1] = NULL;
+	if (buf[0] != '\n')
+	{
+		(*dest)[i] = malloc(sizeof(char) * 2);
+		(*dest)[i][0] = buf[0];
+		(*dest)[i][1] = '\0';
+		(*dest)[i + 1] = NULL;
+	}
+	else
+		(*dest)[i] = NULL;
 }
 
 static char	**void_matrix(char *buf)

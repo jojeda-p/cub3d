@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:10:05 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 17:59:17 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/05 10:18:54 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 	while(g->player.move_speed > 0)
 		g->player.move_speed == g->player.move_speed - (g->player.inertia * v);
 } */
-void	update_velocity(t_game *g)
+/* void	update_velocity(t_game *g)
 {
 	double move_x;
 	double move_y;
@@ -28,7 +28,7 @@ void	update_velocity(t_game *g)
 
 	g->player.vel_x;
 	g->player.vel_y;
-}
+} */
 void	move_player(t_game *g)
 {
 	double	new_x;
@@ -80,11 +80,11 @@ void update_player(t_game *g)
 	int forward;
 	int strafe;
 	double angle;
-	double	move_x;
+	/* double	move_x;
 	double	move_y;
 
 	move_x = 0;
-	move_y = 0;
+	move_y = 0; */
 	angle = 0;
 	forward = (g->input.up != 0) - (g->input.down != 0);
 	strafe = (g->input.right != 0) - (g->input.left != 0);

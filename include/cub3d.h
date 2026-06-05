@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 17:53:20 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/05 14:08:04 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,6 +256,7 @@ int		parse_headline(char **matrix, t_game *g);
 
 /* parse_map.c */
 int		parse_map(char **matrix, t_game *g);
+int		parse_flood_fill(t_game *g);
 
 /* parse_matrix.c */
 char	**parse_content(char *file);

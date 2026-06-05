@@ -44,6 +44,7 @@ SRC_FILES   =	main.c \
 				parse/parse_headline.c \
 				parse/parse_matrix.c \
 				parse/parse_map.c \
+				parse/parse_map_2.c \
 				texture.c
 
 

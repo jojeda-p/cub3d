@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   directions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 13:03:29 by julepere          #+#    #+#             */
-/*   Updated: 2026/06/04 17:25:59 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/05 10:19:15 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "mlx.h"
+#include <math.h>
 
 void	move_forward(char c, t_game *g)
 {

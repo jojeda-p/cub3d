@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:22:25 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 18:06:10 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/05 12:01:02 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,8 @@ int	parse_color(char **matrix, t_game *g, char *s)
 	int		i;
 	char	*color;
 
-	i = 5;
-	while(i < 7)
+	i = 4;
+	while(i < 6)
 	{
 		if (matrix[i][0] == s[0])
 		{

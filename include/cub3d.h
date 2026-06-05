@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 16:54:43 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/04 17:53:20 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,10 @@ typedef struct s_player
 	double	vel_y;
 	double	move_speed;
 	double	rot_speed;
+	double	inertia;
+	double	accel;
+	double	friction;
+	double	max_speed;
 }	t_player;
 
 /*
@@ -213,7 +217,7 @@ int		key_press(int keycode, t_game *g);
 int		key_release(int keycode, t_game *g);
 
 /* movement.c */
-/* void	inertia(t_game *g); */
+void	inertia(t_game *g, int v);
 void	rotate_camera(double angle, t_game *g);
 void	update_player(t_game *g);
 

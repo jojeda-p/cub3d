@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 17:05:46 by julepere          #+#    #+#             */
-/*   Updated: 2026/06/04 16:26:53 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/04 17:53:48 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,16 @@
 void	init_game(t_game *g)
 {
 	*g = (t_game){0};
-	g->config.width         = 1500;
-	g->config.height       	= 1000;
-	g->config.floor_color   = 0x3B2F2F;
+	g->config.width = 1500;
+	g->config.height = 1000;
+	g->config.floor_color = 0x3B2F2F;
 	g->config.ceiling_color = 0x87CEEB;
-	g->camera.fov           = 75.0;
-	g->camera.sensitivity   = 0.0012;
-	g->camera.last_mouse_x  = -1;
-	g->player.move_speed    = 0.05;
-	g->player.rot_speed     = 0.03;
+	g->camera.fov  = 75.0;
+	g->camera.sensitivity = 0.0012;
+	g->camera.last_mouse_x = -1;
+	g->player.move_speed = 0.05;
+	g->player.rot_speed = 0.03;
+	g->player.accel = 0.15;
+	g->player.friction = 0.85;
+	g->player.max_speed = 4.0;
 }

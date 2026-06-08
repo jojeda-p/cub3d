@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   directions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 13:03:29 by julepere          #+#    #+#             */
-/*   Updated: 2026/06/05 10:19:15 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/08 16:54:17 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,98 +14,40 @@
 #include "mlx.h"
 #include <math.h>
 
-void	move_forward(char c, t_game *g)
+void	move_forward(t_game *g)
 {
-	double	new_x;
-	double	new_y;
-	int	map_x;
-	int	map_y;
+	double	accel;
 
-	if (c == 'w')
-	{
-		new_x = g->player.x + g->player.dir_x * g->player.move_speed;
-		new_y = g->player.y + g->player.dir_y * g->player.move_speed;
-		map_x = (int)(new_x / g->map.tile_size);
-		map_y = (int)(new_y / g->map.tile_size);
-		if (map_x < 0 || map_x >= g->map.width || map_y < 0 || map_y >= g->map.height)
-			return ;
-		if (g->map.grid[map_y][map_x] != '1')
-		{
-			g->player.x = new_x;
-			g->player.y = new_y;
-		}
-		
-	}
+	accel = g->player.move_speed / g->player.mass;
+	g->player.vel_x += g->player.dir_x * accel;
+	g->player.vel_y += g->player.dir_y * accel;
 }
 
-void	move_backward(char c, t_game *g)
+void	move_backward(t_game *g)
 {
-	double	new_x;
-	double	new_y;
-	int	map_x;
-	int	map_y;
+	double	accel;
 
-	if (c == 's')
-	{
-		new_x = g->player.x - g->player.dir_x * g->player.move_speed;
-		new_y = g->player.y - g->player.dir_y * g->player.move_speed;
-		map_x = (int)(new_x / g->map.tile_size);
-		map_y = (int)(new_y / g->map.tile_size);
-		if (map_x < 0 || map_x >= g->map.width || map_y < 0 || map_y >= g->map.height)
-			return ;
-		if (g->map.grid[map_y][map_x] != '1')
-		{
-			g->player.x = new_x;
-			g->player.y = new_y;
-		}
-	}
+	accel = g->player.move_speed / g->player.mass;
+	g->player.vel_x -= g->player.dir_x * accel;
+	g->player.vel_y -= g->player.dir_y * accel;
 }
 
-void	move_left(char c, t_game *g)
+void	move_left(t_game *g)
 {
-	double	new_x;
-	double	new_y;
-	int	map_x;
-	int	map_y;
-	
-	if (c == 'a')
-	{
-		new_x = g->player.x + (g->player.dir_y) * g->player.move_speed;
-		new_y = g->player.y - (g->player.dir_x) * g->player.move_speed;
-		map_x = (int)(new_x / g->map.tile_size);
-		map_y = (int)(new_y / g->map.tile_size);
-		if (map_x < 0 || map_x >= g->map.width || map_y < 0 || map_y >= g->map.height)
-			return ;
-		if (g->map.grid[map_y][map_x] != '1')
-		{
-			g->player.x = new_x;
-			g->player.y = new_y;
-		}
-	}
-	
+	double	accel;
+
+	accel = g->player.move_speed / g->player.mass;
+	g->player.vel_x += g->player.dir_y * accel;
+	g->player.vel_y -= g->player.dir_x * accel;
 }
 
-void	move_right(char c, t_game *g)
+void	move_right(t_game *g)
 {
-	double	new_x;
-	double	new_y;
-	int	map_x;
-	int	map_y;
-	
-	if (c == 'd')
-	{
-		new_x = g->player.x - (g->player.dir_y) * g->player.move_speed;
-		new_y = g->player.y + (g->player.dir_x) * g->player.move_speed;
-		map_x = (int)(new_x / g->map.tile_size);
-		map_y = (int)(new_y / g->map.tile_size);
-		if (map_x < 0 || map_x >= g->map.width || map_y < 0 || map_y >= g->map.height)
-			return ;
-		if (g->map.grid[map_y][map_x] != '1')
-		{
-			g->player.x = new_x;
-			g->player.y = new_y;
-		}
-	}
+	double	accel;
+
+	accel = g->player.move_speed / g->player.mass;
+	g->player.vel_x -= g->player.dir_y * accel;
+	g->player.vel_y += g->player.dir_x * accel;
 }
 
 void	rotate_camera(double angle, t_game *g)

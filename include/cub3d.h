@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/05 14:08:04 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/08 17:05:46 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,8 @@ typedef struct s_player
 	double	move_speed;
 	double	rot_speed;
 	double	inertia;
+	double	mass;
 	double	accel;
-	double	friction;
 	double	max_speed;
 }	t_player;
 
@@ -217,15 +217,15 @@ int		key_press(int keycode, t_game *g);
 int		key_release(int keycode, t_game *g);
 
 /* movement.c */
-void	inertia(t_game *g, int v);
 void	rotate_camera(double angle, t_game *g);
 void	update_player(t_game *g);
 
 /* directions.c */
-void	move_forward(char c, t_game *g);
-void	move_backward(char c, t_game *g);
-void	move_left(char c, t_game *g);
-void	move_right(char c, t_game *g);
+void	move_forward(t_game *g);
+void	move_backward(t_game *g);
+void	move_right(t_game *g);
+void	move_left(t_game *g);
+double  update_mouse(t_game *g);
 
 /* raycasting.c */
 void	render_raycasting(t_game *g);

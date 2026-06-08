@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:22:25 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/08 14:31:27 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/08 17:09:18 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,30 @@
 #include <stdio.h>
 
 /*pone el path en la estructura final y comprueba que no se repita la textura*/
-static int	get_texture_path(t_game *g, char *s, int *found, char *path)
+static int	get_texture_path(t_game *g, char *s, char *path)
 {
-	if (s[0] == 'N' && found[0] == 0)
+	if (s[0] == 'N' && g->tex[0].found == 0)
 	{
 		g->tex[0].path = path;
-		found[0] = 1;
+		g->tex[0].found = 1;
 		return (0);
 	}
-	else if (s[0] == 'S' && found[0] == 0)
+	else if (s[0] == 'S' && g->tex[1].found == 0)
 	{
 		g->tex[1].path = path;
-		found[1] = 1;
+		g->tex[1].found = 1;
 		return (0);
 	}
-	else if (s[0] == 'E' && found[0] == 0)
+	else if (s[0] == 'E' && g->tex[2].found == 0)
 	{
 		g->tex[2].path = path;
-		found[2] = 1;
+		g->tex[2].found = 1;
 		return (0);
 	}
-	else if (s[0] == 'W' && found[0] == 0)
+	else if (s[0] == 'W' && g->tex[3].found == 0)
 	{
 		g->tex[3].path = path;
-		found[3] = 1;
+		g->tex[3].found = 1;
 		return (0);
 	}
 	return (print_error(8, s));
@@ -58,13 +58,8 @@ static int	parse_texture(char **matrix, t_game *g, char *s)
 {
 	int		i;
 	char	*path;
-	int		found[4];
 
 	i = 0;
-	found[0] = 0;
-	found[1] = 0;
-	found[2] = 0;
-	found[3] = 0;
 	while(i < 4)
 	{
 		if (matrix[i][0] == s[0] && matrix[i][1] == s[1])
@@ -74,7 +69,7 @@ static int	parse_texture(char **matrix, t_game *g, char *s)
 				return (print_error(7, s));
 			if (parse_permisions(path) != 0)
 				return (1);
-			return (get_texture_path(g, s, found, path));
+			return (get_texture_path(g, s, path));
 		}
 		i++;
 	}

@@ -6,13 +6,21 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 14:58:04 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/05 14:19:46 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/08 16:55:09 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <stdlib.h>
 #include <stdio.h>
+
+int	valid_char(char c)
+{
+	if (c != ' ' && c != '0' && c != 'E' && c != 'S' &&
+		c != '1' && c != 'N' && c != 'W' && c != '\n')
+		return (0);
+	return (1);
+}
 
 static int	map_char_parse(char **matrix)
 {
@@ -27,11 +35,10 @@ static int	map_char_parse(char **matrix)
 		j = 0;
 		while (matrix[i][j])
 		{
-			if (matrix[i][j] != ' ' && matrix[i][j] != '0' &&
-				matrix[i][j] != '1' && matrix[i][j] != 'N' &&
-				matrix[i][j] != '\n')
+			if (!valid_char(matrix[i][j]))
 				return (print_error(10, "map"));
-			if (matrix[i][j] == 'N')
+			if (matrix[i][j] == 'N' || matrix[i][j] == 'S' ||
+				matrix[i][j] == 'W' || matrix[i][j] == 'E')
 				spawn++;
 			j++;
 		}
@@ -126,6 +133,26 @@ int	get_height(t_game *g)
 	return (i);
 }
 
+void	get_dir(char dir, t_game *g)
+{
+	if (dir == 'N')
+	{
+		g->player.dir = 4.71238898;
+	}
+	else if (dir == 'S')
+	{
+		g->player.dir = 1.570796327;
+	}
+	else if (dir == 'W')
+	{
+		g->player.dir = 0;
+	}
+	else if (dir == 'E')
+	{
+		g->player.dir = 3.141592654;
+	}
+}
+
 void	get_player(t_game *g)
 {
 	int	i;
@@ -137,10 +164,12 @@ void	get_player(t_game *g)
 		j = 0;
 		while (g->map.grid[i][j])
 		{
-			if (g->map.grid[i][j] == 'N')
+			if (g->map.grid[i][j] == 'N' || g->map.grid[i][j] == 'S' ||
+				g->map.grid[i][j] == 'W' || g->map.grid[i][j] == 'E')
 			{
 				g->player.y = (double)i + 0.5;
 				g->player.x = (double)j + 0.5;
+				get_dir(g->map.grid[i][j], g);
 				g->map.grid[i][j] = '0';
 				return ;
 			}
@@ -158,7 +187,6 @@ void	init_map(t_game *g)
 	g->map.tile_size = 64;
 	g->player.x = (g->player.x * g->map.tile_size);
 	g->player.y = (g->player.y * g->map.tile_size);
-	g->player.dir = 4.0;
 	g->player.move_speed = 3;
 	g->player.rot_speed = 0.05;
 }

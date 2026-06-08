@@ -1,7 +1,3 @@
-cosas que quedan en el parseo:
--se puede separar con las lineas que se quiera entre las texturas y los colores hasta llegar al mapa y pueden
-estar ordenados como quieran, y puede haber los espacios que se quiera
-
 /* flowchart TD
     A([Inicio parser]) --> B[Validar argc y ruta de archivo]
     B --> C{Extension .cub valida?}

@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 14:58:04 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/08 16:55:09 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/08 17:42:24 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int	valid_char(char c)
 	return (1);
 }
 
-static int	map_char_parse(char **matrix)
+static int	map_char_parse(char **matrix, t_game *g)
 {
 	int	i;
 	int	j;
 	int	spawn;
 
-	i = 6;
+	i = g->map.init;
 	spawn = 0;
 	while (matrix[i])
 	{
@@ -193,7 +193,7 @@ void	init_map(t_game *g)
 
 int	parse_map(char **matrix, t_game *g)
 {
-	if (map_char_parse(matrix) == 1)
+	if (map_char_parse(matrix, g) == 1)
 		return (1);
 	if (matrix_to_grid(matrix, g) == 1)
 		return (1);

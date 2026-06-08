@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:22:25 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/05 12:01:02 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/08 14:31:27 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,27 @@ static int	get_color_hex(char *color, char *s)
 	return ((r << 16) | (g << 8) | b);
 }
 
+static int	check_color_number(char *color, char *s)
+{
+	int	i;
+
+	i = 0;
+	while (color[i])
+	{
+		if (!ft_isnum(color[i]) &&
+			(color[i] && (!ft_isnum(color[i + 1]) || color[i + 1] == ',')) &&
+			(color[i] && (!ft_isnum(color[i + 2]) || color[i + 2] == ',')))
+			return (print_error(9, s));
+		if (ft_isnum(color[i]) && ft_isnum(color[i + 1]) &&
+			ft_isnum(color[i + 2]) && ft_isnum(color[i + 3]))
+				return (print_error(9, s));
+		while (ft_isnum(color[i]))
+			i++;
+		i++;
+	}
+	return (0);
+}
+
 int	parse_color(char **matrix, t_game *g, char *s)
 {
 	int		i;
@@ -117,10 +138,14 @@ int	parse_color(char **matrix, t_game *g, char *s)
 		if (matrix[i][0] == s[0])
 		{
 			color = ft_strdup(matrix[i] + 2);
+			if (check_color_number(color, s) == 1)
+				return (1);
 		 	if (s[0] == 'F')
 				g->config.floor_color = get_color_hex(color, s);
 			else if (s[0] == 'C')
 				g->config.ceiling_color = get_color_hex(color, s);
+			if (g->config.floor_color == 1 || g->config.ceiling_color == 1)
+				return (1);
 			return (0);
 		}
 		i++;

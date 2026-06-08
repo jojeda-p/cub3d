@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 13:20:33 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/05 14:34:26 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/08 15:04:47 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,26 +39,6 @@ void	map_flood_fill(char **map, int x, int y, int *open)
 	map_flood_fill(map, x, y - 1, open);
 	map_flood_fill(map, x + 1, y, open);
 	map_flood_fill(map, x - 1, y, open);
-}
-
-int	check_flood(char **map)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (map[i][j] == '0' || map[i][j] == 'X')
-				return (1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
 }
 
 static char	**alloc_grid(char **grid, int size)
@@ -120,8 +100,8 @@ int	parse_flood_fill(t_game *g)
 	x = (int)(g->player.x / g->map.tile_size - 0.5);
 	y = (int)(g->player.y / g->map.tile_size - 0.5);
 	map_flood_fill(map, x, y, &open);
-	if (open || check_flood(map) == 1)
-		return (free_matrix(map), print_error(13, "map not closed"), 1);
+	if (open)
+		return (free_matrix(map), print_error(13, "map"));
 	free_matrix(map);
 	return (0);
 }

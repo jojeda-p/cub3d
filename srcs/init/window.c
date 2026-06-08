@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:38:27 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 16:38:41 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/08 14:03:19 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ int	render_g(t_game	*g)
 		while (x < g->config.width)
 		{
 			if (y < g->config.height / 2)
-				pixel_put(&g->img, x, y, 0x87CEEB);
+				pixel_put(&g->img, x, y, g->config.ceiling_color);
 			else
-				pixel_put(&g->img, x, y, 0x000000);
+				pixel_put(&g->img, x, y, g->config.floor_color);
 			x++;
 		}
 		y++;

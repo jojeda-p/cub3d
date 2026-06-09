@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 13:20:33 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/08 15:04:47 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/09 13:52:28 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	map_flood_fill(char **map, int x, int y, int *open)
+static void	map_flood_fill(char **map, int x, int y, int *open)
 {
 	if (y < 0 || !map[y])
 	{
@@ -61,7 +61,7 @@ static char	**alloc_grid(char **grid, int size)
 	return (copy);
 }
 
-char	**copy_grid(char **grid)
+static char	**copy_grid(char **grid)
 {
 	char	**copy;
 	int		i;

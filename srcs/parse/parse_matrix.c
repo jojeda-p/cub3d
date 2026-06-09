@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:13:11 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/05 10:26:51 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/09 13:54:23 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,43 +20,41 @@ static void	without_newline(char ***dest, char **src, char *buf, int i)
 {
 	int		j;
 
-	while(src[i])
+	while (src[i])
 	{
-    j = ft_strlen(src[i]);
-    if (!src[i + 1])
-        (*dest)[i] = malloc(j + 2);
-    else
-        (*dest)[i] = malloc(j + 1);
-    j = 0;
-    while(src[i][j])
-    {
-        (*dest)[i][j] = src[i][j];
-        j++;
-    }
-    if (!src[i + 1])
-    {
-        (*dest)[i][j] = buf[0];
-        (*dest)[i][j + 1] = '\0';
-    }
-    else
-        (*dest)[i][j] = '\0';
-    i++;
+		j = ft_strlen(src[i]);
+		if (!src[i + 1])
+			(*dest)[i] = malloc(j + 2);
+		else
+			(*dest)[i] = malloc(j + 1);
+		j = 0;
+		while (src[i][j])
+		{
+			(*dest)[i][j] = src[i][j];
+			j++;
+		}
+		if (!src[i + 1])
+		{
+			(*dest)[i][j] = buf[0];
+			(*dest)[i][j + 1] = '\0';
+		}
+		else
+			(*dest)[i][j] = '\0';
+		i++;
 	}
 	(*dest)[i] = NULL;
 }
 
-static void	with_newline(char ***dest, char **src, char *buf)
+static void	with_newline(char ***dest, char **src, char *buf, int i)
 {
 	int		j;
-	int		i;
 
-	i = 0;
-	while(src[i])
+	while (src[i])
 	{
 		j = ft_strlen(src[i]);
 		(*dest)[i] = malloc(sizeof(char) * (j + 1));
 		j = 0;
-		while(src[i][j])
+		while (src[i][j])
 		{
 			(*dest)[i][j] = src[i][j];
 			j++;
@@ -106,7 +104,7 @@ static char	**memmove_v2(char **src, char *buf)
 	if (src[i - 1][j -1] == '\n')
 	{
 		dest = malloc(sizeof(char *) * (i + 2));
-		with_newline(&dest, src, buf);
+		with_newline(&dest, src, buf, 0);
 	}
 	else
 	{

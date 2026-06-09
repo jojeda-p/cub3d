@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/08 17:25:07 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/09 17:31:10 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,36 @@ typedef struct s_camera
 
 /*
 ---------------------------------------------------------------------------------
+	t_minimap — 
+		x / y : posición en pantalla (esquina superior izq)
+		width / heigth : tamaño en pantalla en píxeles
+		scale : píxeles del mundo por píxel del minimapa
+		border : grosor del margen en píxeles
+		map_start_x / map_start_y : esquina superior izq del mundo visible
+*/
+typedef struct s_minimap
+{
+    int		width;
+    int     height;
+    double	scale;
+    int		border;
+	double	x;
+    double	y;
+	int		player_tile_x;
+	int		player_tile_y;
+	int		map_x;
+	int		map_y;
+	int		visible_tiles;
+    int		color_wall;
+    int		color_floor;
+    int		color_player;
+	int		color_direction;
+    int		color_border;
+    int		color_void;
+}   t_minimap;
+
+/*
+---------------------------------------------------------------------------------
 	t_config — parámetros visuales modificables en init
 		Centraliza todos los valores tuneable del juego.
 */
@@ -199,6 +229,7 @@ typedef struct s_game
 	t_player	player;
 	t_camera	camera;
 	t_config	config;
+	t_minimap	mm;
 }	t_game;
 
 /* ************************************************************************** */
@@ -250,15 +281,35 @@ int		get_tex_color(t_tex texture, int tex_x, int tex_y);
 /* map.c */
 int		temp_init_map(t_game *g, char *file);
 
+/* minimap.c */
+void	init_minimap(t_game *g);
+void	draw_minimap(t_game *g);
+
 /* parse.c */
 int		parser(char *file, t_game *g);
 
 /* parse_headline.c */
 int		parse_headline(char **matrix, t_game *g);
 
+/* parse_headline_utils.c */
+int		get_texture_path(t_game *g, char *s, char *path);
+int		parse_texture_name(char *path);
+char	*clean_path(char *path);
+int		get_color_hex(char *color, char *s);
+int		check_color_number(char *color, char *s);
+
 /* parse_map.c */
 int		parse_map(char **matrix, t_game *g);
+
+/* parse_map_2.c */
 int		parse_flood_fill(t_game *g);
+
+/* parse_map_utis.c */
+int		valid_char(char c);
+void	malloc_grid(char **matrix, t_game *g);
+int		get_width(t_game *g);
+int		get_height(t_game *g);
+void	get_dir(char dir, t_game *g);
 
 /* parse_matrix.c */
 char	**parse_content(char *file);

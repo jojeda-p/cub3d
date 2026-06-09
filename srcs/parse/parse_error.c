@@ -6,14 +6,25 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:14:37 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/05 14:06:33 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/09 13:30:48 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <stdio.h>
 
-int	print_error(int	code, char *s)
+static int	print_error_2(int code)
+{
+	if (code == 11)
+		return (printf("Error: too many arguments.\n"), 1);
+	if (code == 12)
+		return (printf("Error: wrong spawn.\n"), 1);
+	if (code == 13)
+		return (printf("Error: map not closed.\n"), 1);
+	return (1);
+}
+
+int	print_error(int code, char *s)
 {
 	if (code == 1)
 		return (printf("Error: %s has wrong file type.\n", s), 1);
@@ -35,11 +46,5 @@ int	print_error(int	code, char *s)
 		return (printf("Error: %s color has wrong format.\n", s), 1);
 	if (code == 10)
 		return (printf("Error: forbidden character found in %s.\n", s), 1);
-	if (code == 11)
-		return (printf("Error: too many arguments.\n"), 1);
-	if (code == 12)
-		return (printf("Error: wrong spawn.\n"), 1);
-	if (code == 13)
-		return (printf("Error: map not closed.\n"), 1);
-	return (1);
+	return (print_error_2(code));
 }

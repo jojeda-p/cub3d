@@ -6,12 +6,11 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 15:44:01 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/05 12:49:29 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/09 14:15:25 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <stdio.h>
 
 int	main(int argc, char **argv)
 {
@@ -22,7 +21,6 @@ int	main(int argc, char **argv)
 	init_game(&g);
 	if (parser(argv[1], &g) == 1)
 		return (1);
-	/* temp_init_map(&g, argv[1]); */
 	init_raycasting(&g);
 	init_window(&g);
 	return (0);

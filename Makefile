@@ -31,21 +31,23 @@ LIBS        = $(MLX_LIB) -lm
 
 SRC_FILES   =	main.c \
 				init/init.c \
-				ray_init.c \
-				raycasting.c \
+				render/ray_init.c \
+				render/raycasting.c \
+				render/texture.c \
 				utils/utils.c \
-				map.c \
 				movement/movement.c \
 				movement/directions.c \
 				input/input.c \
 				init/window.c \
 				parse/parse.c \
 				parse/parse_error.c \
+				parse/parse_headline_utils.c \
 				parse/parse_headline.c \
 				parse/parse_matrix.c \
 				parse/parse_map.c \
+				parse/parse_map_utils.c \
 				parse/parse_map_2.c \
-				texture.c
+				minimap/minimap.c
 
 
 SRCS        = $(addprefix $(SRC_DIR)/, $(SRC_FILES))

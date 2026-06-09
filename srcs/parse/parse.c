@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 17:42:35 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/05 12:36:28 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/09 13:57:17 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,24 @@ int	parse_permisions(char *file)
 	if (fd < 0)
 	{
 		if (errno == ENOENT)
-       		return (print_error(3, file));
-    	else if (errno == EACCES)
-        	return (print_error(2, file));
-    	else if (errno == EISDIR)
-        	return (print_error(4, file));
+			return (print_error(3, file));
+		else if (errno == EACCES)
+			return (print_error(2, file));
+		else if (errno == EISDIR)
+			return (print_error(4, file));
 	}
 	close(fd);
 	return (0);
 }
 
-int	parse_file(char *file)
+static int	parse_file(char *file)
 {
 	int	i;
 
 	i = ft_strlen(file) -1;
-	if (file[i] != 'b' || file[i - 1] != 'u' || file[i - 2] != 'c' ||
-		file[i - 3] != '.')
-		return (1);
+	if (file[i] != 'b' || file[i - 1] != 'u' || file[i - 2] != 'c'
+		|| file[i - 3] != '.')
+		return (print_error(1, file));
 	if (parse_permisions(file) != 0)
 		return (1);
 	return (0);

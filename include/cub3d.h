@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/09 17:31:10 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/10 18:27:06 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,11 +169,11 @@ typedef struct s_camera
 /*
 ---------------------------------------------------------------------------------
 	t_minimap — 
-		x / y : posición en pantalla (esquina superior izq)
 		width / heigth : tamaño en pantalla en píxeles
 		scale : píxeles del mundo por píxel del minimapa
 		border : grosor del margen en píxeles
-		map_start_x / map_start_y : esquina superior izq del mundo visible
+		offset_x/y : posición exacta del jugador en píxeles del minimapa,
+		 incluyendo la fracción dentro del tile
 */
 typedef struct s_minimap
 {
@@ -181,8 +181,12 @@ typedef struct s_minimap
     int     height;
     double	scale;
     int		border;
-	double	x;
-    double	y;
+	double	offset_x;
+	double	offset_y;
+	double	margin_x;
+	double	margin_y;
+	double	inner_x;
+    double	inner_y;
 	int		player_tile_x;
 	int		player_tile_y;
 	int		map_x;
@@ -282,8 +286,12 @@ int		get_tex_color(t_tex texture, int tex_x, int tex_y);
 int		temp_init_map(t_game *g, char *file);
 
 /* minimap.c */
-void	init_minimap(t_game *g);
 void	draw_minimap(t_game *g);
+
+/* minimap_utils.c */
+void	draw_border(t_game *g, int x, int y);
+int		div_floor(int a, int b);
+void	draw_tiles(t_game *g, int x, int y);
 
 /* parse.c */
 int		parser(char *file, t_game *g);

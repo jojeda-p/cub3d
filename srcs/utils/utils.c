@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 13:03:49 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 18:13:53 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/10 18:57:31 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_strlen(char *s)
 	i = 0;
 	while (s[i])
 		i++;
-	return i;
+	return (i);
 }
 
 void	free_matrix(char **matrix)
@@ -72,7 +72,7 @@ int	ft_atoi_color(char *color)
 {
 	int	result;
 	int	i;
-	
+
 	i = 0;
 	result = 0;
 	while (color[i] && color[i] != ',' && color[i] != '\n')
@@ -83,6 +83,6 @@ int	ft_atoi_color(char *color)
 		i++;
 	}
 	if (color[i] != ',' && color[i] != '\n' && color[i] != '\0')
-    	return (-1);
+		return (-1);
 	return (result);
 }

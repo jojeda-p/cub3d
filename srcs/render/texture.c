@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:30:48 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 16:29:35 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/10 18:53:29 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 void	load_textures(t_game *g)
 {
 	int	i;
-	
+
 	g->tex[0].path = "./assets/cris.xpm";
 	g->tex[1].path = "./assets/naranjito.xpm";
 	g->tex[2].path = "./assets/epti.xpm";
@@ -25,10 +25,12 @@ void	load_textures(t_game *g)
 	i = 0;
 	while (i < 4)
 	{
-		g->tex[i].img = mlx_xpm_file_to_image(g->mlx, g->tex[i].path, &g->tex[i].width, &g->tex[i].height);
+		g->tex[i].img = mlx_xpm_file_to_image(g->mlx, g->tex[i].path,
+				&g->tex[i].width, &g->tex[i].height);
 		if (!g->tex[i].img)
 			return ;
-		g->tex[i].addr = mlx_get_data_addr(g->tex[i].img, &g->tex[i].bpp, &g->tex[i].line_len, &g->tex[i].endian);
+		g->tex[i].addr = mlx_get_data_addr(g->tex[i].img, &g->tex[i].bpp,
+				&g->tex[i].line_len, &g->tex[i].endian);
 		if (!g->tex[i].addr)
 			return ;
 		i++;
@@ -47,16 +49,18 @@ t_tex	get_wall_texture(t_game *g)
 		return (g->tex[0]);
 	return (g->tex[1]);
 }
-/*calculando la direccion del pixel movemos los bits de los 4 bytes que lo componen y los extraemos*/
-int	get_tex_color(t_tex texture,int tex_x, int tex_y)
+
+/*calculando la direccion del pixel movemos los bits de los 4 bytes
+ que lo componen y los extraemos*/
+int	get_tex_color(t_tex texture, int tex_x, int tex_y)
 {
 	int				offset;
 	unsigned int	color;
 	unsigned char	*pixel;
-	int			i;
+	int				i;
 
-	if (tex_x < 0 || tex_x >= texture.width || tex_y < 0 ||
-		 tex_y >= texture.height)
+	if (tex_x < 0 || tex_x >= texture.width || tex_y < 0
+		|| tex_y >= texture.height)
 		return (0);
 	offset = tex_y * texture.line_len + tex_x * (texture.bpp / 8);
 	pixel = (unsigned char *)texture.addr + offset;
@@ -86,13 +90,15 @@ int	get_tex_x(t_game *g, t_tex texture)
 	int		tex_x;
 
 	if (g->ray.side == 0)
-		wall_x = g->player.y / g->map.tile_size + g->ray.perp_dist * g->ray.ray_dir_y;
+		wall_x = g->player.y / g->map.tile_size + g->ray.perp_dist
+			* g->ray.ray_dir_y;
 	if (g->ray.side == 1)
-		wall_x = g->player.x / g->map.tile_size + g->ray.perp_dist * g->ray.ray_dir_x;
+		wall_x = g->player.x / g->map.tile_size + g->ray.perp_dist
+			* g->ray.ray_dir_x;
 	wall_x = wall_x - floor(wall_x);
 	tex_x = (int)(wall_x * (double)texture.width);
-	if ((g->ray.side == 0 && g->ray.ray_dir_x > 0) ||
-		 (g->ray.side == 1 && g->ray.ray_dir_y < 0))
+	if ((g->ray.side == 0 && g->ray.ray_dir_x > 0)
+		|| (g->ray.side == 1 && g->ray.ray_dir_y < 0))
 		tex_x = texture.width - tex_x - 1;
 	if (tex_x < 0)
 		tex_x = 0;

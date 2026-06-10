@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:38:27 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/09 17:13:04 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/10 18:56:14 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 void	pixel_put(t_img *img, int x, int y, int color)
 {
 	char	*dst;
-	
+
 	if (!img || !img->addr || x < 0 || y < 0)
 		return ;
-	dst = img->addr + (y *  img->line_len + x * (img->bpp / 8));
+	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
 	*(unsigned int *)dst = (unsigned int)color;
 }
 
@@ -56,15 +56,19 @@ int	render_g(t_game	*g)
 	return (0);
 }
 
+/*
+crear imagen en RAM
+guardar puntero de la imagen
+ademas rellena automaticamente las variales de img -> bbp, line_len y endian
+*/
 static int	init_image(t_game *g)
 {
-	g->img.img = mlx_new_image(g->mlx, g->config.width, g->config.height); //crear imagen en RAM
+	g->img.img = mlx_new_image(g->mlx, g->config.width, g->config.height);
 	if (!g->img.img)
 		return (-1);
 	g->img.addr = mlx_get_data_addr(g->img.img, &g->img.bpp,
-		&g->img.line_len, &g->img.endian);// guardar puntero de la imagen
-	return (0);//ademas rellena automaticamente las variales de img -> bbp,
-	// line_len y endian
+			&g->img.line_len, &g->img.endian);
+	return (0);
 }
 
 int	init_window(t_game *g)
@@ -80,8 +84,8 @@ int	init_window(t_game *g)
 	load_textures(g);
 	mlx_loop_hook(g->mlx, render_g, g);
 	mlx_hook(g->win, 17, 0, close_window, g);
-	mlx_hook(g->win, 2, 1L<<0, key_press, g);
-	mlx_hook(g->win, 3, 1L<<1, key_release, g);
+	mlx_hook(g->win, 2, 1L << 0, key_press, g);
+	mlx_hook(g->win, 3, 1L << 1, key_release, g);
 	mlx_loop(g->mlx);
 	return (0);
 }
@@ -93,4 +97,3 @@ int	close_window(t_game *g)
 	exit(0);
 	return (0);
 }
-

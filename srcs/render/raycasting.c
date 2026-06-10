@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 13:34:06 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/04 16:35:08 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/10 18:50:58 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	draw_wall_column(t_game *g, int column, t_tex texture)
 	if (g->ray.line_height <= 0 || texture.height <= 0)
 		return ;
 	step = (double)texture.height / (double)g->ray.line_height;
-	tex_pos = ((double)g->ray.draw_start - (double)g->config.height / 2.0 + (double)g->ray.line_height / 2.0) * step;
+	tex_pos = ((double)g->ray.draw_start - (double)g->config.height
+			/ 2.0 + (double)g->ray.line_height / 2.0) * step;
 	while (y <= g->ray.draw_end)
 	{
 		tex_y = (int)tex_pos;
@@ -53,14 +54,18 @@ Inicio y fin de la columna a dibujar
 void	calculate_wall_projection(t_game *g)
 {
 	if (g->ray.side == 0)
-		g->ray.perp_dist = (g->ray.map_x - (g->player.x / g->map.tile_size) + (1.0 - (double)g->ray.step_x) / 2.0) / g->ray.ray_dir_x;
+		g->ray.perp_dist = (g->ray.map_x - (g->player.x / g->map.tile_size)
+				+ (1.0 - (double)g->ray.step_x) / 2.0) / g->ray.ray_dir_x;
 	else
-		g->ray.perp_dist = (g->ray.map_y - (g->player.y / g->map.tile_size) + (1.0 - (double)g->ray.step_y) / 2.0) / g->ray.ray_dir_y;
+		g->ray.perp_dist = (g->ray.map_y - (g->player.y / g->map.tile_size)
+				+ (1.0 - (double)g->ray.step_y) / 2.0) / g->ray.ray_dir_y;
 	if (!isfinite(g->ray.perp_dist) || g->ray.perp_dist <= 0.0)
 		g->ray.perp_dist = 1e-6;
 	g->ray.line_height = (int)((double)g->config.height / g->ray.perp_dist);
-	g->ray.draw_start = (int)(-((double)g->ray.line_height) / 2.0 + (double)g->config.height / 2.0);
-	g->ray.draw_end   = (int)(((double)g->ray.line_height) / 2.0 + (double)g->config.height / 2.0);
+	g->ray.draw_start = (int)(-((double)g->ray.line_height) / 2.0
+			+ (double)g->config.height / 2.0);
+	g->ray.draw_end = (int)(((double)g->ray.line_height) / 2.0
+			+ (double)g->config.height / 2.0);
 	if (g->ray.draw_start < 0)
 		g->ray.draw_start = 0;
 	if (g->ray.draw_end >= g->config.height)
@@ -71,7 +76,7 @@ void	dda_loop(t_game *g)
 {
 	while (g->ray.hit == 0)
 	{
-		if (g->ray.side_dist_x < g->ray.side_dist_y)//golpeo lado vertical
+		if (g->ray.side_dist_x < g->ray.side_dist_y)
 		{
 			g->ray.side_dist_x = g->ray.delta_dist_x + g->ray.side_dist_x;
 			g->ray.map_x = g->ray.step_x + g->ray.map_x;
@@ -83,13 +88,12 @@ void	dda_loop(t_game *g)
 			g->ray.map_y = g->ray.step_y + g->ray.map_y;
 			g->ray.side = 1;
 		}
-		if (g->ray.map_x < 0 || g->ray.map_x >= g->map.width ||
-   			g->ray.map_y < 0 || g->ray.map_y >= g->map.height)
-    		g->ray.hit = 1;
+		if (g->ray.map_x < 0 || g->ray.map_x >= g->map.width
+			|| g->ray.map_y < 0 || g->ray.map_y >= g->map.height)
+			g->ray.hit = 1;
 		else if (g->map.grid[g->ray.map_y][g->ray.map_x] == '1')
 			g->ray.hit = 1;
 	}
-	
 }
 
 /*Procesamos una columna

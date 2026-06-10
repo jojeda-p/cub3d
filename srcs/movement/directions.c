@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   directions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 13:03:29 by julepere          #+#    #+#             */
-/*   Updated: 2026/06/08 16:54:17 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/10 18:59:09 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,15 @@ void	move_right(t_game *g)
 
 void	rotate_camera(double angle, t_game *g)
 {
-	double old_dir_x;
-	double old_dir_y;
-	double old_cam_x;
-	double old_cam_y;
+	double	old_dir_x;
+	double	old_dir_y;
+	double	old_cam_x;
+	double	old_cam_y;
 
 	old_dir_x = g->player.dir_x;
 	old_dir_y = g->player.dir_y;
 	old_cam_x = g->camera.plane_x;
 	old_cam_y = g->camera.plane_y;
-
 	g->player.dir_x = old_dir_x * cos(angle) - old_dir_y * sin(angle);
 	g->player.dir_y = old_dir_x * sin(angle) + old_dir_y * cos(angle);
 	g->camera.plane_x = old_cam_x * cos(angle) - old_cam_y * sin(angle);

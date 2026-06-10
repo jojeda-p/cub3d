@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:10:05 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/08 16:55:14 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/10 18:59:30 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	move_player(t_game *g)
 {
 	double	new_x;
 	double	new_y;
-	int	map_x;
-	int	map_y;
+	int		map_x;
+	int		map_y;
 
 	g->player.vel_x *= g->player.inertia;
 	g->player.vel_y *= g->player.inertia;

@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:13:11 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/09 13:54:23 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/10 12:53:11 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,23 @@ static char	**void_matrix(char *buf)
 {
 	char	**dest;
 
+	if (buf[0] == '\n')
+	{
+		dest = malloc(sizeof(char *));
+		if (!dest)
+			return (NULL);
+		dest[0] = NULL;
+		return (dest);
+	}
 	dest = malloc(sizeof(char *) * 2);
+	if (!dest)
+		return (NULL);
 	dest[0] = malloc(sizeof(char) * 2);
+	if (!dest[0])
+	{
+		free(dest);
+		return (NULL);
+	}
 	dest[0][0] = buf[0];
 	dest[0][1] = '\0';
 	dest[1] = NULL;

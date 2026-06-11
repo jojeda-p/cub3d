@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 17:05:46 by julepere          #+#    #+#             */
-/*   Updated: 2026/06/11 13:57:58 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/11 14:03:55 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ void	init_game(t_game *g)
 	g->player.friction = 0.21;
 	g->player.walk_speed   = 3.5;
 	g->player.sprint_speed = 6.5;
-
+	
+	g->state = STATE_GAME;
+	g->pause_tex.path = "assets/pause.xpm";
 
 	init_minimap(g);
 }

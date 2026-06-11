@@ -3,15 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/11 13:46:52 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/11 14:03:35 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
+
+/* ************************************************************************** */
+/*                                 ENUMS                                      */
+/* ************************************************************************** */
+
+typedef enum e_state
+{
+    STATE_GAME,
+    STATE_PAUSE,
+}   t_state;
 
 /* ************************************************************************** */
 /*                                 STRUCTS                                    */
@@ -233,6 +243,7 @@ typedef struct s_game
 	void		*win;
 	t_img		img;
 	t_tex		tex[4];
+	t_tex		pause_tex;
 	t_map		map;
 	t_ray		ray;
 	t_input		input;
@@ -240,6 +251,7 @@ typedef struct s_game
 	t_camera	camera;
 	t_config	config;
 	t_minimap	mm;
+	t_state		state;
 }	t_game;
 
 /* ************************************************************************** */

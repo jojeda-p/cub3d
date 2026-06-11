@@ -6,16 +6,34 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 16:08:23 by julepere          #+#    #+#             */
-/*   Updated: 2026/06/10 18:58:10 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/11 13:43:21 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "mlx.h"
+
+int	key_pause(t_game *g)
+{
+	if (g->state == STATE_GAME)
+		{	
+			g->state = STATE_PAUSE;
+			mlx_mouse_show(g->mlx, g->win);
+		}
+		else
+		{
+			g->state = STATE_GAME;
+			mlx_mouse_hide(g->mlx, g->win);
+		}
+	return (0);
+}
 
 int	key_press(int keycode, t_game *g)
 {
 	if (keycode == 65307)
 		return (close_window(g));
+	if (keycode == 112)
+		return (key_pause(g));
 	if (keycode == 119)
 		g->input.up = 1;
 	if (keycode == 115)
@@ -33,6 +51,8 @@ int	key_press(int keycode, t_game *g)
 
 int	key_release(int keycode, t_game *g)
 {
+	if (g->state == STATE_PAUSE)
+		return (0);
 	if (keycode == 119)
 		g->input.up = 0;
 	if (keycode == 115)

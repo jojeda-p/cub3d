@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/10 18:27:06 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/11 13:46:52 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ typedef struct s_input
 	int	right;
 	int	arrow_left;
 	int	arrow_right;
+	int shift;
 }	t_input;
 
 /*
@@ -137,15 +138,18 @@ typedef struct s_player
 	double	y;
 	double	dir;
 	double	dir_x;
-	double	dir_y;
-	double	vel_x;
-	double	vel_y;
-	double	move_speed;
+	double	dir_y;	
 	double	rot_speed;
-	double	inertia;
-	double	mass;
 	double	accel;
 	double	max_speed;
+
+	double	vel_x;
+	double	vel_y;
+	double	force;
+	double	mass;
+	double	friction;
+	double	sprint_speed;
+	double	walk_speed;
 }	t_player;
 
 /*
@@ -160,6 +164,8 @@ typedef struct s_camera
 	double	plane_x;
 	double	plane_y;
 	double	fov;
+	double	walk_fov;
+	double	sprint_fov;
 	double	sensitivity;
 	int		mouse_x;
 	int		last_mouse_x;

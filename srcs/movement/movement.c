@@ -3,16 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:10:05 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/10 18:59:30 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/11 13:48:39 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <math.h>
 #include "mlx.h"
+#ifndef M_PI
+# define M_PI 3.14159265358979323846
+#endif
+
+
+static void	apply_physics(t_game *g)
+{
+	double	speed;
+
+	speed = sqrt(g->player.vel_x * g->player.vel_x
+			+ g->player.vel_y * g->player.vel_y);
+	if (speed > g->player.max_speed)
+	{
+		g->player.vel_x = (g->player.vel_x / speed) * g->player.max_speed;
+		g->player.vel_y = (g->player.vel_y / speed) * g->player.max_speed;
+	}
+	g->player.vel_x *= (1.0 - g->player.friction);
+	g->player.vel_y *= (1.0 - g->player.friction);
+}
 
 void	move_player(t_game *g)
 {
@@ -21,8 +40,7 @@ void	move_player(t_game *g)
 	int		map_x;
 	int		map_y;
 
-	g->player.vel_x *= g->player.inertia;
-	g->player.vel_y *= g->player.inertia;
+	apply_physics(g);
 	new_x = g->player.x + g->player.vel_x;
 	new_y = g->player.y + g->player.vel_y;
 	map_x = (int)(new_x / g->map.tile_size);
@@ -70,6 +88,35 @@ double	update_mouse(t_game *g)
 	return (angle);
 }
 
+static void	update_speed_limit(t_game *g)
+{
+	double	target_speed;
+	double	target_friction;
+	double	target_fov;
+	double	scale;
+
+	if (g->input.shift)
+	{
+		target_speed    = g->player.sprint_speed;
+		target_friction = 0.08;
+		target_fov      = g->camera.sprint_fov;
+	}
+	else
+	{
+		target_speed    = g->player.walk_speed;
+		target_friction = 0.21;
+		target_fov      = g->camera.walk_fov;
+	}
+	g->player.max_speed += (target_speed - g->player.max_speed) * 0.2;
+	g->player.friction  += (target_friction - g->player.friction) * 0.1;
+	g->camera.fov       += (target_fov - g->camera.fov) * 0.1;
+	scale = tan((g->camera.fov * M_PI / 180.0) / 2.0);
+	g->camera.plane_x = -g->player.dir_y * scale;
+	g->camera.plane_y =  g->player.dir_x * scale;
+}
+
+#include <stdio.h>
+
 void	update_player(t_game *g)
 {
 	int		forward;
@@ -88,6 +135,7 @@ void	update_player(t_game *g)
 		move_right(g);
 	else if (strafe == -1)
 		move_left(g);
+	update_speed_limit(g);
 	move_player(g);
 	if (g->input.arrow_left && !g->input.arrow_right)
 		angle -= g->player.rot_speed;
@@ -95,4 +143,9 @@ void	update_player(t_game *g)
 		angle += g->player.rot_speed;
 	angle += update_mouse(g);
 	rotate_camera(angle, g);
+	
+	printf("max_speed: %.2f | vel: %.2f | shift: %d\n",
+    g->player.max_speed,
+    sqrt(g->player.vel_x * g->player.vel_x + g->player.vel_y * g->player.vel_y),
+    g->input.shift);
 }

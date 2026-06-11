@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 17:05:46 by julepere          #+#    #+#             */
-/*   Updated: 2026/06/10 18:56:48 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/11 13:57:58 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,18 @@ void	init_game(t_game *g)
 	g->camera.last_mouse_x = -1;
 	g->player.rot_speed = 0.03;
 	g->player.accel = 0.15;
-	g->player.max_speed = 4.0;
-	g->player.inertia = 1.0;
-	g->player.mass = 80.0;
-	g->player.move_speed = 4.0;
+	g->player.max_speed    = g->player.walk_speed;
+
+	g->camera.fov        = 75.0;
+	g->camera.walk_fov   = 75.0;
+	g->camera.sprint_fov = 80.0;
+	
+	g->player.force    = 80.0;
+	g->player.mass     = 80.0;
+	g->player.friction = 0.21;
+	g->player.walk_speed   = 3.5;
+	g->player.sprint_speed = 6.5;
+
+
 	init_minimap(g);
 }

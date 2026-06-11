@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   directions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 13:03:29 by julepere          #+#    #+#             */
-/*   Updated: 2026/06/10 18:59:09 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/11 13:04:49 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	move_forward(t_game *g)
 {
 	double	accel;
 
-	accel = g->player.move_speed / g->player.mass;
+	accel = g->player.force / g->player.mass;
 	g->player.vel_x += g->player.dir_x * accel;
 	g->player.vel_y += g->player.dir_y * accel;
 }
@@ -27,7 +27,7 @@ void	move_backward(t_game *g)
 {
 	double	accel;
 
-	accel = g->player.move_speed / g->player.mass;
+	accel = g->player.force / g->player.mass;
 	g->player.vel_x -= g->player.dir_x * accel;
 	g->player.vel_y -= g->player.dir_y * accel;
 }
@@ -36,7 +36,7 @@ void	move_left(t_game *g)
 {
 	double	accel;
 
-	accel = g->player.move_speed / g->player.mass;
+	accel = g->player.force / g->player.mass;
 	g->player.vel_x += g->player.dir_y * accel;
 	g->player.vel_y -= g->player.dir_x * accel;
 }
@@ -45,7 +45,7 @@ void	move_right(t_game *g)
 {
 	double	accel;
 
-	accel = g->player.move_speed / g->player.mass;
+	accel = g->player.force / g->player.mass;
 	g->player.vel_x -= g->player.dir_y * accel;
 	g->player.vel_y += g->player.dir_x * accel;
 }

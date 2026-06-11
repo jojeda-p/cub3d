@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:38:27 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/10 18:56:14 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/11 13:28:48 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,32 @@ void	pixel_put(t_img *img, int x, int y, int color)
 	*(unsigned int *)dst = (unsigned int)color;
 }
 
+int	render_pause(t_game *g)
+{
+	int	x;
+	int	y;
+	int	tex_x;
+	int	tex_y;
+	int	color;
+
+	y = 0;
+	while (y < g->config.height)
+	{
+		x = 0;
+		while (x < g->config.width)
+		{
+			tex_x = x * g->pause_tex.width / g->config.width;
+			tex_y = y * g->pause_tex.height / g->config.height;
+			color = get_tex_color(g->pause_tex, tex_x, tex_y);
+			pixel_put(&g->img, x, y, color);
+			x++;
+		}
+		y++;
+	}
+	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);
+	return (0);
+}
+
 /*Dibujar en el buffer de la imagen todo el frame: cielo, suelo, muros
 (raycasting), texturas y sprites, y finalmente enviar la imagen a la ventana*/
 int	render_g(t_game	*g)
@@ -35,6 +61,8 @@ int	render_g(t_game	*g)
 	int	x;
 	int	y;
 
+	if (g->state == STATE_PAUSE)
+		return (render_pause(g));
 	update_player(g);
 	y = 0;
 	while (y < g->config.height)

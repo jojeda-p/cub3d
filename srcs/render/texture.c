@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:30:48 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/10 18:53:29 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/11 13:17:05 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@ void	load_textures(t_game *g)
 {
 	int	i;
 
-	g->tex[0].path = "./assets/cris.xpm";
-	g->tex[1].path = "./assets/naranjito.xpm";
-	g->tex[2].path = "./assets/epti.xpm";
-	g->tex[3].path = "./assets/download.xpm";
 	i = 0;
 	while (i < 4)
 	{
@@ -35,6 +31,12 @@ void	load_textures(t_game *g)
 			return ;
 		i++;
 	}
+	g->pause_tex.img = mlx_xpm_file_to_image(g->mlx, g->pause_tex.path,
+			&g->pause_tex.width, &g->pause_tex.height);
+	if (!g->pause_tex.img)
+		return ;
+	g->pause_tex.addr = mlx_get_data_addr(g->pause_tex.img, &g->pause_tex.bpp,
+			&g->pause_tex.line_len, &g->pause_tex.endian);
 }
 
 t_tex	get_wall_texture(t_game *g)

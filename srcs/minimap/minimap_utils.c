@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 13:59:07 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/10 18:43:15 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/11 12:30:52 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,7 @@ void	draw_tiles(t_game *g, int x, int y)
 			+ (int)g->mm.offset_y, g->mm.scale);
 	if (g->mm.map_x < 0 || g->mm.map_y < 0 || g->mm.map_x >= g->map.width
 		|| g->mm.map_y >= g->map.height)
-	{
-		pixel_put(&g->img, g->mm.margin_x + x, g->mm.margin_y
-			+ y, g->mm.color_void);
 		return ;
-	}
 	cell = g->map.grid[g->mm.map_y][g->mm.map_x];
 	if (cell == '1')
 		color = g->mm.color_wall;

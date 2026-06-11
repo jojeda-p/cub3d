@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 11:56:03 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/10 18:48:18 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/11 12:21:04 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <math.h>
 
 #ifndef M_PI
-#define M_PI 3.14159265358979323846
+# define M_PI 3.14159265358979323846
 #endif
 
 /*cam es perpendicular a dir, por eso -dir_y e dir_x (rotación 90°)

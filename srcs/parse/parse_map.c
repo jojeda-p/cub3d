@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 14:58:04 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/10 15:29:54 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/11 12:21:42 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,6 @@ static void	init_map(t_game *g)
 	g->map.tile_size = 64;
 	g->player.x = (g->player.x * g->map.tile_size);
 	g->player.y = (g->player.y * g->map.tile_size);
-	g->player.move_speed = 3;//mover de aqui
-	g->player.rot_speed = 0.05;//mover de aqui
 }
 
 int	parse_map(char **matrix, t_game *g)

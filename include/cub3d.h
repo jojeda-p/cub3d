@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/11 14:03:35 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/11 17:34:41 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,7 +298,7 @@ void	draw_wall_column(t_game *g, int column, t_tex texture);
 void	load_textures(t_game *g);
 t_tex	get_wall_texture(t_game *g);
 int		get_tex_x(t_game *g, t_tex texture);
-int		get_tex_color(t_tex texture, int tex_x, int tex_y);
+int		get_tex_color(t_game *g, t_tex texture, int tex_x, int tex_y);
 
 /* map.c */
 int		temp_init_map(t_game *g, char *file);

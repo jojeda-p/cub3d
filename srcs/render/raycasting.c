@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 13:34:06 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/10 18:50:58 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/11 16:14:24 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	draw_wall_column(t_game *g, int column, t_tex texture)
 			tex_y = 0;
 		if (tex_y >= texture.height)
 			tex_y = texture.height - 1;
-		pixel_put(&g->img, column, y, get_tex_color(texture, tex_x, tex_y));
+		pixel_put(&g->img, column, y, get_tex_color(g, texture, tex_x, tex_y));
 		tex_pos += step;
 		y++;
 	}

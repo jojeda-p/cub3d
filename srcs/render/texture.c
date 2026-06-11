@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:30:48 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/11 13:17:05 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/11 17:09:47 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,25 @@ t_tex	get_wall_texture(t_game *g)
 	return (g->tex[1]);
 }
 
+int	ft_fog(t_game *g, int color)
+{
+	double	factor;
+	int		r;
+	int		b;
+	int		gr;
+
+	factor = 1.0 - (g->ray.perp_dist / 10.0);
+	if (factor < 0.0)
+		factor = 0.0;
+	r = ((color >> 16) & 0xFF) * factor;
+	gr = ((color >> 8) & 0xFF) * factor;
+	b = (color & 0xFF) * factor;
+	return ((r << 16) | (gr << 8) | b);
+}
+
 /*calculando la direccion del pixel movemos los bits de los 4 bytes
  que lo componen y los extraemos*/
-int	get_tex_color(t_tex texture, int tex_x, int tex_y)
+int	get_tex_color(t_game *g, t_tex texture, int tex_x, int tex_y)
 {
 	int				offset;
 	unsigned int	color;
@@ -78,6 +94,7 @@ int	get_tex_color(t_tex texture, int tex_x, int tex_y)
 			i++;
 		}
 	}
+	color = ft_fog(g, color);
 	return ((int)color);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:38:27 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/11 13:28:48 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/11 16:44:56 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	render_pause(t_game *g)
 		{
 			tex_x = x * g->pause_tex.width / g->config.width;
 			tex_y = y * g->pause_tex.height / g->config.height;
-			color = get_tex_color(g->pause_tex, tex_x, tex_y);
+			color = get_tex_color(g, g->pause_tex, tex_x, tex_y);
 			pixel_put(&g->img, x, y, color);
 			x++;
 		}

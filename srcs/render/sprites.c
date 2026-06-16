@@ -6,12 +6,13 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/16 12:43:19 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/16 16:44:55 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/16 17:26:59 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "mlx.h"
+#include <stdlib.h>
 
 void    load_sprite_textures(t_game *g)
 {
@@ -94,12 +95,57 @@ void	order_sprites(t_game *g)
 	}
 }
 
-/* void	calculate_sprite(t_game *g, int i)
+void	calculate_sprite_2(t_game *g, int i)
 {
-	
+	g->sprite[i].screen_x = (int)(g->config.width / 2
+    	* (1 + g->sprite[i].transform_x / g->sprite[i].transform_y));
+	g->sprite[i].height = abs((int)(g->config.height
+		/ g->sprite[i].transform_y));
+	g->sprite[i].width  = abs((int)(g->config.width
+		/ g->sprite[i].transform_y));
+	g->sprite[i].draw_start_y = -g->sprite[i].height
+		/ 2 + g->config.height / 2;
+	g->sprite[i].draw_end_y   =  g->sprite[i].height
+		/ 2 + g->config.height / 2;
+	if (g->sprite[i].draw_start_y < 0)
+		g->sprite[i].draw_start_y = 0;
+	if (g->sprite[i].draw_end_y >= g->config.height)
+		g->sprite[i].draw_end_y = g->config.height - 1;
+	g->sprite[i].draw_start_x = -g->sprite[i].width
+		/ 2 + g->sprite[i].screen_x;
+	g->sprite[i].draw_end_x   =  g->sprite[i].width
+		/ 2 + g->sprite[i].screen_x;
+	if (g->sprite[i].draw_start_x < 0)
+		g->sprite[i].draw_start_x = 0;
+	if (g->sprite[i].draw_end_x >= g->config.width)
+		g->sprite[i].draw_end_x = g->config.width - 1;
 }
 
-void	draw_sprite(t_game *g, int i)
+
+/*dx y dy — vector desde el jugador hasta el sprite en unidades del mundo.
+inv_det — el determinante inverso de la matriz de cámara.
+Tu cámara tiene dos vectores: dir (hacia donde miras) y plane 
+(el plano perpendicular que define el FOV).*/
+void	calculate_sprite(t_game *g, int i)
+{
+	double  dx;
+    double  dy;
+    double  inv_det;
+	
+	dx = g->sprite[i].x - g->player.x;
+    dy = g->sprite[i].y - g->player.y;
+	inv_det = 1.0 / (g->camera.plane_x * g->player.dir_y - g->player.dir_x
+		* g->camera.plane_y);
+	g->sprite[i].transform_x = inv_det * (g->player.dir_y * dx
+		- g->player.dir_x * dy);
+	g->sprite[i].transform_y = inv_det * (-g->camera.plane_y * dx
+		+ g->camera.plane_x * dy);
+	if (g->sprite[i].transform_y <= 0)
+		return ;
+	calculate_sprite_2(g, i);
+}
+
+/* void	draw_sprite(t_game *g, int i)
 {
 	
 } */
@@ -112,8 +158,8 @@ void	render_sprites(t_game *g)
 	i = 0;
 	while (i < g->config.sprite)
 	{
-		/* calculate_sprite(g, i);
-		draw_sprite(g, i); */
+		calculate_sprite(g, i);
+		/* draw_sprite(g, i); */
 		i++;
 	}
 }

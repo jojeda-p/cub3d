@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/16 16:14:07 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/16 17:02:05 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,11 +221,34 @@ typedef struct s_minimap
     int		color_void;
 }   t_minimap;
 
+
+/*transform_x — posición lateral del sprite en espacio de cámara.
+Vale -1 si está al extremo izquierdo del FOV, 0 si está justo al frente, +1
+si está al extremo derecho.
+transform_y — profundidad del sprite en espacio de cámara.
+Es comparable directamente con tu z_buf. Si es negativo o cero, el sprite
+está detrás del jugador — no se dibuja.
+screen_x — píxel X de pantalla donde cae el centro del sprite.
+height y width — tamaño en píxeles del sprite proyectado en pantalla.
+Cuanto mayor es transform_y (más lejos), más pequeño.
+draw_start_y/draw_end_y — fila de pantalla donde empieza y termina el sprite
+verticalmente, clampeado a [0, config.height].
+draw_start_x/draw_end_x — columna de pantalla donde empieza y termina el sprite
+horizontalmente, clampeado a [0, config.width].*/
 typedef struct s_sprite
 {
 	double	x;
 	double	y;
 	double	distance;
+	double	transform_x;
+	double	transform_y;
+	double	screen_x;
+	int		height;
+	int		width;
+	int		draw_start_x;
+	int		draw_start_y;
+	int		draw_end_x;
+	int		draw_end_y;
 	t_tex	frames[16];
 	int		num_frames;
 	int		current_frame;

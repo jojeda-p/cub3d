@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:38:27 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/11 16:44:56 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/16 12:00:40 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,26 +58,9 @@ int	render_pause(t_game *g)
 (raycasting), texturas y sprites, y finalmente enviar la imagen a la ventana*/
 int	render_g(t_game	*g)
 {
-	int	x;
-	int	y;
-
 	if (g->state == STATE_PAUSE)
 		return (render_pause(g));
 	update_player(g);
-	y = 0;
-	while (y < g->config.height)
-	{
-		x = 0;
-		while (x < g->config.width)
-		{
-			if (y < g->config.height / 2)
-				pixel_put(&g->img, x, y, g->config.ceiling_color);
-			else
-				pixel_put(&g->img, x, y, g->config.floor_color);
-			x++;
-		}
-		y++;
-	}
 	render_raycasting(g);
 	draw_minimap(g);
 	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);

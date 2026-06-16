@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:14:37 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/09 13:30:48 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/16 12:31:59 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static int	print_error_2(int code)
 		return (printf("Error: wrong spawn.\n"), 1);
 	if (code == 13)
 		return (printf("Error: map not closed.\n"), 1);
+	if (code == 14)
+		return (printf("Error: sprite or door is outside the map.\n"), 1);
 	return (1);
 }
 

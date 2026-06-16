@@ -6,13 +6,32 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 13:34:06 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/11 16:14:24 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/16 13:29:35 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <stdio.h>
 #include <math.h>
+
+void	render_sprites(t_game *g)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	while (x < g->config.width)
+	{
+		y = 0;
+		g->sprite->distance = get_distance(g);
+		while (y < g->config.height)
+		{
+			if (g->ray.z_buf[x] > g->sprite->distance)
+				pixel_put(&g->img, x, y, get_sprite_color(g));
+			y++;
+		}
+	}
+}
 
 void	draw_wall_column(t_game *g, int column, t_tex texture)
 {
@@ -23,6 +42,7 @@ void	draw_wall_column(t_game *g, int column, t_tex texture)
 	double	tex_pos;
 
 	y = g->ray.draw_start;
+	draw_floor_ceiling(g, y, column);
 	tex_x = get_tex_x(g, texture);
 	if (g->ray.line_height <= 0 || texture.height <= 0)
 		return ;
@@ -31,11 +51,7 @@ void	draw_wall_column(t_game *g, int column, t_tex texture)
 			/ 2.0 + (double)g->ray.line_height / 2.0) * step;
 	while (y <= g->ray.draw_end)
 	{
-		tex_y = (int)tex_pos;
-		if (tex_y < 0)
-			tex_y = 0;
-		if (tex_y >= texture.height)
-			tex_y = texture.height - 1;
+		tex_y = get_tex_y(texture, tex_pos);
 		pixel_put(&g->img, column, y, get_tex_color(g, texture, tex_x, tex_y));
 		tex_pos += step;
 		y++;
@@ -51,7 +67,7 @@ Distancia perpendicular a la pared(evita ojo de pez)
 Altura de la pared en pantalla
 Inicio y fin de la columna a dibujar
 */
-void	calculate_wall_projection(t_game *g)
+void	calculate_wall_projection(t_game *g, int column)
 {
 	if (g->ray.side == 0)
 		g->ray.perp_dist = (g->ray.map_x - (g->player.x / g->map.tile_size)
@@ -61,6 +77,7 @@ void	calculate_wall_projection(t_game *g)
 				+ (1.0 - (double)g->ray.step_y) / 2.0) / g->ray.ray_dir_y;
 	if (!isfinite(g->ray.perp_dist) || g->ray.perp_dist <= 0.0)
 		g->ray.perp_dist = 1e-6;
+	g->ray.z_buf[column] = g->ray.perp_dist;
 	g->ray.line_height = (int)((double)g->config.height / g->ray.perp_dist);
 	g->ray.draw_start = (int)(-((double)g->ray.line_height) / 2.0
 			+ (double)g->config.height / 2.0);
@@ -120,8 +137,9 @@ void	render_raycasting(t_game *g)
 		init_ray_values(g);
 		dda_loop(g);
 		texture = get_wall_texture(g);
-		calculate_wall_projection(g);
+		calculate_wall_projection(g, column);
 		draw_wall_column(g, column, texture);
 		column++;
 	}
+	render_srites(g);
 }

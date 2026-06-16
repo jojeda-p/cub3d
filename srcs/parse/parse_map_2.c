@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 13:20:33 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/10 12:50:33 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/16 13:08:18 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static void	map_flood_fill(char **map, int x, int y, int *open)
+static void	mark_door_anim(char c, t_game *g)
+{
+	if (c == 'A')
+		g->map.anim--;
+	if (c == 'D')
+		g->map.door--;
+}
+
+static void	map_flood_fill(char **map, int x, int y, t_game *g)
 {
 	if (y < 0 || !map[y])
 	{
-		*open = 1;
+		g->map.open = 1;
 		return ;
 	}
 	if (x < 0 || x >= (int)ft_strlen(map[y]))
 	{
-		*open = 1;
+		g->map.open = 1;
 		return ;
 	}
 	if (map[y][x] == '1' || map[y][x] == 'V' || map[y][x] == 'X')
@@ -31,14 +39,16 @@ static void	map_flood_fill(char **map, int x, int y, int *open)
 	if (map[y][x] == ' ')
 	{
 		map[y][x] = 'X';
-		*open = 1;
+		g->map.open = 1;
 		return ;
 	}
+	if (map[y][x] == 'D' || map[y][x] == 'A')
+		mark_door_anim(map[y][x], g);
 	map[y][x] = 'V';
-	map_flood_fill(map, x, y + 1, open);
-	map_flood_fill(map, x, y - 1, open);
-	map_flood_fill(map, x + 1, y, open);
-	map_flood_fill(map, x - 1, y, open);
+	map_flood_fill(map, x, y + 1, g);
+	map_flood_fill(map, x, y - 1, g);
+	map_flood_fill(map, x + 1, y, g);
+	map_flood_fill(map, x - 1, y, g);
 }
 
 static char	**alloc_grid(char **grid, int size)
@@ -93,15 +103,16 @@ int	parse_flood_fill(t_game *g)
 	char	**map;
 	int		x;
 	int		y;
-	int		open;
 
-	open = 0;
+	g->map.open = 0;
 	map = copy_grid(g->map.grid);
 	x = (int)(g->player.x / g->map.tile_size - 0.5);
 	y = (int)(g->player.y / g->map.tile_size - 0.5);
-	map_flood_fill(map, x, y, &open);
-	if (open)
+	map_flood_fill(map, x, y, g);
+	if (g->map.open)
 		return (free_matrix(map), print_error(13, "map"));
+	if (g->map.anim != 0 || g->map.door !=0)
+		return (free_matrix(map), print_error(14, "map"));
 	free_matrix(map);
 	return (0);
 }

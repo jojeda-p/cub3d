@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 17:05:46 by julepere          #+#    #+#             */
-/*   Updated: 2026/06/11 14:03:55 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/16 13:30:53 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	init_game(t_game *g)
 	
 	g->state = STATE_GAME;
 	g->pause_tex.path = "assets/pause.xpm";
+
+	g->ray.z_buf = malloc(sizeof(double) * g->config.width);
 
 	init_minimap(g);
 }

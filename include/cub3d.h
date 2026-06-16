@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/11 17:34:41 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/16 13:20:31 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,10 @@ typedef struct s_map
 	int		height;
 	int		tile_size;
 	int		init;
+	int		anim;
+	int		door;
+	int		spawn;
+	int		open;
 }	t_map;
 
 /*
@@ -110,6 +114,7 @@ typedef struct s_ray
 	double	side_dist_x;
 	double	side_dist_y;
 	double	perp_dist;
+	double	*z_buf;
 	int		map_x;
 	int		map_y;
 	int		step_x;
@@ -216,6 +221,15 @@ typedef struct s_minimap
     int		color_void;
 }   t_minimap;
 
+typedef struct s_sprite
+{
+	double	x;
+	double	y;
+	double	distance;
+	t_tex	tex;
+}	t_sprite;
+
+
 /*
 ---------------------------------------------------------------------------------
 	t_config — parámetros visuales modificables en init
@@ -227,6 +241,8 @@ typedef struct s_config
 	int	height;
 	int	floor_color;
 	int	ceiling_color;
+	int	sprite;
+	int	door;
 }	t_config;
 
 /*
@@ -252,6 +268,7 @@ typedef struct s_game
 	t_config	config;
 	t_minimap	mm;
 	t_state		state;
+	t_sprite	*sprite;
 }	t_game;
 
 /* ************************************************************************** */
@@ -350,5 +367,9 @@ void	free_matrix(char **matrix);
 int		parse_permisions(char *file);
 int		ft_atoi_color(char *color);
 int		ft_isnum(char s);
+
+/* ray_utils.c */
+void	draw_floor_ceiling(t_game *g, int y, int column);
+int		get_tex_y(t_tex texture, double tex_pos);
 
 #endif

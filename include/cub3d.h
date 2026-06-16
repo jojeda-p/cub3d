@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/16 13:20:31 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/16 16:14:07 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,9 @@ typedef struct s_sprite
 	double	x;
 	double	y;
 	double	distance;
-	t_tex	tex;
+	t_tex	frames[16];
+	int		num_frames;
+	int		current_frame;
 }	t_sprite;
 
 
@@ -243,6 +245,8 @@ typedef struct s_config
 	int	ceiling_color;
 	int	sprite;
 	int	door;
+	int	frame_counter;
+	int	anim_speed;
 }	t_config;
 
 /*
@@ -307,9 +311,7 @@ void	init_raycasting(t_game *g);
 double	calculate_camera_x(int column, int width);
 void	init_ray_values(t_game *g);
 void	init_ray_values2(t_game *g);
-void	dda_loop(t_game *g);
-void	calculate_wall_projection(t_game *g);
-void	draw_wall_column(t_game *g, int column, t_tex texture);
+
 
 /* texture.c */
 void	load_textures(t_game *g);
@@ -368,8 +370,9 @@ int		parse_permisions(char *file);
 int		ft_atoi_color(char *color);
 int		ft_isnum(char s);
 
-/* ray_utils.c */
-void	draw_floor_ceiling(t_game *g, int y, int column);
-int		get_tex_y(t_tex texture, double tex_pos);
+/* sprites.c */
+void	load_sprite(t_game *g);
+void    load_sprite_textures(t_game *g);
+void	render_sprites(t_game *g);
 
 #endif

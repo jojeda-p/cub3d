@@ -6,11 +6,13 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 17:05:46 by julepere          #+#    #+#             */
-/*   Updated: 2026/06/16 13:30:53 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/16 16:49:13 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 static void	init_minimap(t_game *g)
 {
@@ -52,11 +54,8 @@ void	init_game(t_game *g)
 	g->player.friction = 0.21;
 	g->player.walk_speed   = 3.5;
 	g->player.sprint_speed = 6.5;
-	
 	g->state = STATE_GAME;
 	g->pause_tex.path = "assets/pause.xpm";
-
 	g->ray.z_buf = malloc(sizeof(double) * g->config.width);
-
 	init_minimap(g);
 }

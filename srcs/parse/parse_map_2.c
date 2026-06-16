@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 13:20:33 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/16 13:08:18 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/16 16:49:46 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static void	mark_door_anim(char c, t_game *g)
+static void	mark_door_anim(char c, t_game *g, int x, int y)
 {
 	if (c == 'A')
+	{
 		g->map.anim--;
+		g->sprite[g->map.anim].x = x * g->map.tile_size + g->map.tile_size / 2;
+		g->sprite[g->map.anim].y = y * g->map.tile_size + g->map.tile_size / 2;
+	}
 	if (c == 'D')
 		g->map.door--;
 }
@@ -43,7 +47,7 @@ static void	map_flood_fill(char **map, int x, int y, t_game *g)
 		return ;
 	}
 	if (map[y][x] == 'D' || map[y][x] == 'A')
-		mark_door_anim(map[y][x], g);
+		mark_door_anim(map[y][x], g, x, y);
 	map[y][x] = 'V';
 	map_flood_fill(map, x, y + 1, g);
 	map_flood_fill(map, x, y - 1, g);

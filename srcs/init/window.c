@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:38:27 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/16 12:00:40 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/16 16:38:31 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	init_window(t_game *g)
 	if (init_image(g) == -1)
 		return (-1);
 	load_textures(g);
+	load_sprite_textures(g);
 	mlx_loop_hook(g->mlx, render_g, g);
 	mlx_hook(g->win, 17, 0, close_window, g);
 	mlx_hook(g->win, 2, 1L << 0, key_press, g);

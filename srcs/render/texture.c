@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:30:48 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/11 17:09:47 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/16 16:06:20 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	load_textures(t_game *g)
 		return ;
 	g->pause_tex.addr = mlx_get_data_addr(g->pause_tex.img, &g->pause_tex.bpp,
 			&g->pause_tex.line_len, &g->pause_tex.endian);
+	if (!g->pause_tex.addr)
+		return ;
 }
 
 t_tex	get_wall_texture(t_game *g)

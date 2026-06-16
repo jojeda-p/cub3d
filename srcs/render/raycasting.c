@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 13:34:06 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/16 13:29:35 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/16 16:18:24 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,25 @@
 #include <stdio.h>
 #include <math.h>
 
-void	render_sprites(t_game *g)
+static void	draw_floor_ceiling(t_game *g, int y, int column)
 {
-	int	x;
-	int	y;
+	int	i;
 
-	x = 0;
-	while (x < g->config.width)
+	i = 0;
+	while (i < y)
 	{
-		y = 0;
-		g->sprite->distance = get_distance(g);
-		while (y < g->config.height)
-		{
-			if (g->ray.z_buf[x] > g->sprite->distance)
-				pixel_put(&g->img, x, y, get_sprite_color(g));
-			y++;
-		}
+		pixel_put(&g->img, column, i, g->config.ceiling_color);
+		i++;
+	}
+	i = g->ray.draw_end;
+	while (i < g->config.height)
+	{
+		pixel_put(&g->img, column, i, g->config.floor_color);
+		i++;
 	}
 }
 
-void	draw_wall_column(t_game *g, int column, t_tex texture)
+static void	draw_wall_column(t_game *g, int column, t_tex texture)
 {
 	int		y;
 	int		tex_x;
@@ -51,7 +50,11 @@ void	draw_wall_column(t_game *g, int column, t_tex texture)
 			/ 2.0 + (double)g->ray.line_height / 2.0) * step;
 	while (y <= g->ray.draw_end)
 	{
-		tex_y = get_tex_y(texture, tex_pos);
+		tex_y = (int)tex_pos;
+		if (tex_y < 0)
+			tex_y = 0;
+		if (tex_y >= texture.height)
+			tex_y = texture.height - 1;
 		pixel_put(&g->img, column, y, get_tex_color(g, texture, tex_x, tex_y));
 		tex_pos += step;
 		y++;
@@ -67,7 +70,7 @@ Distancia perpendicular a la pared(evita ojo de pez)
 Altura de la pared en pantalla
 Inicio y fin de la columna a dibujar
 */
-void	calculate_wall_projection(t_game *g, int column)
+static void	calculate_wall_projection(t_game *g, int column)
 {
 	if (g->ray.side == 0)
 		g->ray.perp_dist = (g->ray.map_x - (g->player.x / g->map.tile_size)
@@ -89,7 +92,7 @@ void	calculate_wall_projection(t_game *g, int column)
 		g->ray.draw_end = g->config.height - 1;
 }
 
-void	dda_loop(t_game *g)
+static void	dda_loop(t_game *g)
 {
 	while (g->ray.hit == 0)
 	{
@@ -141,5 +144,5 @@ void	render_raycasting(t_game *g)
 		draw_wall_column(g, column, texture);
 		column++;
 	}
-	render_srites(g);
+	/* render_srites(g); */
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/16 16:14:07 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/16 17:10:07 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,20 @@
 
 typedef enum e_state
 {
-    STATE_GAME,
-    STATE_PAUSE,
+	STATE_GAME,
+	STATE_PAUSE,
 }   t_state;
+
+typedef enum e_weapon_state
+{
+	IDLE,		// 0 - estatico
+	WALK,		// 1 - andar
+	SPRINT,		// 2 - sprint
+	RELOAD,		// 3 - recarga
+	AIM,		// 4 - apuntar
+	UNAIM,		// 5 - desapuntar
+	SHOOT,		// 6 - disparar
+}   t_weapon_state;
 
 /* ************************************************************************** */
 /*                                 STRUCTS                                    */
@@ -62,6 +73,44 @@ typedef struct s_tex
 	int		height;
 	int		found;
 }	t_tex;
+
+/*
+---------------------------------------------------------------------------------
+	t_frame — frame individual de una animación de arma
+		addr     : array plano con los píxeles de la imagen
+		bpp      : bits per pixel (típicamente 32)
+		line_len : bytes por fila
+*/
+typedef struct s_frame
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+	int		width;
+	int		height;
+}	t_frame;
+
+/*
+---------------------------------------------------------------------------------
+	t_weapon — animación del arma en pantalla
+		frames      : array de frames de la animación activa
+		frame_count : número de frames de la animación activa
+		current     : índice del frame que se está mostrando
+		speed       : ticks entre cada cambio de frame
+		tick        : contador de ticks del frame actual
+		state       : estado del arma (IDLE, SHOOT, RELOAD...)
+*/
+typedef struct s_weapon
+{
+	t_frame	*frames;
+	int		frame_count;
+	int		current;
+	int		speed;
+	int		tick;
+	int		state;
+}	t_weapon;
 
 /*
 ---------------------------------------------------------------------------------
@@ -198,27 +247,27 @@ typedef struct s_camera
 */
 typedef struct s_minimap
 {
-    int		width;
-    int     height;
-    double	scale;
-    int		border;
+	int		width;
+	int     height;
+	double	scale;
+	int		border;
 	double	offset_x;
 	double	offset_y;
 	double	margin_x;
 	double	margin_y;
 	double	inner_x;
-    double	inner_y;
+	double	inner_y;
 	int		player_tile_x;
 	int		player_tile_y;
 	int		map_x;
 	int		map_y;
 	int		visible_tiles;
-    int		color_wall;
-    int		color_floor;
-    int		color_player;
+	int		color_wall;
+	int		color_floor;
+	int		color_player;
 	int		color_direction;
-    int		color_border;
-    int		color_void;
+	int		color_border;
+	int		color_void;
 }   t_minimap;
 
 typedef struct s_sprite

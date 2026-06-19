@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:38:27 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/16 16:38:31 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/19 14:04:16 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	render_g(t_game	*g)
 	if (g->state == STATE_PAUSE)
 		return (render_pause(g));
 	update_player(g);
+	update_sprite_animation(g);
 	render_raycasting(g);
 	draw_minimap(g);
 	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);
@@ -102,7 +103,7 @@ int	init_window(t_game *g)
 	return (0);
 }
 
-int	close_window(t_game *g)
+int	close_window(t_game *g)//falta hacer free a todo lo reservado, sprites, grid etc
 {
 	if (g && g->mlx && g->win)
 		mlx_destroy_window(g->mlx, g->win);

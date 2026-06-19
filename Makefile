@@ -35,6 +35,7 @@ SRC_FILES   =	main.c \
 				render/raycasting.c \
 				render/texture.c \
 				render/sprites.c \
+				render/sprites_utils.c \
 				utils/utils.c \
 				movement/movement.c \
 				movement/directions.c \

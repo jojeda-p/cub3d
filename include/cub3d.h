@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/16 17:02:05 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/19 13:50:39 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,6 +252,7 @@ typedef struct s_sprite
 	t_tex	frames[16];
 	int		num_frames;
 	int		current_frame;
+	int		collected;
 }	t_sprite;
 
 
@@ -394,8 +395,15 @@ int		ft_atoi_color(char *color);
 int		ft_isnum(char s);
 
 /* sprites.c */
+void	render_sprites(t_game *g);
+
+/* sprites_utils.c */
 void	load_sprite(t_game *g);
 void    load_sprite_textures(t_game *g);
-void	render_sprites(t_game *g);
+int		get_sprite_tex_x(t_game *g, int x, int i);
+int		get_sprite_tex_y(t_game *g, int y, int i);
+int		get_sprite_color(t_game *g, int i, int tex_x, int tex_y);
+void    update_sprite_animation(t_game *g);
+void    check_sprite_pickup(t_game *g);
 
 #endif

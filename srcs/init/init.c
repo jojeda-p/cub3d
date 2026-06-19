@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 17:05:46 by julepere          #+#    #+#             */
-/*   Updated: 2026/06/16 16:49:13 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/19 13:00:57 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static void	init_minimap(t_game *g)
 void	init_game(t_game *g)
 {
 	*g = (t_game){0};
-	g->config.width = 1500;
-	g->config.height = 1000;
+	g->config.width = 1000;
+	g->config.height = 500;
 	g->camera.fov = 75.0;
 	g->camera.sensitivity = 0.0012;
 	g->camera.last_mouse_x = -1;

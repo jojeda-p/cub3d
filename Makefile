@@ -36,6 +36,8 @@ SRC_FILES   =	main.c \
 				render/texture.c \
 				render/sprites.c \
 				render/sprites_utils.c \
+				render/load_sprites.c \
+				render/door.c \
 				utils/utils.c \
 				movement/movement.c \
 				movement/directions.c \

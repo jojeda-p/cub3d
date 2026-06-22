@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 14:58:04 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/16 16:38:16 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/22 14:01:25 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ static void	init_map(t_game *g)
 	g->config.sprite = g->map.anim;
 	g->config.door = g->map.door;
 	g->sprite = malloc(sizeof(t_sprite) * g->config.sprite);
+	g->door = malloc(sizeof(t_door) * g->config.door);
 }
 
 int	parse_map(char **matrix, t_game *g)
@@ -122,5 +123,6 @@ int	parse_map(char **matrix, t_game *g)
 	if (parse_flood_fill(g) == 1)
 		return (1);
 	load_sprite(g);
+	load_door(g);
 	return (0);
 }

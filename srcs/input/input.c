@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 16:08:23 by julepere          #+#    #+#             */
-/*   Updated: 2026/06/11 14:02:51 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/22 13:16:30 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@
 int	key_pause(t_game *g)
 {
 	if (g->state == STATE_GAME)
-		{	
-			g->state = STATE_PAUSE;
-			mlx_mouse_show(g->mlx, g->win);
-		}
-		else
-		{
-			g->state = STATE_GAME;
-			mlx_mouse_hide(g->mlx, g->win);
-		}
+	{
+		g->state = STATE_PAUSE;
+		mlx_mouse_show(g->mlx, g->win);
+	}
+	else
+	{
+		g->state = STATE_GAME;
+		mlx_mouse_hide(g->mlx, g->win);
+	}
 	return (0);
 }
 

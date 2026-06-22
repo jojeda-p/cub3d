@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:30:48 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/19 13:43:32 by josu             ###   ########.fr       */
+/*   Updated: 2026/06/22 16:26:24 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	load_textures(t_game *g)
 	g->pause_tex.addr = mlx_get_data_addr(g->pause_tex.img, &g->pause_tex.bpp,
 			&g->pause_tex.line_len, &g->pause_tex.endian);
 	if (!g->pause_tex.addr)
+		return ;
+	if (load_door_texture(g))
 		return ;
 }
 
@@ -119,7 +121,7 @@ int	get_tex_x(t_game *g, t_tex texture)
 	wall_x = wall_x - floor(wall_x);
 	tex_x = (int)(wall_x * (double)texture.width);
 	if (!((g->ray.side == 0 && g->ray.ray_dir_x > 0)
-    || (g->ray.side == 1 && g->ray.ray_dir_y < 0)))
+			|| (g->ray.side == 1 && g->ray.ray_dir_y < 0)))
 		tex_x = texture.width - tex_x - 1;
 	if (tex_x < 0)
 		tex_x = 0;

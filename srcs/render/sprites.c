@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/16 12:43:19 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/19 14:11:34 by josu             ###   ########.fr       */
+/*   Updated: 2026/06/22 16:00:01 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	calculate_sprite_2(t_game *g, int i)
 	v_offset = 200 / g->sprite[i].transform_y;
 	g->sprite[i].draw_start_y = -g->sprite[i].height
 		/ 2 + g->config.height / 2 + (int)v_offset;
-	g->sprite[i].draw_end_y   =  g->sprite[i].height
+	g->sprite[i].draw_end_y = g->sprite[i].height
 		/ 2 + g->config.height / 2 + (int)v_offset;
 	if (g->sprite[i].draw_start_y < 0)
 		g->sprite[i].draw_start_y = 0;
@@ -59,7 +59,7 @@ static void	calculate_sprite_2(t_game *g, int i)
 		g->sprite[i].draw_end_y = g->config.height - 1;
 	g->sprite[i].draw_start_x = -g->sprite[i].width
 		/ 2 + g->sprite[i].screen_x;
-	g->sprite[i].draw_end_x   =  g->sprite[i].width
+	g->sprite[i].draw_end_x = g->sprite[i].width
 		/ 2 + g->sprite[i].screen_x;
 	if (g->sprite[i].draw_start_x < 0)
 		g->sprite[i].draw_start_x = 0;
@@ -67,64 +67,62 @@ static void	calculate_sprite_2(t_game *g, int i)
 		g->sprite[i].draw_end_x = g->config.width - 1;
 }
 
-
 /*dx y dy — vector desde el jugador hasta el sprite en unidades del mundo.
 inv_det — el determinante inverso de la matriz de cámara.
 Tu cámara tiene dos vectores: dir (hacia donde miras) y plane 
 (el plano perpendicular que define el FOV).*/
 static void	calculate_sprite(t_game *g, int i)
 {
-	double  dx;
-    double  dy;
-    double  inv_det;
-	
+	double	dx;
+	double	dy;
+	double	inv_det;
+
 	dx = (g->sprite[i].x - g->player.x) / g->map.tile_size;
 	dy = (g->sprite[i].y - g->player.y) / g->map.tile_size;
 	inv_det = 1.0 / (g->camera.plane_x * g->player.dir_y - g->player.dir_x
-		* g->camera.plane_y);
+			* g->camera.plane_y);
 	g->sprite[i].transform_x = inv_det * (g->player.dir_y * dx
-		- g->player.dir_x * dy);
+			- g->player.dir_x * dy);
 	g->sprite[i].transform_y = inv_det * (-g->camera.plane_y * dx
-		+ g->camera.plane_x * dy);
+			+ g->camera.plane_x * dy);
 	if (g->sprite[i].transform_y <= 0)
 		return ;
 	g->sprite[i].screen_x = (int)(g->config.width / 2
-    	* (1 + g->sprite[i].transform_x / g->sprite[i].transform_y));
+			* (1 + g->sprite[i].transform_x / g->sprite[i].transform_y));
 	g->sprite[i].height = abs((int)(g->config.height
-		/ g->sprite[i].transform_y)) * 0.3;
-	g->sprite[i].width  = abs((int)(g->config.width
-		/ g->sprite[i].transform_y)) * 0.3;
+				/ g->sprite[i].transform_y)) * 0.3;
+	g->sprite[i].width = abs((int)(g->config.width
+				/ g->sprite[i].transform_y)) * 0.3;
 	calculate_sprite_2(g, i);
 }
 
 static void	draw_sprite(t_game *g, int i)
 {
-	int x;
-    int y;
-    int tex_x;
-    int tex_y;
+	int	x;
+	int	y;
 	int	color;
 
-    if (g->sprite[i].transform_y <= 0)
-        return ;
-    x = g->sprite[i].draw_start_x;
+	if (g->sprite[i].transform_y <= 0)
+		return ;
+	x = g->sprite[i].draw_start_x;
 	while (x < g->sprite[i].draw_end_x)
-    {
-        if (g->sprite[i].transform_y < g->ray.z_buf[x])
-        {
-			tex_x = get_sprite_tex_x(g, x, i);
-            y = g->sprite[i].draw_start_y;
-            while (y < g->sprite[i].draw_end_y)
-            {
-				tex_y = get_sprite_tex_y(g, y, i);
-				color = get_sprite_color(g, i, tex_x, tex_y);
+	{
+		if (g->sprite[i].transform_y < g->ray.z_buf[x])
+		{
+			g->sprite[i].tex_x = get_sprite_tex_x(g, x, i);
+			y = g->sprite[i].draw_start_y;
+			while (y < g->sprite[i].draw_end_y)
+			{
+				g->sprite[i].tex_y = get_sprite_tex_y(g, y, i);
+				color = get_sprite_color(g, i, g->sprite[i].tex_x,
+					g->sprite[i].tex_y);
 				if (color != 0xae17cc)
 					pixel_put(&g->img, x, y, color);
-                y++;
-            }
-        }
-        x++;
-    }
+				y++;
+			}
+		}
+		x++;
+	}
 }
 
 void	render_sprites(t_game *g)

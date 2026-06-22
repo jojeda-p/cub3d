@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/19 13:50:39 by josu             ###   ########.fr       */
+/*   Updated: 2026/06/22 18:44:42 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,8 @@ typedef struct s_sprite
 	double	transform_x;
 	double	transform_y;
 	double	screen_x;
+	int		tex_x;
+	int		tex_y;
 	int		height;
 	int		width;
 	int		draw_start_x;
@@ -273,6 +275,28 @@ typedef struct s_config
 	int	anim_speed;
 }	t_config;
 
+typedef struct s_door
+{
+	double	x;
+	double	y;
+	double	distance;
+	double	transform_x;
+	double	transform_y;
+	double	screen_x;
+	int		dir;
+	int		tex_x;
+	int		tex_y;
+	int		height;
+	int		width;
+	int		draw_start_x;
+	int		draw_start_y;
+	int		draw_end_x;
+	int		draw_end_y;
+	t_tex	tex;
+	int		open;
+	double	open_progress;
+}	t_door;
+
 /*
 ---------------------------------------------------------------------------------
 	t_game — estado global del juego
@@ -297,6 +321,7 @@ typedef struct s_game
 	t_minimap	mm;
 	t_state		state;
 	t_sprite	*sprite;
+	t_door		*door;
 }	t_game;
 
 /* ************************************************************************** */
@@ -342,6 +367,7 @@ void	load_textures(t_game *g);
 t_tex	get_wall_texture(t_game *g);
 int		get_tex_x(t_game *g, t_tex texture);
 int		get_tex_color(t_game *g, t_tex texture, int tex_x, int tex_y);
+int		ft_fog(t_game *g, int color);
 
 /* map.c */
 int		temp_init_map(t_game *g, char *file);
@@ -405,5 +431,10 @@ int		get_sprite_tex_y(t_game *g, int y, int i);
 int		get_sprite_color(t_game *g, int i, int tex_x, int tex_y);
 void    update_sprite_animation(t_game *g);
 void    check_sprite_pickup(t_game *g);
+
+/* door.c */
+void	load_door(t_game *g);
+int		load_door_texture(t_game *g);
+void    render_doors(t_game *g);
 
 #endif

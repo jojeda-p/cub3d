@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 17:05:46 by julepere          #+#    #+#             */
-/*   Updated: 2026/06/19 13:00:57 by josu             ###   ########.fr       */
+/*   Updated: 2026/06/22 13:15:27 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,23 @@ static void	init_minimap(t_game *g)
 void	init_game(t_game *g)
 {
 	*g = (t_game){0};
-	g->config.width = 1000;
-	g->config.height = 500;
+	g->config.width = 1500;
+	g->config.height = 1000;
 	g->camera.fov = 75.0;
 	g->camera.sensitivity = 0.0012;
 	g->camera.last_mouse_x = -1;
 	g->player.rot_speed = 0.03;
 	g->player.accel = 0.15;
-	g->player.max_speed    = g->player.walk_speed;
+	g->player.max_speed = g->player.walk_speed;
 
-	g->camera.fov        = 75.0;
-	g->camera.walk_fov   = 75.0;
+	g->camera.fov = 75.0;
+	g->camera.walk_fov = 75.0;
 	g->camera.sprint_fov = 80.0;
 	
-	g->player.force    = 80.0;
-	g->player.mass     = 80.0;
+	g->player.force = 80.0;
+	g->player.mass = 80.0;
 	g->player.friction = 0.21;
-	g->player.walk_speed   = 3.5;
+	g->player.walk_speed = 3.5;
 	g->player.sprint_speed = 6.5;
 	g->state = STATE_GAME;
 	g->pause_tex.path = "assets/pause.xpm";

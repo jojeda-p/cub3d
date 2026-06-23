@@ -54,7 +54,7 @@ SRC_FILES   =	main.c \
 				minimap/minimap.c \
 				minimap/minimap_utils.c \
 				animations/animations_utils.c \
-				animations/
+				animations/animations.c
 
 
 SRCS        = $(addprefix $(SRC_DIR)/, $(SRC_FILES))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/23 12:22:56 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/23 16:39:33 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,8 @@ typedef struct s_ray
 	int		line_height;
 	int		draw_start;
 	int		draw_end;
+	int		door_hit;
+	int		door_perp;
 }	t_ray;
 
 /*
@@ -333,24 +335,20 @@ typedef struct s_config
 
 typedef struct s_door
 {
-	double	x;
-	double	y;
-	double	distance;
-	double	transform_x;
-	double	transform_y;
-	double	screen_x;
-	int		dir;
+	int		map_x;
+	int		map_y;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+	int		dir;        // 0=horizontal, 1=vertical
+	int		open;
 	int		tex_x;
 	int		tex_y;
-	int		height;
-	int		width;
-	int		draw_start_x;
-	int		draw_start_y;
-	int		draw_end_x;
-	int		draw_end_y;
-	t_tex	tex;
-	int		open;
 	double	open_progress;
+    double	step;
+    double	tex_pos;
+	double	perp_dist;
+	t_tex	tex;
 }	t_door;
 
 /*
@@ -491,9 +489,10 @@ void    update_sprite_animation(t_game *g);
 void    check_sprite_pickup(t_game *g);
 
 /* door.c */
-void	load_door(t_game *g);
 int		load_door_texture(t_game *g);
-void    render_doors(t_game *g);
+void	load_door(t_game *g);
+void	door_render(t_game *g);
+void 	draw_door_column(t_game *g, int column, int i);
 
 /* animations.c */
 int		load_weapon_anims(t_game *g);

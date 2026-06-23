@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 13:34:06 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/22 16:29:47 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/23 17:01:14 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 #include <stdio.h>
 #include <math.h>
 
-static void	draw_floor_ceiling(t_game *g, int y, int column)
+static void	draw_floor_ceiling(t_game *g, int start, int end, int column)
 {
 	int	i;
 
 	i = 0;
-	while (i < y)
+	while (i < start)
 	{
 		pixel_put(&g->img, column, i, g->config.ceiling_color);
 		i++;
 	}
-	i = g->ray.draw_end;
+	i = end;
 	while (i < g->config.height)
 	{
 		pixel_put(&g->img, column, i, g->config.floor_color);
@@ -41,7 +41,7 @@ static void	draw_wall_column(t_game *g, int column, t_tex texture)
 	double	tex_pos;
 
 	y = g->ray.draw_start;
-	draw_floor_ceiling(g, y, column);
+	draw_floor_ceiling(g, y, g->ray.draw_end, column);
 	tex_x = get_tex_x(g, texture);
 	if (g->ray.line_height <= 0 || texture.height <= 0)
 		return ;
@@ -113,6 +113,8 @@ static void	dda_loop(t_game *g)
 			g->ray.hit = 1;
 		else if (g->map.grid[g->ray.map_y][g->ray.map_x] == '1')
 			g->ray.hit = 1;
+		else if (g->map.grid[g->ray.map_y][g->ray.map_x] == 'D')
+			door_render(g);
 	}
 }
 
@@ -132,18 +134,37 @@ void	render_raycasting(t_game *g)
 {
 	int		column;
 	t_tex	texture;
+	int		di;
 
 	column = 0;
 	while (column < g->config.width)
 	{
 		g->ray.camera_x = calculate_camera_x(column, g->config.width);
 		init_ray_values(g);
+		g->ray.door_hit = -1;
 		dda_loop(g);
-		texture = get_wall_texture(g);
-		calculate_wall_projection(g, column);
-		draw_wall_column(g, column, texture);
+		
+		if (g->ray.door_hit >= 0)
+		{
+			di = g->ray.door_hit;
+			g->door[di].perp_dist = g->ray.door_perp;
+			printf("door dist=%f line=%d\n",
+			g->door[di].perp_dist,
+			g->door[di].line_height);
+
+		printf("wall line=%d\n",
+			g->ray.line_height);
+			draw_door_column(g, column, di);
+			draw_floor_ceiling(g, g->door[di].draw_start,
+				g->door[di].draw_end, column);
+		}
+		else
+		{
+            texture = get_wall_texture(g);
+            calculate_wall_projection(g, column);
+            draw_wall_column(g, column, texture);
+        }
 		column++;
 	}
 	render_sprites(g);
-	render_doors(g);
 }

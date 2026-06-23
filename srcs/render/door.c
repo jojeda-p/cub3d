@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 13:46:44 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/22 18:52:05 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/23 17:17:05 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,114 +52,19 @@ int	load_door_texture(t_game *g)
 	return (0);
 }
 
-void	update_door(t_game *g, int i)
+int	find_door(t_game *g, int x, int y)
 {
-	double	proximity;
-	double	dist;
-	double	dx;
-	double	dy;
-	double	door_speed;
+	int	i;
 
-	dx = g->door[i].x - g->player.x;
-	dy = g->door[i].y - g->player.y;
-	dist = sqrt(dx * dx + dy * dy);
-	proximity = 1.5 * g->map.tile_size;
-	door_speed = 0.05;
-	if (dist < proximity)
+	i = 0;
+	while (i < g->config.door)
 	{
-		if (g->door[i].open_progress < 1.0)
-			g->door[i].open_progress = g->door[i].open_progress + door_speed;
+		if (g->door[i].map_x / g->map.tile_size == x
+            && g->door[i].map_y / g->map.tile_size == y)
+			return (i);
+		i++;
 	}
-	else
-	{
-		if (g->door[i].open_progress > 0.0)
-			g->door[i].open_progress = g->door[i].open_progress - door_speed;
-	}
-}
-
-void	calculate_door_2(t_game *g, int i)
-{
-	g->door[i].draw_start_y = -g->door[i].height / 2 + g->config.height / 2;
-	g->door[i].draw_end_y = g->door[i].height / 2 + g->config.height / 2;
-	if (g->door[i].draw_start_y < 0)
-		g->door[i].draw_start_y = 0;
-	if (g->door[i].draw_end_y >= g->config.height)
-		g->door[i].draw_end_y = g->config.height - 1;
-	g->door[i].draw_start_x = -g->door[i].width / 2 + g->door[i].screen_x;
-	g->door[i].draw_end_x = g->door[i].width / 2 + g->door[i].screen_x;
-	if (g->door[i].draw_start_x < 0)
-		g->door[i].draw_start_x = 0;
-	if (g->door[i].draw_end_x >= g->config.width)
-		g->door[i].draw_end_x = g->config.width - 1;
-}
-
-int	calculate_door(t_game *g, int i)
-{
-	double	p[4];
-	double	t[4];
-	double	inv;
-	int		scr[2];
-
-	p[0] = (g->door[i].x - g->player.x) / g->map.tile_size;
-	p[1] = (g->door[i].y - g->player.y) / g->map.tile_size;
-	if (g->door[i].dir == 0)
-	{
-		p[2] = p[0] + 0.5;
-		p[0] = p[0] - 0.5;
-		p[3] = p[1];
-	}
-	else
-	{
-		p[2] = p[0];
-		p[3] = p[1] + 0.5;
-		p[1] = p[1] - 0.5;
-	}
-	inv = 1.0 / (g->camera.plane_x * g->player.dir_y
-			- g->player.dir_x * g->camera.plane_y);
-	t[0] = inv * (g->player.dir_y * p[0] - g->player.dir_x * p[1]);
-	t[1] = inv * (-g->camera.plane_y * p[0] + g->camera.plane_x * p[1]);
-	t[2] = inv * (g->player.dir_y * p[2] - g->player.dir_x * p[3]);
-	t[3] = inv * (-g->camera.plane_y * p[2] + g->camera.plane_x * p[3]);
-	if (t[1] <= 0.1 && t[3] <= 0.1)
-		return (0);
-	scr[0] = (int)((g->config.width / 2.0) * (1.0 + t[0] / t[1]));
-	scr[1] = (int)((g->config.width / 2.0) * (1.0 + t[2] / t[3]));
-	g->door[i].width = abs(scr[1] - scr[0]);
-	if (g->door[i].width <= 0)
-		return (0);
-	g->door[i].screen_x = (scr[0] + scr[1]) / 2;
-	g->door[i].transform_y = (t[1] + t[3]) / 2.0;
-	g->door[i].height = abs((int)(g->config.height / g->door[i].transform_y));
-	calculate_door_2(g, i);
-	return (1);
-}
-
-void	get_door_tex_x(t_game *g, int x, int i)
-{
-    int     d;
-    int     tex_offset;
-    t_tex   tex;
-
-    tex = g->door[i].tex;
-    tex_offset = (int)(tex.width * g->door[i].open_progress);
-    d = x - (g->door[i].screen_x - g->door[i].width / 2);
-    g->door[i].tex_x = tex_offset + d * tex.width / g->door[i].width;
-    if (g->door[i].tex_x < 0)
-        g->door[i].tex_x = 0;
-    if (g->door[i].tex_x >= tex.width)
-        g->door[i].tex_x = tex.width - 1;
-}
-
-void	get_door_tex_y(t_game *g, int y, int i)
-{
-	int	d;
-
-	d = y - g->door[i].draw_start_y;
-	g->door[i].tex_y = d * g->door[i].tex.height / g->door[i].height;
-	if (g->door[i].tex_y < 0)
-		g->door[i].tex_y = 0;
-	if (g->door[i].tex_y >= g->door[i].tex.height)
-		g->door[i].tex_y = g->door[i].tex.height - 1;
+	return (-1);
 }
 
 int	get_door_color(t_game *g, int i, int tex_x, int tex_y)
@@ -191,50 +96,98 @@ int	get_door_color(t_game *g, int i, int tex_x, int tex_y)
 	return ((int)color);
 }
 
-void	draw_door(t_game *g, int i)
+void draw_door_column(t_game *g, int column, int i)
 {
-	int	x;
-	int	y;
-	int	color;
-	int	real_end;
+    int     y;
+    int     color;
 
-	real_end = g->door[i].draw_start_x
-		+ (int)(g->door[i].width * (1.0 - g->door[i].open_progress));
-	if (real_end > g->door[i].draw_end_x)
-		real_end = g->door[i].draw_end_x;
-	x = g->door[i].draw_start_x;
-	while (x < real_end)
-	{
-		if (g->door[i].transform_y < g->ray.z_buf[x])
-		{
-			get_door_tex_x(g, x, i);
-			y = g->door[i].draw_start_y;
-			while (y < g->door[i].draw_end_y)
-			{
-				get_door_tex_y(g, y, i);
-				color = get_door_color(g, i, g->door[i].tex_x,
-					g->door[i].tex_y);
-				pixel_put(&g->img, x, y, color);
-				y++;
-			}
-		}
-		x++;
-	}
+    if (!isfinite(g->door[i].perp_dist) || g->door[i].perp_dist <= 0.0)
+        return ;
+    g->door[i].line_height = g->ray.line_height;
+    g->door[i].draw_start = -g->door[i].line_height / 2 + g->config.height / 2;
+    if (g->door[i].draw_start < 0)
+        g->door[i].draw_start = 0;
+    g->door[i].draw_end = g->door[i].line_height / 2 + g->config.height / 2;
+    if (g->door[i].draw_end >= g->config.height)
+        g->door[i].draw_end = g->config.height - 1;
+    if (g->door[i].line_height <= 0 || g->door[i].tex.height <= 0)
+        return ;
+    g->door[i].step = (double)g->door[i].tex.height / g->door[i].line_height;
+    g->door[i].tex_pos = (g->door[i].draw_start - g->config.height / 2
+        + g->door[i].line_height / 2) * g->door[i].step;
+    y = g->door[i].draw_start;
+    while (y <= g->door[i].draw_end)
+    {
+        g->door[i].tex_y = (int)g->door[i].tex_pos;
+        if (g->door[i].tex_y < 0)
+            g->door[i].tex_y = 0;
+        if (g->door[i].tex_y >= g->door[i].tex.height)
+            g->door[i].tex_y = g->door[i].tex.height - 1;
+        g->door[i].tex_pos += g->door[i].step;
+        color = get_door_color(g, i, g->door[i].tex_x, g->door[i].tex_y);
+        if (color != 0)
+            pixel_put(&g->img, column, y, color);
+        y++;
+    }
+    g->ray.z_buf[column] = g->door[i].perp_dist;
 }
 
-void    render_doors(t_game *g)
+double  get_door_perp_dist(t_game *g, int i)
 {
-    int i;
+    double  perp_dist;
+    double  exact_hit;
+    int     tex_x;
+    int     tex_offset;
+    double  pos_x;
+    double  pos_y;
 
-    i = 0;
-    while (i < g->config.door)
+    pos_x = g->player.x / g->map.tile_size;
+    pos_y = g->player.y / g->map.tile_size;
+    
+    if (g->door[i].dir == 0) // Puerta horizontal (separando Norte/Sur)
     {
-        update_door(g, i);
-        if (g->door[i].open_progress < 1.0)
-        {
-            if (calculate_door(g, i))
-                draw_door(g, i);
-        }
-        i++;
+        perp_dist = g->ray.side_dist_y - (g->ray.delta_dist_y / 2.0);
+        exact_hit = pos_x + perp_dist * g->ray.ray_dir_x;
+        if (exact_hit < (double)g->ray.map_x || exact_hit > (double)(g->ray.map_x + 1))
+            return (-1.0);
+        exact_hit = exact_hit - floor(exact_hit);
+        if (g->ray.ray_dir_y > 0)
+            exact_hit = 1.0 - exact_hit;
     }
+    else // Puerta vertical (separando Este/Oeste)
+    {
+        perp_dist = g->ray.side_dist_x - (g->ray.delta_dist_x / 2.0);
+        exact_hit = pos_y + perp_dist * g->ray.ray_dir_y;
+        if (exact_hit < (double)g->ray.map_y || exact_hit > (double)(g->ray.map_y + 1))
+            return (-1.0);
+        exact_hit = exact_hit - floor(exact_hit);
+        if (g->ray.ray_dir_x < 0)
+            exact_hit = 1.0 - exact_hit;
+    }
+    if (perp_dist <= 0)
+        return (-1.0);
+    tex_offset = (int)(g->door[i].tex.width * g->door[i].open_progress);
+    tex_x = tex_offset + (int)(exact_hit * g->door[i].tex.width);
+    if (tex_x >= g->door[i].tex.width || tex_x < 0)
+        return (-1.0);
+    g->door[i].tex_x = tex_x;
+    return (perp_dist);
+}
+
+void	door_render(t_game *g)
+{
+	int		i;
+	double	perp_dist;
+
+	i = find_door(g, g->ray.map_x, g->ray.map_y);
+	if (i >= 0)
+	{
+		perp_dist = get_door_perp_dist(g, i);
+		if (perp_dist > 0)
+		{
+			g->ray.door_hit = i;
+			g->ray.door_perp = perp_dist;
+			g->ray.hit = 1;
+		}
+	}
 }

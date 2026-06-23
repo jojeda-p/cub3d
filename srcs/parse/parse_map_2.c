@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 13:20:33 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/22 17:11:28 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/23 13:40:38 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static void	mark_door_anim(char c, t_game *g, int x, int y)
 	if (c == 'D')
 	{
 		g->map.door--;
-		g->door[g->map.door].x = x * g->map.tile_size + g->map.tile_size / 2;
-		g->door[g->map.door].y = y * g->map.tile_size + g->map.tile_size / 2;
+		g->door[g->map.door].map_x = x * g->map.tile_size + g->map.tile_size / 2;
+		g->door[g->map.door].map_y = y * g->map.tile_size + g->map.tile_size / 2;
 		g->door[g->map.door].open_progress = 0.0;
 		g->door[g->map.door].open = 0;
 	}
@@ -108,12 +108,14 @@ static char	**copy_grid(char **grid)
 	return (copy);
 }
 
-int	check_door(char **map)
+int	check_door(t_game *g, char **map)
 {
 	int	i;
 	int	j;
+	int	k;
 
 	i = 0;
+	k = 0;
 	while (map[i])
 	{
 		j = 0;
@@ -126,6 +128,16 @@ int	check_door(char **map)
 				if (!((map[i - 1][j] == '1' && map[i + 1][j] == '1')
 					|| (map[i][j - 1] == '1' && map[i][j + 1] == '1')))
 					return (1);
+				if (map[i - 1][j] == '1' && map[i + 1][j] == '1')
+				{
+					g->door[k].dir = 1;
+					k++;
+				}
+				if (map[i][j - 1] == '1' && map[i][j + 1] == '1')
+				{
+					g->door[k].dir = 0;
+					k++;
+				}
 			}
 			j++;
 		}
@@ -149,7 +161,7 @@ int	parse_flood_fill(t_game *g)
 		return (free_matrix(map), print_error(13, "map"));
 	if (g->map.anim != 0 || g->map.door != 0)
 		return (free_matrix(map), print_error(14, "map"));
-	if (check_door(g->map.grid) == 1)
+	if (check_door(g, g->map.grid) == 1)
 		return (free_matrix(map), print_error(15, "map"));
 	free_matrix(map);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/23 11:46:47 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/23 12:01:34 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,15 @@ typedef enum e_state
 typedef enum e_weapon_state
 {
 	IDLE,		// 0 - estatico
-	WALK,		// 1 - andar
+	WALK,		// 1 - movimiento
 	SPRINT,		// 2 - sprint
 	RELOAD,		// 3 - recarga
-	AIM,		// 4 - apuntar
-	UNAIM,		// 5 - desapuntar
-	SHOOT,		// 6 - disparar
-}   t_weapon_state;
+	AIM,		// 4 - apuntado_estatico
+	AIM_IN,		// 5 - apuntar
+	AIM_OUT,	// 6 - desapuntar
+	SHOOT,		// 7 - disparo
+	SPECIAL,	// 8 - animacion
+}	t_weapon_state;
 
 /* ************************************************************************** */
 /*                                 STRUCTS                                    */
@@ -104,15 +106,15 @@ typedef struct s_frame
 */
 typedef struct s_weapon
 {
-	t_frame	*frames;
-	int		frame_count;
-	int		current;
-	int		speed;
-	int		tick;
-	int		state;
-	int		
+	t_frame		*frames[9];
+	int			frame_count[9];
+	int			current;
+	int			speed;
+	int			tick;
+	int			state;
+	int			looping;
+	int			reversed;
 }	t_weapon;
-
 /*
 ---------------------------------------------------------------------------------
 	t_map — mapa del nivel

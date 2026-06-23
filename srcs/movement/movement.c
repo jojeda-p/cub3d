@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:10:05 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/11 13:48:39 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/23 12:24:45 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,9 +143,4 @@ void	update_player(t_game *g)
 		angle += g->player.rot_speed;
 	angle += update_mouse(g);
 	rotate_camera(angle, g);
-	
-	printf("max_speed: %.2f | vel: %.2f | shift: %d\n",
-    g->player.max_speed,
-    sqrt(g->player.vel_x * g->player.vel_x + g->player.vel_y * g->player.vel_y),
-    g->input.shift);
 }

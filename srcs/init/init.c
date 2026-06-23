@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 17:05:46 by julepere          #+#    #+#             */
-/*   Updated: 2026/06/22 13:15:27 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/23 12:28:17 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,13 @@ void	init_game(t_game *g)
 	g->camera.fov = 75.0;
 	g->camera.walk_fov = 75.0;
 	g->camera.sprint_fov = 80.0;
+
+	g->weapon.state   = IDLE;
+	g->weapon.current = 0;
+	g->weapon.tick    = 0;
+	g->weapon.speed   = 10;
+	g->weapon.looping = 1;
+	g->weapon.reversed = 0;
 	
 	g->player.force = 80.0;
 	g->player.mass = 80.0;

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:38:27 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/19 14:04:16 by josu             ###   ########.fr       */
+/*   Updated: 2026/06/23 12:25:22 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include "mlx.h"
 
 /*escribe un color (ARGB) en la posición (x,y) dentro del buffer de mlx
@@ -62,7 +63,9 @@ int	render_g(t_game	*g)
 		return (render_pause(g));
 	update_player(g);
 	update_sprite_animation(g);
+	update_weapon(g);
 	render_raycasting(g);
+	render_weapon(g);
 	draw_minimap(g);
 	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);
 	return (0);
@@ -95,6 +98,7 @@ int	init_window(t_game *g)
 		return (-1);
 	load_textures(g);
 	load_sprite_textures(g);
+	load_weapon_anims(g);
 	mlx_loop_hook(g->mlx, render_g, g);
 	mlx_hook(g->win, 17, 0, close_window, g);
 	mlx_hook(g->win, 2, 1L << 0, key_press, g);

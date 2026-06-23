@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/23 12:01:34 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/23 12:22:56 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -378,6 +378,7 @@ typedef struct s_game
 	t_state		state;
 	t_sprite	*sprite;
 	t_door		*door;
+	t_weapon	weapon;
 }	t_game;
 
 /* ************************************************************************** */
@@ -493,5 +494,15 @@ void    check_sprite_pickup(t_game *g);
 void	load_door(t_game *g);
 int		load_door_texture(t_game *g);
 void    render_doors(t_game *g);
+
+/* animations.c */
+int		load_weapon_anims(t_game *g);
+void	update_weapon(t_game *g);
+void	update_weapon_state(t_game *g);
+void    render_weapon(t_game *g);
+
+/* animation_utils.c */
+int		load_anim(t_game *g, int state, char *folder, char *name, int count);
+char	*ft_strjoin(char *s1, char *s2);
 
 #endif

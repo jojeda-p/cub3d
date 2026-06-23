@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/23 11:43:43 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/23 11:46:47 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_weapon
 	int		speed;
 	int		tick;
 	int		state;
+	int		
 }	t_weapon;
 
 /*
@@ -188,6 +189,10 @@ typedef struct s_input
 	int	arrow_left;
 	int	arrow_right;
 	int shift;
+	int shoot;
+	int aim;
+	int reload;
+	int special;
 }	t_input;
 
 /*
@@ -468,6 +473,7 @@ void	free_matrix(char **matrix);
 int		parse_permisions(char *file);
 int		ft_atoi_color(char *color);
 int		ft_isnum(char s);
+char	*int_to_str(int n);
 
 /* sprites.c */
 void	render_sprites(t_game *g);

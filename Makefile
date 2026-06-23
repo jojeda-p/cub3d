@@ -52,7 +52,9 @@ SRC_FILES   =	main.c \
 				parse/parse_map_utils.c \
 				parse/parse_map_2.c \
 				minimap/minimap.c \
-				minimap/minimap_utils.c
+				minimap/minimap_utils.c \
+				animations/animations_utils.c \
+				animations/
 
 
 SRCS        = $(addprefix $(SRC_DIR)/, $(SRC_FILES))

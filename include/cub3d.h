@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/16 17:10:07 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/23 11:43:43 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,14 +270,40 @@ typedef struct s_minimap
 	int		color_void;
 }   t_minimap;
 
+
+/*transform_x — posición lateral del sprite en espacio de cámara.
+Vale -1 si está al extremo izquierdo del FOV, 0 si está justo al frente, +1
+si está al extremo derecho.
+transform_y — profundidad del sprite en espacio de cámara.
+Es comparable directamente con tu z_buf. Si es negativo o cero, el sprite
+está detrás del jugador — no se dibuja.
+screen_x — píxel X de pantalla donde cae el centro del sprite.
+height y width — tamaño en píxeles del sprite proyectado en pantalla.
+Cuanto mayor es transform_y (más lejos), más pequeño.
+draw_start_y/draw_end_y — fila de pantalla donde empieza y termina el sprite
+verticalmente, clampeado a [0, config.height].
+draw_start_x/draw_end_x — columna de pantalla donde empieza y termina el sprite
+horizontalmente, clampeado a [0, config.width].*/
 typedef struct s_sprite
 {
 	double	x;
 	double	y;
 	double	distance;
+	double	transform_x;
+	double	transform_y;
+	double	screen_x;
+	int		tex_x;
+	int		tex_y;
+	int		height;
+	int		width;
+	int		draw_start_x;
+	int		draw_start_y;
+	int		draw_end_x;
+	int		draw_end_y;
 	t_tex	frames[16];
 	int		num_frames;
 	int		current_frame;
+	int		collected;
 }	t_sprite;
 
 
@@ -297,6 +323,28 @@ typedef struct s_config
 	int	frame_counter;
 	int	anim_speed;
 }	t_config;
+
+typedef struct s_door
+{
+	double	x;
+	double	y;
+	double	distance;
+	double	transform_x;
+	double	transform_y;
+	double	screen_x;
+	int		dir;
+	int		tex_x;
+	int		tex_y;
+	int		height;
+	int		width;
+	int		draw_start_x;
+	int		draw_start_y;
+	int		draw_end_x;
+	int		draw_end_y;
+	t_tex	tex;
+	int		open;
+	double	open_progress;
+}	t_door;
 
 /*
 ---------------------------------------------------------------------------------
@@ -322,6 +370,7 @@ typedef struct s_game
 	t_minimap	mm;
 	t_state		state;
 	t_sprite	*sprite;
+	t_door		*door;
 }	t_game;
 
 /* ************************************************************************** */
@@ -367,6 +416,7 @@ void	load_textures(t_game *g);
 t_tex	get_wall_texture(t_game *g);
 int		get_tex_x(t_game *g, t_tex texture);
 int		get_tex_color(t_game *g, t_tex texture, int tex_x, int tex_y);
+int		ft_fog(t_game *g, int color);
 
 /* map.c */
 int		temp_init_map(t_game *g, char *file);
@@ -420,8 +470,20 @@ int		ft_atoi_color(char *color);
 int		ft_isnum(char s);
 
 /* sprites.c */
+void	render_sprites(t_game *g);
+
+/* sprites_utils.c */
 void	load_sprite(t_game *g);
 void    load_sprite_textures(t_game *g);
-void	render_sprites(t_game *g);
+int		get_sprite_tex_x(t_game *g, int x, int i);
+int		get_sprite_tex_y(t_game *g, int y, int i);
+int		get_sprite_color(t_game *g, int i, int tex_x, int tex_y);
+void    update_sprite_animation(t_game *g);
+void    check_sprite_pickup(t_game *g);
+
+/* door.c */
+void	load_door(t_game *g);
+int		load_door_texture(t_game *g);
+void    render_doors(t_game *g);
 
 #endif

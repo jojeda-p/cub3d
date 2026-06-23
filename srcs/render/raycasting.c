@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 13:34:06 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/16 16:18:24 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/22 16:29:47 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,5 +144,6 @@ void	render_raycasting(t_game *g)
 		draw_wall_column(g, column, texture);
 		column++;
 	}
-	/* render_srites(g); */
+	render_sprites(g);
+	render_doors(g);
 }

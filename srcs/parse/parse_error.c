@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:14:37 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/16 12:31:59 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/22 17:04:54 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static int	print_error_2(int code)
 		return (printf("Error: map not closed.\n"), 1);
 	if (code == 14)
 		return (printf("Error: sprite or door is outside the map.\n"), 1);
+	if (code == 15)
+		return (printf("Error: wrong door position.\n"), 1);
 	return (1);
 }
 

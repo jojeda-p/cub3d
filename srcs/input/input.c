@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 16:08:23 by julepere          #+#    #+#             */
-/*   Updated: 2026/06/22 13:16:30 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/23 15:40:36 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ int	key_press(int keycode, t_game *g)
 		g->input.arrow_right = 1;
 	if (keycode == 65505 || keycode == 65506)
 		g->input.shift = 1;
+	if (keycode == 114)
+		g->input.reload = 1;
+	if (keycode == 116)
+		g->input.special = 1;
 	return (0);
 }
 
@@ -69,5 +73,9 @@ int	key_release(int keycode, t_game *g)
 		g->input.arrow_right = 0;
 	if (keycode == 65505 || keycode == 65506)
 		g->input.shift = 0;
+	if (keycode == 114)
+		g->input.reload = 0;
+	if (keycode == 116)
+		g->input.special = 0;
 	return (0);
 }

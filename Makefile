@@ -54,6 +54,7 @@ SRC_FILES   =	main.c \
 				minimap/minimap.c \
 				minimap/minimap_utils.c \
 				animations/animations_utils.c \
+				animations/animations_logic.c \
 				animations/animations.c
 
 

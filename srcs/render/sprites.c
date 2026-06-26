@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/16 12:43:19 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/22 16:00:01 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/26 15:08:55 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ static void	draw_sprite(t_game *g, int i)
 			{
 				g->sprite[i].tex_y = get_sprite_tex_y(g, y, i);
 				color = get_sprite_color(g, i, g->sprite[i].tex_x,
-					g->sprite[i].tex_y);
+						g->sprite[i].tex_y);
 				if (color != 0xae17cc)
 					pixel_put(&g->img, x, y, color);
 				y++;

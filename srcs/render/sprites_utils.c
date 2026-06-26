@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/19 10:31:27 by josu              #+#    #+#             */
-/*   Updated: 2026/06/22 13:18:16 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/26 15:57:31 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,37 +33,6 @@ int	get_sprite_tex_y(t_game *g, int y, int i)
 	tex_y = d * g->sprite[i].frames[g->sprite[i].current_frame].height
 		/ g->sprite[i].height;
 	return (tex_y);
-}
-
-int	get_sprite_color(t_game *g, int i, int tex_x, int tex_y)
-{
-	int				offset;
-	unsigned int	color;
-	unsigned char	*pixel;
-	int				j;
-
-	if (tex_x < 0 || tex_x >= g->sprite[i].frames[g->sprite[i].current_frame].width
-		|| tex_y < 0 || tex_y >= g->sprite[i].frames[g->sprite[i].current_frame].height)
-		return (0);
-	offset = tex_y * g->sprite[i].frames[g->sprite[i].current_frame].line_len
-		+ tex_x * (g->sprite[i].frames[g->sprite[i].current_frame].bpp / 8);
-	pixel = (unsigned char *)
-		g->sprite[i].frames[g->sprite[i].current_frame].addr + offset;
-	if ((g->sprite[i].frames[g->sprite[i].current_frame].bpp / 8) == 4)
-		color = *(unsigned int *)pixel;
-	else
-	{
-		color = 0;
-		j = 0;
-		while (j < (g->sprite[i].frames[g->sprite[i].current_frame].bpp / 8))
-		{
-			color |= ((unsigned int)pixel[j]) << (8 * j);
-			j++;
-		}
-	}
-	if (color != 0xae17cc)
-		color = ft_fog(g, color);
-	return ((int)color);
 }
 
 void	update_sprite_animation(t_game *g)

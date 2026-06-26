@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/23 16:39:33 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/26 16:19:00 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ typedef struct s_ray
 	int		draw_start;
 	int		draw_end;
 	int		door_hit;
-	int		door_perp;
+	double	door_perp;
 }	t_ray;
 
 /*
@@ -341,15 +341,39 @@ typedef struct s_door
 	int		draw_start;
 	int		draw_end;
 	int		dir;        // 0=horizontal, 1=vertical
-	int		open;
+	int		target_open;
 	int		tex_x;
 	int		tex_y;
+	double	wall_x;
 	double	open_progress;
     double	step;
     double	tex_pos;
 	double	perp_dist;
 	t_tex	tex;
 }	t_door;
+
+typedef struct s_door_aux
+{
+	int		map_x;
+	int		map_y;
+	int		step_x;
+	int		step_y;
+	int		side;
+	int		i;
+	double	pos_x;
+	double	pos_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	perp_dist;
+	double	wall_x;
+	double	speed;
+	double	door_x;
+	double	door_y;
+	double	dx;
+	double	dy;
+}	t_door_aux;
 
 /*
 ---------------------------------------------------------------------------------
@@ -391,6 +415,9 @@ int		init_window(t_game *g);
 int		close_window(t_game *g);
 int		key_hook(int keycode, t_game *g);
 void	pixel_put(t_img *img, int x, int y, int color);
+
+/* free.c */
+void	free_game(t_game *g);
 
 /* input.c */
 int		key_press(int keycode, t_game *g);
@@ -454,6 +481,10 @@ int		parse_map(char **matrix, t_game *g);
 /* parse_map_2.c */
 int		parse_flood_fill(t_game *g);
 
+/* parse_map_door.c */
+void	mark_door_anim(char c, t_game *g, int x, int y);
+int		check_door(t_game *g, char **map);
+
 /* parse_map_utis.c */
 int		valid_char(char c);
 void	malloc_grid(char **matrix, t_game *g);
@@ -484,15 +515,29 @@ void	load_sprite(t_game *g);
 void    load_sprite_textures(t_game *g);
 int		get_sprite_tex_x(t_game *g, int x, int i);
 int		get_sprite_tex_y(t_game *g, int y, int i);
-int		get_sprite_color(t_game *g, int i, int tex_x, int tex_y);
 void    update_sprite_animation(t_game *g);
 void    check_sprite_pickup(t_game *g);
 
+/* sprites_utils_2.c */
+int		get_sprite_color(t_game *g, int i, int tex_x, int tex_y);
+
 /* door.c */
-int		load_door_texture(t_game *g);
 void	load_door(t_game *g);
-void	door_render(t_game *g);
-void 	draw_door_column(t_game *g, int column, int i);
+int		load_door_texture(t_game *g);
+int		find_door(t_game *g, int x, int y);
+void	update_doors(t_game *g);
+
+/* door_aux.c */
+void	step_door_cast(t_door_aux *da);
+void	init_door_aux(t_game *g, t_door_aux *da);
+void	calculate_door_projection(t_game *g, int i);
+
+/* draw_door.c */
+void	draw_door_over_wall(t_game *g, int column);
+
+/* draw_door_2.c */
+void	draw_door_column(t_game *g, int column, int i);
+int		get_door_color(t_game *g, int i, int tex_x, int tex_y);
 
 /* animations.c */
 int		load_weapon_anims(t_game *g);

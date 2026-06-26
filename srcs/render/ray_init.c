@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 11:56:03 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/11 12:21:04 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/26 16:16:04 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,18 @@ void	init_ray_values2(t_game *g)
 				- (g->player.y / g->map.tile_size)) * g->ray.delta_dist_y;
 	g->ray.hit = 0;
 	g->ray.side = 0;
+}
+
+/*escribe un color (ARGB) en la posición (x,y) dentro del buffer de mlx
+ usando addr, bpp y line_len esta funcion solo solo coloca un valor de color
+  en una posición exacta de memoria quedespues render_g mandara a la pantalla
+ dst es la dirección de memoria donde se va a guardar un pixel concreto*/
+void	pixel_put(t_img *img, int x, int y, int color)
+{
+	char	*dst;
+
+	if (!img || !img->addr || x < 0 || y < 0)
+		return ;
+	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
+	*(unsigned int *)dst = (unsigned int)color;
 }

@@ -31,13 +31,18 @@ LIBS        = $(MLX_LIB) -lm
 
 SRC_FILES   =	main.c \
 				init/init.c \
+				init/free.c \
 				render/ray_init.c \
 				render/raycasting.c \
 				render/texture.c \
 				render/sprites.c \
 				render/sprites_utils.c \
+				render/sprites_utils_2.c \
 				render/load_sprites.c \
 				render/door.c \
+				render/door_aux.c \
+				render/draw_door.c \
+				render/draw_door_2.c \
 				utils/utils.c \
 				movement/movement.c \
 				movement/directions.c \
@@ -51,6 +56,7 @@ SRC_FILES   =	main.c \
 				parse/parse_map.c \
 				parse/parse_map_utils.c \
 				parse/parse_map_2.c \
+				parse/parse_map_door.c \
 				minimap/minimap.c \
 				minimap/minimap_utils.c \
 				animations/animations_utils.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:38:27 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/23 12:25:22 by julepere         ###   ########.fr       */
+/*   Updated: 2026/06/26 16:21:42 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "mlx.h"
-
-/*escribe un color (ARGB) en la posición (x,y) dentro del buffer de mlx
- usando addr, bpp y line_len esta funcion solo solo coloca un valor de color
-  en una posición exacta de memoria quedespues render_g mandara a la pantalla
- dst es la dirección de memoria donde se va a guardar un pixel concreto*/
-void	pixel_put(t_img *img, int x, int y, int color)
-{
-	char	*dst;
-
-	if (!img || !img->addr || x < 0 || y < 0)
-		return ;
-	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
-	*(unsigned int *)dst = (unsigned int)color;
-}
 
 int	render_pause(t_game *g)
 {
@@ -107,10 +93,9 @@ int	init_window(t_game *g)
 	return (0);
 }
 
-int	close_window(t_game *g)//falta hacer free a todo lo reservado, sprites, grid etc
+int	close_window(t_game *g)
 {
-	if (g && g->mlx && g->win)
-		mlx_destroy_window(g->mlx, g->win);
+	free_game(g);
 	exit(0);
 	return (0);
 }

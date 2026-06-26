@@ -3,34 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 13:20:33 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/23 13:40:38 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/06/26 16:02:12 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-static void	mark_door_anim(char c, t_game *g, int x, int y)
-{
-	if (c == 'A')
-	{
-		g->map.anim--;
-		g->sprite[g->map.anim].x = x * g->map.tile_size + g->map.tile_size / 2;
-		g->sprite[g->map.anim].y = y * g->map.tile_size + g->map.tile_size / 2;
-	}
-	if (c == 'D')
-	{
-		g->map.door--;
-		g->door[g->map.door].map_x = x * g->map.tile_size + g->map.tile_size / 2;
-		g->door[g->map.door].map_y = y * g->map.tile_size + g->map.tile_size / 2;
-		g->door[g->map.door].open_progress = 0.0;
-		g->door[g->map.door].open = 0;
-	}
-}
 
 static void	map_flood_fill(char **map, int x, int y, t_game *g)
 {
@@ -106,44 +88,6 @@ static char	**copy_grid(char **grid)
 		i++;
 	}
 	return (copy);
-}
-
-int	check_door(t_game *g, char **map)
-{
-	int	i;
-	int	j;
-	int	k;
-
-	i = 0;
-	k = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (map[i][j] == 'D')
-			{
-				if (i == 0 || j == 0 || !map[i + 1] || map[i][j + 1] == '\0')
-					return (1);
-				if (!((map[i - 1][j] == '1' && map[i + 1][j] == '1')
-					|| (map[i][j - 1] == '1' && map[i][j + 1] == '1')))
-					return (1);
-				if (map[i - 1][j] == '1' && map[i + 1][j] == '1')
-				{
-					g->door[k].dir = 1;
-					k++;
-				}
-				if (map[i][j - 1] == '1' && map[i][j + 1] == '1')
-				{
-					g->door[k].dir = 0;
-					k++;
-				}
-			}
-			j++;
-		}
-		i++;
-	}
-	return (0);
 }
 
 int	parse_flood_fill(t_game *g)

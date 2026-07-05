@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/05 19:17:58 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/05 19:25:27 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ typedef struct s_weapon
 	int			speed;
 	int			tick;
 	int			state;
+	int			next_state;
+	int			blocking;
 	int			looping;
 	int			reversed;
 }	t_weapon;
@@ -560,5 +562,10 @@ void	check_game_end(t_game *g);
 /* pause_end.c */
 int	render_end(t_game *g);
 int	render_pause(t_game *g);
+
+/* animation_utils_2.c */
+void	set_state(t_game *g, int state, int looping, int reversed);
+int		is_moving(t_game *g);
+int		is_sprinting(t_game *g);
 
 #endif

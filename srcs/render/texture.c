@@ -3,16 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:30:48 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/22 16:26:24 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/05 19:13:43 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <math.h>
 #include "mlx.h"
+
+//moverla de sitio
+int	load_end_pause_texture(t_game *g)
+{
+	g->pause_tex.img = mlx_xpm_file_to_image(g->mlx, g->pause_tex.path,
+			&g->pause_tex.width, &g->pause_tex.height);
+	if (!g->pause_tex.img)
+		return (1);
+	g->pause_tex.addr = mlx_get_data_addr(g->pause_tex.img, &g->pause_tex.bpp,
+			&g->pause_tex.line_len, &g->pause_tex.endian);
+	if (!g->pause_tex.addr)
+		return (1);
+	g->end.img = mlx_xpm_file_to_image(g->mlx, g->end.path,
+			&g->end.width, &g->end.height);
+	if (!g->end.img)
+		return (1);
+	g->end.addr = mlx_get_data_addr(g->end.img, &g->end.bpp,
+			&g->end.line_len, &g->end.endian);
+	if (!g->end.addr)
+		return (1);
+	return (0);
+}
 
 void	load_textures(t_game *g)
 {
@@ -31,13 +53,7 @@ void	load_textures(t_game *g)
 			return ;
 		i++;
 	}
-	g->pause_tex.img = mlx_xpm_file_to_image(g->mlx, g->pause_tex.path,
-			&g->pause_tex.width, &g->pause_tex.height);
-	if (!g->pause_tex.img)
-		return ;
-	g->pause_tex.addr = mlx_get_data_addr(g->pause_tex.img, &g->pause_tex.bpp,
-			&g->pause_tex.line_len, &g->pause_tex.endian);
-	if (!g->pause_tex.addr)
+	if (load_end_pause_texture(g))
 		return ;
 	if (load_door_texture(g))
 		return ;

@@ -6,7 +6,7 @@
 /*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 16:17:15 by josu              #+#    #+#             */
-/*   Updated: 2026/06/26 16:22:10 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/05 19:02:35 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,11 @@ void	free_game(t_game *g)
 	}
 	if (g->map.grid)
 		free_matrix(g->map.grid);
+	if (g->end.img)
+	{
+		mlx_destroy_image(g->mlx, g->end.img);
+		g->end.img = NULL;
+	}
 	free(g->ray.z_buf);
 	g->ray.z_buf = NULL;
 }

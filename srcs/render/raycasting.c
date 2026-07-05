@@ -6,7 +6,7 @@
 /*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 13:34:06 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/26 14:02:06 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/05 18:28:29 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,5 +146,6 @@ void	render_raycasting(t_game *g)
 		draw_door_over_wall(g, column);
 		column++;
 	}
-	render_sprites(g);
+	if (g->config.sprite >= 1)
+		render_sprites(g);
 }

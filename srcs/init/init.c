@@ -6,7 +6,7 @@
 /*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 17:05:46 by julepere          #+#    #+#             */
-/*   Updated: 2026/06/26 13:09:47 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/05 19:05:05 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,11 @@ void	init_game(t_game *g)
 	g->player.friction = 0.21;
 	g->player.walk_speed = 3.5;
 	g->player.sprint_speed = 6.5;
+
 	g->state = STATE_GAME;
 	g->pause_tex.path = "assets/pause.xpm";
+	g->end.path = "assets/finish.xpm";
+	g->end.img = NULL;
 	g->ray.z_buf = malloc(sizeof(double) * g->config.width);
 	init_minimap(g);
 }

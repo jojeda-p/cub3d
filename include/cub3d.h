@@ -6,7 +6,7 @@
 /*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/26 16:19:00 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/05 19:17:58 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef enum e_state
 {
 	STATE_GAME,
 	STATE_PAUSE,
+	STATE_END
 }   t_state;
 
 typedef enum e_weapon_state
@@ -331,6 +332,7 @@ typedef struct s_config
 	int	door;
 	int	frame_counter;
 	int	anim_speed;
+	int	sprite_counter;
 }	t_config;
 
 typedef struct s_door
@@ -401,6 +403,7 @@ typedef struct s_game
 	t_sprite	*sprite;
 	t_door		*door;
 	t_weapon	weapon;
+	t_tex		end;
 }	t_game;
 
 /* ************************************************************************** */
@@ -520,6 +523,7 @@ void    check_sprite_pickup(t_game *g);
 
 /* sprites_utils_2.c */
 int		get_sprite_color(t_game *g, int i, int tex_x, int tex_y);
+char	*ft_itoa2(int n);
 
 /* door.c */
 void	load_door(t_game *g);
@@ -548,5 +552,13 @@ void    render_weapon(t_game *g);
 /* animation_utils.c */
 int		load_anim(t_game *g, int state, char *folder, char *name, int count);
 char	*ft_strjoin(char *s1, char *s2);
+
+/* progress.c */
+void	draw_progress(t_game *g);
+void	check_game_end(t_game *g);
+
+/* pause_end.c */
+int	render_end(t_game *g);
+int	render_pause(t_game *g);
 
 #endif

@@ -32,6 +32,7 @@ LIBS        = $(MLX_LIB) -lm
 SRC_FILES   =	main.c \
 				init/init.c \
 				init/free.c \
+				init/pause_end.c \
 				render/ray_init.c \
 				render/raycasting.c \
 				render/texture.c \
@@ -43,6 +44,7 @@ SRC_FILES   =	main.c \
 				render/door_aux.c \
 				render/draw_door.c \
 				render/draw_door_2.c \
+				render/progress.c \
 				utils/utils.c \
 				movement/movement.c \
 				movement/directions.c \

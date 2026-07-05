@@ -6,7 +6,7 @@
 /*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:38:27 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/26 16:21:42 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/05 19:17:20 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,38 +15,14 @@
 #include <stdio.h>
 #include "mlx.h"
 
-int	render_pause(t_game *g)
-{
-	int	x;
-	int	y;
-	int	tex_x;
-	int	tex_y;
-	int	color;
-
-	y = 0;
-	while (y < g->config.height)
-	{
-		x = 0;
-		while (x < g->config.width)
-		{
-			tex_x = x * g->pause_tex.width / g->config.width;
-			tex_y = y * g->pause_tex.height / g->config.height;
-			color = get_tex_color(g, g->pause_tex, tex_x, tex_y);
-			pixel_put(&g->img, x, y, color);
-			x++;
-		}
-		y++;
-	}
-	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);
-	return (0);
-}
-
 /*Dibujar en el buffer de la imagen todo el frame: cielo, suelo, muros
 (raycasting), texturas y sprites, y finalmente enviar la imagen a la ventana*/
 int	render_g(t_game	*g)
 {
 	if (g->state == STATE_PAUSE)
 		return (render_pause(g));
+	if (g->state == STATE_END)
+		return (render_end(g));
 	update_player(g);
 	update_sprite_animation(g);
 	update_weapon(g);
@@ -54,6 +30,8 @@ int	render_g(t_game	*g)
 	render_weapon(g);
 	draw_minimap(g);
 	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);
+	draw_progress(g);
+	check_game_end(g);
 	return (0);
 }
 

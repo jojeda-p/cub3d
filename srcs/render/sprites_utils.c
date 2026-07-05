@@ -6,7 +6,7 @@
 /*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/19 10:31:27 by josu              #+#    #+#             */
-/*   Updated: 2026/06/26 15:57:31 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/05 18:05:02 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	check_sprite_pickup(t_game *g)
 			if (dist < pickup_rad)
 			{
 				g->sprite[i].collected = 1;
+				g->config.sprite_counter++;
 				tile_x = (int)(g->sprite[i].x / g->map.tile_size);
 				tile_y = (int)(g->sprite[i].y / g->map.tile_size);
 				g->map.grid[tile_y][tile_x] = '0';

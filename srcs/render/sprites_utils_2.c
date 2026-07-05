@@ -6,11 +6,12 @@
 /*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 15:30:50 by josu              #+#    #+#             */
-/*   Updated: 2026/06/26 15:57:28 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/05 18:23:42 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <stdlib.h>
 
 static int	valid_sprite_pixel(t_tex *tex, int tex_x, int tex_y)
 {
@@ -56,4 +57,46 @@ int	get_sprite_color(t_game *g, int i, int tex_x, int tex_y)
 	if (color != 0xae17cc)
 		color = ft_fog(g, color);
 	return ((int)color);
+}
+
+static int	ft_nbr_len(int n)
+{
+	int	len;
+
+	len = 0;
+	if (n <= 0)
+		len++;
+	while (n != 0)
+	{
+		n /= 10;
+		len++;
+	}
+	return (len);
+}
+
+char	*ft_itoa2(int n)
+{
+	char	*str;
+	long	nb;
+	int		len;
+
+	nb = n;
+	len = ft_nbr_len(n);
+	str = malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
+	str[len] = '\0';
+	if (nb == 0)
+		str[0] = '0';
+	if (nb < 0)
+	{
+		str[0] = '-';
+		nb = -nb;
+	}
+	while (nb > 0)
+	{
+		str[--len] = (nb % 10) + '0';
+		nb /= 10;
+	}
+	return (str);
 }

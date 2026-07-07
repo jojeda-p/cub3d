@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/05 19:25:27 by julepere         ###   ########.fr       */
+/*   Updated: 2026/07/07 12:41:18 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -558,6 +558,7 @@ char	*ft_strjoin(char *s1, char *s2);
 /* progress.c */
 void	draw_progress(t_game *g);
 void	check_game_end(t_game *g);
+int		load_end_pause_texture(t_game *g);
 
 /* pause_end.c */
 int	render_end(t_game *g);

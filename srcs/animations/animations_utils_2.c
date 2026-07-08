@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/05 14:07:12 by julepere          #+#    #+#             */
-/*   Updated: 2026/07/05 14:09:47 by julepere         ###   ########.fr       */
+/*   Updated: 2026/07/05 21:39:21 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	set_state(t_game *g, int state, int looping, int reversed)
 {
-	g->weapon.state = state;
 	g->weapon.current = 0;
 	g->weapon.tick = 0;
+	g->weapon.state = state;
 	g->weapon.looping = looping;
 	g->weapon.reversed = reversed;
 }

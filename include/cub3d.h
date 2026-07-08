@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/05 19:25:27 by julepere         ###   ########.fr       */
+/*   Updated: 2026/07/05 21:43:46 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -548,7 +548,6 @@ int		get_door_color(t_game *g, int i, int tex_x, int tex_y);
 /* animations.c */
 int		load_weapon_anims(t_game *g);
 void	update_weapon(t_game *g);
-void	update_weapon_state(t_game *g);
 void    render_weapon(t_game *g);
 
 /* animation_utils.c */

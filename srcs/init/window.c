@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:38:27 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/05 19:17:20 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/07 12:35:52 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	render_g(t_game	*g)
 		return (render_end(g));
 	update_player(g);
 	update_sprite_animation(g);
+	update_weapon_state(g);
 	update_weapon(g);
 	render_raycasting(g);
 	render_weapon(g);

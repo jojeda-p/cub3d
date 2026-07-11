@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:38:27 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/07 12:35:52 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/10 21:29:33 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ int	render_g(t_game	*g)
 		return (render_end(g));
 	update_player(g);
 	update_sprite_animation(g);
-	update_weapon_state(g);
 	update_weapon(g);
 	render_raycasting(g);
 	render_weapon(g);
 	draw_minimap(g);
+	draw_crosshair(g);
 	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);
 	draw_progress(g);
 	check_game_end(g);

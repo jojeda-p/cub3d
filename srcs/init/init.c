@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 17:05:46 by julepere          #+#    #+#             */
-/*   Updated: 2026/07/07 11:30:21 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/10 21:23:36 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ void	init_game(t_game *g)
 	g->camera.walk_fov = 75.0;
 	g->camera.sprint_fov = 80.0;
 	g->player.rot_speed = 0.03;
-	g->player.accel = 0.15;
+	g->player.accel = 0.1;
+	g->player.force = 28.0;
+	g->player.mass = 100.0;
+	g->player.friction = 0.07;
+	g->player.walk_speed = 1.8;
+	g->player.sprint_speed = 2.9;
 	g->player.max_speed = g->player.walk_speed;
-	g->player.force = 80.0;
-	g->player.mass = 80.0;
-	g->player.friction = 0.21;
-	g->player.walk_speed = 3.5;
-	g->player.sprint_speed = 6.5;
 	init_weapon(g);
 	init_state(g);
 	g->ray.z_buf = malloc(sizeof(double) * g->config.width);

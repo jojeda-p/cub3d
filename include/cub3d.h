@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/08 11:05:14 by julepere         ###   ########.fr       */
+/*   Updated: 2026/07/10 21:29:42 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -441,6 +441,9 @@ double  update_mouse(t_game *g);
 
 /* raycasting.c */
 void	render_raycasting(t_game *g);
+
+/* crosshair.c */
+void	draw_crosshair(t_game *g);
 
 /* ray_init.c */
 void	init_raycasting(t_game *g);

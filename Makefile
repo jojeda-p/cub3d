@@ -45,6 +45,7 @@ SRC_FILES   =	main.c \
 				render/draw_door.c \
 				render/draw_door_2.c \
 				render/progress.c \
+				render/crosshair.c \
 				utils/utils.c \
 				movement/movement.c \
 				movement/directions.c \

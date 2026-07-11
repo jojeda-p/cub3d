@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:10:05 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/07 12:12:24 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/10 21:23:17 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,30 @@ void	move_player(t_game *g)
 	{
 		g->player.x = new_x;
 		g->player.y = new_y;
+		return ;
 	}
-	else
+	map_x = (int)(new_x / g->map.tile_size);
+	map_y = (int)(g->player.y / g->map.tile_size);
+	if (map_x >= 0 && map_x < g->map.width
+		&& map_y >= 0 && map_y < g->map.height
+		&& g->map.grid[map_y][map_x] != '1')
 	{
-		g->player.vel_x = 0;
+		g->player.x = new_x;
 		g->player.vel_y = 0;
+		return ;
 	}
+	map_x = (int)(g->player.x / g->map.tile_size);
+	map_y = (int)(new_y / g->map.tile_size);
+	if (map_x >= 0 && map_x < g->map.width
+		&& map_y >= 0 && map_y < g->map.height
+		&& g->map.grid[map_y][map_x] != '1')
+	{
+		g->player.y = new_y;
+		g->player.vel_x = 0;
+		return ;
+	}
+	g->player.vel_x = 0;
+	g->player.vel_y = 0;
 }
 
 double	update_mouse(t_game *g)
@@ -95,20 +113,20 @@ static void	update_speed_limit(t_game *g)
 	double	target_fov;
 	double	scale;
 
-	if (g->input.shift)
+	if (is_sprinting(g))
 	{
 		target_speed = g->player.sprint_speed;
-		target_friction = 0.08;
+		target_friction = 0.05;
 		target_fov = g->camera.sprint_fov;
 	}
 	else
 	{
 		target_speed = g->player.walk_speed;
-		target_friction = 0.21;
+		target_friction = 0.09;
 		target_fov = g->camera.walk_fov;
 	}
-	g->player.max_speed += (target_speed - g->player.max_speed) * 0.2;
-	g->player.friction += (target_friction - g->player.friction) * 0.1;
+	g->player.max_speed += (target_speed - g->player.max_speed) * 0.12;
+	g->player.friction += (target_friction - g->player.friction) * 0.05;
 	g->camera.fov += (target_fov - g->camera.fov) * 0.1;
 	scale = tan((g->camera.fov * M_PI / 180.0) / 2.0);
 	g->camera.plane_x = -g->player.dir_y * scale;

@@ -79,3 +79,29 @@ int	key_release(int keycode, t_game *g)
 		g->input.special = 0;
 	return (0);
 }
+
+int	mouse_press(int button, int x, int y, t_game *g)
+{
+	(void)x;
+	(void)y;
+	if (g->state == STATE_PAUSE)
+		return (0);
+	if (button == 1)
+		g->input.shoot = 1;
+	if (button == 3)
+		g->input.aim = 1;
+	return (0);
+}
+
+int	mouse_release(int button, int x, int y, t_game *g)
+{
+	(void)x;
+	(void)y;
+	if (g->state == STATE_PAUSE)
+		return (0);
+	if (button == 1)
+		g->input.shoot = 0;
+	if (button == 3)
+		g->input.aim = 0;
+	return (0);
+}

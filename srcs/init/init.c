@@ -39,8 +39,9 @@ static void	init_weapon(t_game *g)
 	g->weapon.next_state = IDLE;
 	g->weapon.current = 0;
 	g->weapon.tick = 0;
-	g->weapon.speed = 5;
+	g->weapon.speed = 15;
 	g->weapon.blocking = 0;
+	g->weapon.hidden = 0;
 	g->weapon.looping = 1;
 	g->weapon.reversed = 0;
 }

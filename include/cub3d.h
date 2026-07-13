@@ -115,6 +115,7 @@ typedef struct s_weapon
 	int			state;
 	int			next_state;
 	int			blocking;
+	int			hidden;
 	int			looping;
 	int			reversed;
 }	t_weapon;
@@ -427,6 +428,8 @@ void	free_game(t_game *g);
 /* input.c */
 int		key_press(int keycode, t_game *g);
 int		key_release(int keycode, t_game *g);
+int		mouse_press(int button, int x, int y, t_game *g);
+int		mouse_release(int button, int x, int y, t_game *g);
 
 /* movement.c */
 void	rotate_camera(double angle, t_game *g);

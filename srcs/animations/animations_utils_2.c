@@ -19,6 +19,7 @@ void	set_state(t_game *g, int state, int looping, int reversed)
 	g->weapon.state = state;
 	g->weapon.looping = looping;
 	g->weapon.reversed = reversed;
+	g->weapon.hidden = 0;
 }
 
 int	is_moving(t_game *g)

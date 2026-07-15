@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:30:48 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/07 11:24:22 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/15 14:24:59 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <math.h>
 #include "mlx.h"
 
-void	load_textures(t_game *g)
+int	load_textures(t_game *g)
 {
 	int	i;
 
@@ -24,17 +24,18 @@ void	load_textures(t_game *g)
 		g->tex[i].img = mlx_xpm_file_to_image(g->mlx, g->tex[i].path,
 				&g->tex[i].width, &g->tex[i].height);
 		if (!g->tex[i].img)
-			return ;
+			return (1);
 		g->tex[i].addr = mlx_get_data_addr(g->tex[i].img, &g->tex[i].bpp,
 				&g->tex[i].line_len, &g->tex[i].endian);
 		if (!g->tex[i].addr)
-			return ;
+			return (1);
 		i++;
 	}
 	if (load_end_pause_texture(g))
-		return ;
+		return (1);
 	if (load_door_texture(g))
-		return ;
+		return (1);
+	return (0);
 }
 
 t_tex	get_wall_texture(t_game *g)

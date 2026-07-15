@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:38:27 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/10 21:29:33 by julepere         ###   ########.fr       */
+/*   Updated: 2026/07/15 14:32:28 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,15 @@ int	init_window(t_game *g)
 		return (-1);
 	g->win = mlx_new_window(g->mlx, g->config.width, g->config.height, "cub3d");
 	if (!g->win)
-		return (-1);
+		return (free_game(g), -1);
 	if (init_image(g) == -1)
-		return (-1);
-	load_textures(g);
-	load_sprite_textures(g);
-	load_weapon_anims(g);
+		return (free_game(g), -1);
+	if (load_textures(g) != 0)
+		return (free_game(g), -1);
+	if (load_sprite_textures(g) != 0)
+		return (free_game(g), -1);
+	if (load_weapon_anims(g) != 0)
+		return (free_game(g), -1);
 	mlx_loop_hook(g->mlx, render_g, g);
 	mlx_hook(g->win, 17, 0, close_window, g);
 	mlx_hook(g->win, 2, 1L << 0, key_press, g);

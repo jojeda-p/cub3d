@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   animations_utils_2.c                               :+:      :+:    :+:   */
+/*   parse_headline_utils2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/05 14:07:12 by julepere          #+#    #+#             */
-/*   Updated: 2026/07/15 13:15:33 by jojeda-p         ###   ########.fr       */
+/*   Created: 2026/07/15 15:01:56 by jojeda-p          #+#    #+#             */
+/*   Updated: 2026/07/15 15:02:59 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	set_state(t_game *g, int state, int looping, int reversed)
+int	check_textures(t_game *g)
 {
-	g->weapon.current = 0;
-	g->weapon.tick = 0;
-	g->weapon.state = state;
-	g->weapon.looping = looping;
-	g->weapon.reversed = reversed;
-	g->weapon.hidden = 0;
-}
-
-int	is_moving(t_game *g)
-{
-	return (g->input.up || g->input.down
-		|| g->input.left || g->input.right);
-}
-
-int	is_sprinting(t_game *g)
-{
-	return (g->input.shift && g->input.up);
+	if (!g->tex[0].path)
+		return (print_error(5, "NO"));
+	if (!g->tex[1].path)
+		return (print_error(5, "SO"));
+	if (!g->tex[2].path)
+		return (print_error(5, "EA"));
+	if (!g->tex[3].path)
+		return (print_error(5, "WE"));
+	if (!g->config.ceiling_color)
+		return (print_error(6, "C"));
+	if (!g->config.ceiling_color)
+		return (print_error(6, "F"));
+	return (0);
 }

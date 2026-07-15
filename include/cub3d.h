@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/10 21:29:42 by julepere         ###   ########.fr       */
+/*   Updated: 2026/07/15 15:20:55 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef enum e_state
 	STATE_GAME,
 	STATE_PAUSE,
 	STATE_END
-}   t_state;
+}	t_state;
 
 typedef enum e_weapon_state
 {
@@ -118,6 +118,10 @@ typedef struct s_weapon
 	int			hidden;
 	int			looping;
 	int			reversed;
+	int			tex_x;
+	int			tex_y;
+	int			x;
+	int			y;
 }	t_weapon;
 /*
 ---------------------------------------------------------------------------------
@@ -150,7 +154,7 @@ typedef struct s_map
 		side_dist X/Y	: Distancia desde la posicion actual del jugador hasta
 						   la primera linea del grid (X o Y)
 		perp_dist		: Distancia perpendicular al plano de cámara hasta el
-						   muro (NO distancia euclídea — evita el fish-eye effect)
+						muro (NO distancia euclídea — evita el fish-eye effect)
 		map_x/y			: Celda del mapa donde esta el rayo en cada paso del DDA
 		step_x			: Dirección del paso DDA: +1 o -1 según ray_dir
 		side			: Qué cara del muro fue golpeada — 0 = NS, 1 = EW
@@ -196,11 +200,11 @@ typedef struct s_input
 	int	right;
 	int	arrow_left;
 	int	arrow_right;
-	int shift;
-	int shoot;
-	int aim;
-	int reload;
-	int special;
+	int	shift;
+	int	shoot;
+	int	aim;
+	int	reload;
+	int	special;
 }	t_input;
 
 /*
@@ -261,7 +265,7 @@ typedef struct s_camera
 typedef struct s_minimap
 {
 	int		width;
-	int     height;
+	int		height;
 	double	scale;
 	int		border;
 	double	offset_x;
@@ -281,8 +285,7 @@ typedef struct s_minimap
 	int		color_direction;
 	int		color_border;
 	int		color_void;
-}   t_minimap;
-
+}	t_minimap;
 
 /*transform_x — posición lateral del sprite en espacio de cámara.
 Vale -1 si está al extremo izquierdo del FOV, 0 si está justo al frente, +1
@@ -319,7 +322,6 @@ typedef struct s_sprite
 	int		collected;
 }	t_sprite;
 
-
 /*
 ---------------------------------------------------------------------------------
 	t_config — parámetros visuales modificables en init
@@ -338,6 +340,7 @@ typedef struct s_config
 	int	sprite_counter;
 }	t_config;
 
+// dir {0=horizontal, 1=vertical}
 typedef struct s_door
 {
 	int		map_x;
@@ -345,14 +348,14 @@ typedef struct s_door
 	int		line_height;
 	int		draw_start;
 	int		draw_end;
-	int		dir;        // 0=horizontal, 1=vertical
+	int		dir;
 	int		target_open;
 	int		tex_x;
 	int		tex_y;
 	double	wall_x;
 	double	open_progress;
-    double	step;
-    double	tex_pos;
+	double	step;
+	double	tex_pos;
 	double	perp_dist;
 	t_tex	tex;
 }	t_door;
@@ -432,15 +435,19 @@ int		mouse_press(int button, int x, int y, t_game *g);
 int		mouse_release(int button, int x, int y, t_game *g);
 
 /* movement.c */
-void	rotate_camera(double angle, t_game *g);
+void	move_player(t_game *g);
+
+/* update_movement.c */
 void	update_player(t_game *g);
+void	update_speed_limit(t_game *g);
+double	update_mouse(t_game *g);
 
 /* directions.c */
 void	move_forward(t_game *g);
 void	move_backward(t_game *g);
 void	move_right(t_game *g);
 void	move_left(t_game *g);
-double  update_mouse(t_game *g);
+void	rotate_camera(double angle, t_game *g);
 
 /* raycasting.c */
 void	render_raycasting(t_game *g);
@@ -454,9 +461,8 @@ double	calculate_camera_x(int column, int width);
 void	init_ray_values(t_game *g);
 void	init_ray_values2(t_game *g);
 
-
 /* texture.c */
-void	load_textures(t_game *g);
+int		load_textures(t_game *g);
 t_tex	get_wall_texture(t_game *g);
 int		get_tex_x(t_game *g, t_tex texture);
 int		get_tex_color(t_game *g, t_tex texture, int tex_x, int tex_y);
@@ -474,6 +480,7 @@ int		div_floor(int a, int b);
 void	draw_tiles(t_game *g, int x, int y);
 
 /* parse.c */
+int		parse_permisions(char *file);
 int		parser(char *file, t_game *g);
 
 /* parse_headline.c */
@@ -486,7 +493,14 @@ char	*clean_path(char *path);
 int		get_color_hex(char *color, char *s);
 int		check_color_number(char *color, char *s);
 
+/* parse_headline_utils2.c */
+int		check_textures(t_game *g);
+
+/* parse_init_map.c */
+int		init_map(t_game *g);
+
 /* parse_map.c */
+void	get_player(t_game *g);
 int		parse_map(char **matrix, t_game *g);
 
 /* parse_map_2.c */
@@ -513,21 +527,25 @@ int		print_error(int code, char *s);
 int		ft_strlen(char *s);
 char	*ft_strdup(char *s);
 void	free_matrix(char **matrix);
-int		parse_permisions(char *file);
 int		ft_atoi_color(char *color);
 int		ft_isnum(char s);
-char	*int_to_str(int n);
+
+/* utils2.c */
+char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strrchr(char *s, int c);
+char	*ft_itoa(int n);
+char	*join_free(char *s1, char *s2);
 
 /* sprites.c */
 void	render_sprites(t_game *g);
 
 /* sprites_utils.c */
 void	load_sprite(t_game *g);
-void    load_sprite_textures(t_game *g);
+int		load_sprite_textures(t_game *g);
 int		get_sprite_tex_x(t_game *g, int x, int i);
 int		get_sprite_tex_y(t_game *g, int y, int i);
-void    update_sprite_animation(t_game *g);
-void    check_sprite_pickup(t_game *g);
+void	update_sprite_animation(t_game *g);
+void	check_sprite_pickup(t_game *g);
 
 /* sprites_utils_2.c */
 int		get_sprite_color(t_game *g, int i, int tex_x, int tex_y);
@@ -553,12 +571,33 @@ int		get_door_color(t_game *g, int i, int tex_x, int tex_y);
 
 /* animations.c */
 int		load_weapon_anims(t_game *g);
-void	update_weapon(t_game *g);
-void    render_weapon(t_game *g);
+void	render_weapon(t_game *g);
 
-/* animation_utils.c */
-int		load_anim(t_game *g, int state, char *folder, char *name, int count);
-char	*ft_strjoin(char *s1, char *s2);
+/* animations_utils.c */
+int		load_frames_loop(t_game *g, int state, char *base, char *name);
+char	*get_name(char *folder);
+int		load_frame(t_game *g, t_frame *frame, char *path);
+
+/* load_animations.c */
+int		load_anim(t_game *g, int state, char *folder, int count);
+
+/* weapon_state.c */
+void	update_weapon(t_game *g);
+
+/* sprint.c */
+void	start_sprint_reverse(t_game *g, int next_state);
+void	enter_sprint_hold(t_game *g);
+void	start_sprint_enter(t_game *g);
+
+/* animations_logic.c */
+int		weapon_loop_state(t_game *g);
+void	advance_weapon_frame(t_game *g);
+int		weapon_frame_finished(t_game *g);
+void	start_blocking_state(t_game *g, int state);
+void	start_one_shot_state(t_game *g, int state);
+
+/* blocking_state.c */
+void	finish_blocking_state(t_game *g);
 
 /* progress.c */
 void	draw_progress(t_game *g);
@@ -566,8 +605,8 @@ void	check_game_end(t_game *g);
 int		load_end_pause_texture(t_game *g);
 
 /* pause_end.c */
-int	render_end(t_game *g);
-int	render_pause(t_game *g);
+int		render_end(t_game *g);
+int		render_pause(t_game *g);
 
 /* animation_utils_2.c */
 void	set_state(t_game *g, int state, int looping, int reversed);

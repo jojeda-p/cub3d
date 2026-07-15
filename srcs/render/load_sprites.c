@@ -6,40 +6,49 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 13:10:50 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/22 14:19:20 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/15 14:56:27 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "mlx.h"
 
-void	load_sprite_textures(t_game *g)
+static int	load_sprite_frames(t_game *g, int i)
+{
+	int	j;
+
+	j = 0;
+	while (j < g->sprite[i].num_frames)
+	{
+		g->sprite[i].frames[j].img = mlx_xpm_file_to_image(g->mlx,
+				g->sprite[i].frames[j].path, &g->sprite[i].frames[j].width,
+				&g->sprite[i].frames[j].height);
+		if (!g->sprite[i].frames[j].img)
+			return (1);
+		g->sprite[i].frames[j].addr = mlx_get_data_addr(
+				g->sprite[i].frames[j].img, &g->sprite[i].frames[j].bpp,
+				&g->sprite[i].frames[j].line_len,
+				&g->sprite[i].frames[j].endian);
+		if (!g->sprite[i].frames[j].addr)
+			return (1);
+		g->sprite[i].collected = 0;
+		j++;
+	}
+	return (0);
+}
+
+int	load_sprite_textures(t_game *g)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 	while (i < g->config.sprite)
 	{
-		j = 0;
-		while (j < g->sprite[i].num_frames)
-		{
-			g->sprite[i].frames[j].img = mlx_xpm_file_to_image(g->mlx,
-					g->sprite[i].frames[j].path, &g->sprite[i].frames[j].width,
-					&g->sprite[i].frames[j].height);
-			if (!g->sprite[i].frames[j].img)
-				return ;
-			g->sprite[i].frames[j].addr = mlx_get_data_addr(
-					g->sprite[i].frames[j].img, &g->sprite[i].frames[j].bpp,
-					&g->sprite[i].frames[j].line_len,
-					&g->sprite[i].frames[j].endian);
-			if (!g->sprite[i].frames[j].addr)
-				return ;
-			g->sprite[i].collected = 0;
-			j++;
-		}
+		if (load_sprite_frames(g, i))
+			return (1);
 		i++;
 	}
+	return (0);
 }
 
 static void	cast_texture(t_game *g, int i)

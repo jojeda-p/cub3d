@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 17:42:35 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/09 13:57:17 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/15 14:10:50 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ int	parser(char *file, t_game *g)
 	if (matrix == NULL)
 		return (1);
 	if (parse_headline(matrix, g) == 1)
-		return (1);
+		return (free_matrix(matrix), 1);
 	if (parse_map(matrix, g) == 1)
-		return (1);
+		return (free_matrix(matrix), 1);
 	free_matrix(matrix);
 	return (0);
 }

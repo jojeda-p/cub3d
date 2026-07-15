@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 16:17:15 by josu              #+#    #+#             */
-/*   Updated: 2026/07/05 19:02:35 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/15 14:20:30 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ static void	free_textures(t_game *g)
 		mlx_destroy_image(g->mlx, g->pause_tex.img);
 	if (g->img.img)
 		mlx_destroy_image(g->mlx, g->img.img);
+	i = 0;
+	while (i < 4)
+	{
+		free(g->tex[i].path);
+		g->tex[i].path = NULL;
+		i++;
+	}
 }
 
 static void	free_sprites(t_game *g)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 13:20:33 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/26 16:02:12 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/15 14:19:32 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,15 @@ static char	**alloc_grid(char **grid, int size)
 	{
 		copy[i] = malloc(sizeof(char) * (ft_strlen(grid[i]) + 1));
 		if (!copy[i])
+		{
+			while (i > 0)
+			{
+				i--;
+				free(copy[i]);
+			}
+			free(copy);
 			return (NULL);
+		}
 		i++;
 	}
 	copy[i] = NULL;
@@ -98,6 +106,8 @@ int	parse_flood_fill(t_game *g)
 
 	g->map.open = 0;
 	map = copy_grid(g->map.grid);
+	if (!map)
+		return (print_error(13, "map"));
 	x = (int)(g->player.x / g->map.tile_size - 0.5);
 	y = (int)(g->player.y / g->map.tile_size - 0.5);
 	map_flood_fill(map, x, y, g);

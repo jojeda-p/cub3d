@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 14:58:04 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/05 18:26:19 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/15 15:09:51 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	matrix_to_grid(char **matrix, t_game *g)
 	return (0);
 }
 
-static void	get_player(t_game *g)
+void	get_player(t_game *g)
 {
 	int	i;
 	int	j;
@@ -96,21 +96,6 @@ static void	get_player(t_game *g)
 	}
 }
 
-static void	init_map(t_game *g)
-{
-	g->map.width = get_width(g);
-	g->map.height = get_height(g);
-	get_player(g);
-	g->map.tile_size = 64;
-	g->player.x = (g->player.x * g->map.tile_size);
-	g->player.y = (g->player.y * g->map.tile_size);
-	g->config.sprite = g->map.anim;
-	g->config.door = g->map.door;
-	g->sprite = malloc(sizeof(t_sprite) * g->config.sprite);
-	g->door = malloc(sizeof(t_door) * g->config.door);
-	g->config.sprite_counter = 0;
-}
-
 int	parse_map(char **matrix, t_game *g)
 {
 	g->map.spawn = 0;
@@ -120,7 +105,12 @@ int	parse_map(char **matrix, t_game *g)
 		return (1);
 	if (matrix_to_grid(matrix, g) == 1)
 		return (1);
-	init_map(g);
+	if (init_map(g) == 1)
+	{
+		free_matrix(g->map.grid);
+		g->map.grid = NULL;
+		return (1);
+	}
 	if (parse_flood_fill(g) == 1)
 		return (1);
 	load_sprite(g);

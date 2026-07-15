@@ -47,15 +47,19 @@ SRC_FILES   =	main.c \
 				render/progress.c \
 				render/crosshair.c \
 				utils/utils.c \
+				utils/utils2.c \
 				movement/movement.c \
 				movement/directions.c \
+				movement/update_movement.c \
 				input/input.c \
 				init/window.c \
 				parse/parse.c \
 				parse/parse_error.c \
 				parse/parse_headline_utils.c \
+				parse/parse_headline_utils2.c \
 				parse/parse_headline.c \
 				parse/parse_matrix.c \
+				parse/parse_init_map.c \
 				parse/parse_map.c \
 				parse/parse_map_utils.c \
 				parse/parse_map_2.c \
@@ -65,6 +69,10 @@ SRC_FILES   =	main.c \
 				animations/animations_utils.c \
 				animations/animations_utils_2.c \
 				animations/animations_logic.c \
+				animations/weapon_state.c \
+				animations/sprint.c \
+				animations/blocking_state.c \
+				animations/load_animations.c \
 				animations/animations.c
 
 

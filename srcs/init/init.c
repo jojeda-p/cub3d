@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 17:05:46 by julepere          #+#    #+#             */
-/*   Updated: 2026/07/10 21:23:36 by julepere         ###   ########.fr       */
+/*   Updated: 2026/07/15 18:38:25 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	init_weapon(t_game *g)
 	g->weapon.next_state = IDLE;
 	g->weapon.current = 0;
 	g->weapon.tick = 0;
-	g->weapon.speed = 15;
+	g->weapon.speed = 8;
 	g->weapon.blocking = 0;
 	g->weapon.hidden = 0;
 	g->weapon.looping = 1;

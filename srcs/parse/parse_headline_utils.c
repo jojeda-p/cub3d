@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 13:32:41 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/09 13:48:55 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/15 18:14:16 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,23 +105,24 @@ int	get_color_hex(char *color, char *s)
 	return ((r << 16) | (g << 8) | b);
 }
 
-int	check_color_number(char *color, char *s)
+int check_color_number(char *color, char *s)
 {
-	int	i;
-
-	i = 0;
-	while (color[i])
-	{
-		if (!ft_isnum(color[i])
-			&& (color[i] && (!ft_isnum(color[i + 1]) || color[i + 1] == ','))
-			&& (color[i] && (!ft_isnum(color[i + 2]) || color[i + 2] == ',')))
-			return (print_error(9, s));
-		if (ft_isnum(color[i]) && ft_isnum(color[i + 1])
-			&& ft_isnum(color[i + 2]) && ft_isnum(color[i + 3]))
-			return (print_error(9, s));
-		while (ft_isnum(color[i]))
-			i++;
-		i++;
-	}
-	return (0);
+    int i = 0;
+    while (color[i])
+    {
+        if (!ft_isnum(color[i]))
+        {
+            if (color[i+1] && !ft_isnum(color[i+1]) && color[i+2] && !ft_isnum(color[i+2]))
+                return (print_error(9, s));
+        }
+        if (ft_isnum(color[i]) && color[i+1] && ft_isnum(color[i+1])
+            && color[i+2] && ft_isnum(color[i+2]) && color[i+3] && ft_isnum(color[i+3]))
+            return (print_error(9, s));
+            
+        while (color[i] && ft_isnum(color[i]))
+            i++;
+        if (color[i])
+            i++;
+    }
+    return (0);
 }

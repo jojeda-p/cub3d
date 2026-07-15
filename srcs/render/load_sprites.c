@@ -6,12 +6,30 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 13:10:50 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/15 14:56:27 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/15 17:33:56 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "mlx.h"
+#include <stdio.h>
+
+static void	destroy_loaded_frames(t_game *g, t_sprite *sprite, int loaded)
+{
+	int	i;
+
+	i = 0;
+	while (i < loaded)
+	{
+		if (sprite->frames[i].img)
+		{
+			mlx_destroy_image(g->mlx, sprite->frames[i].img);
+			sprite->frames[i].img = NULL;
+			sprite->frames[i].addr = NULL;
+		}
+		i++;
+	}
+}
 
 static int	load_sprite_frames(t_game *g, int i)
 {
@@ -24,13 +42,17 @@ static int	load_sprite_frames(t_game *g, int i)
 				g->sprite[i].frames[j].path, &g->sprite[i].frames[j].width,
 				&g->sprite[i].frames[j].height);
 		if (!g->sprite[i].frames[j].img)
-			return (1);
+			return (destroy_loaded_frames(g, &g->sprite[i], j), 1);
 		g->sprite[i].frames[j].addr = mlx_get_data_addr(
 				g->sprite[i].frames[j].img, &g->sprite[i].frames[j].bpp,
 				&g->sprite[i].frames[j].line_len,
 				&g->sprite[i].frames[j].endian);
 		if (!g->sprite[i].frames[j].addr)
-			return (1);
+		{
+			mlx_destroy_image(g->mlx, g->sprite[i].frames[j].img);
+			g->sprite[i].frames[j].img = NULL;
+			return (destroy_loaded_frames(g, &g->sprite[i], j), 1);
+		}
 		g->sprite[i].collected = 0;
 		j++;
 	}

@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 16:17:15 by josu              #+#    #+#             */
-/*   Updated: 2026/07/15 14:20:30 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/15 17:10:53 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static void	free_sprites(t_game *g)
 				mlx_destroy_image(g->mlx, g->sprite[i].frames[j].img);
 			j++;
 		}
+		free(g->sprite[i].frames);
 		i++;
 	}
 	free(g->sprite);

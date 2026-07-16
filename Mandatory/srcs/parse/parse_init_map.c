@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 15:06:38 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/16 12:35:42 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/16 13:54:18 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,5 @@ int	init_map(t_game *g)
 	g->map.tile_size = 64;
 	g->player.x = (g->player.x * g->map.tile_size);
 	g->player.y = (g->player.y * g->map.tile_size);
-	g->config.sprite = g->map.anim;
-	g->config.door = g->map.door;
-	g->config.sprite_counter = 0;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 14:58:04 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/16 12:44:38 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/16 13:54:36 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,6 @@ void	get_player(t_game *g)
 int	parse_map(char **matrix, t_game *g)
 {
 	g->map.spawn = 0;
-	g->map.anim = 0;
-	g->map.door = 0;
 	if (map_char_parse(matrix, g) == 1)
 		return (1);
 	if (matrix_to_grid(matrix, g) == 1)

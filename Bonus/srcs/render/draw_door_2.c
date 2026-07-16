@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_door_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 15:23:23 by josu              #+#    #+#             */
-/*   Updated: 2026/06/26 15:26:52 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/16 16:02:07 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	get_door_color(t_game *g, int i, int tex_x, int tex_y)
 			j++;
 		}
 	}
-	color = ft_fog(g, color);
+	color = ft_fog(color, g->door[i].perp_dist);
 	return ((int)color);
 }
 
@@ -64,20 +64,13 @@ static void	draw_door_loop(t_game *g, int column, int i)
 
 void	draw_door_column(t_game *g, int column, int i)
 {
-	double	old_dist;
-
-	old_dist = g->ray.perp_dist;
-	g->ray.perp_dist = g->door[i].perp_dist;
 	if (g->door[i].line_height <= 0 || g->door[i].tex.height <= 0)
-	{
-		g->ray.perp_dist = old_dist;
 		return ;
-	}
 	g->door[i].step = (double)g->door[i].tex.height
 		/ g->door[i].line_height;
-	g->door[i].tex_pos = (g->door[i].draw_start - g->config.height / 2
+	g->door[i].tex_pos = (g->door[i].draw_start
+			- g->config.height / 2
 			+ g->door[i].line_height / 2) * g->door[i].step;
 	draw_door_loop(g, column, i);
 	g->ray.z_buf[column] = g->door[i].perp_dist;
-	g->ray.perp_dist = old_dist;
 }

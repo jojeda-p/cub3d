@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 16:08:23 by julepere          #+#    #+#             */
-/*   Updated: 2026/06/23 15:40:36 by julepere         ###   ########.fr       */
+/*   Updated: 2026/07/16 15:53:35 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,16 @@ int	key_pause(t_game *g)
 {
 	if (g->state == STATE_GAME)
 	{
+		g->input = (t_input){0};
+		g->player.vel_x = 0;
+		g->player.vel_y = 0;
 		g->state = STATE_PAUSE;
 		mlx_mouse_show(g->mlx, g->win);
 	}
-	else
+	else if (g->state == STATE_PAUSE)
 	{
 		g->state = STATE_GAME;
+		g->camera.last_mouse_x = -1;
 		mlx_mouse_hide(g->mlx, g->win);
 	}
 	return (0);
@@ -34,6 +38,8 @@ int	key_press(int keycode, t_game *g)
 		return (close_window(g));
 	if (keycode == 112)
 		return (key_pause(g));
+	if (g->state != STATE_GAME)
+		return (0);
 	if (keycode == 119)
 		g->input.up = 1;
 	if (keycode == 115)
@@ -57,8 +63,6 @@ int	key_press(int keycode, t_game *g)
 
 int	key_release(int keycode, t_game *g)
 {
-	if (g->state == STATE_PAUSE)
-		return (0);
 	if (keycode == 119)
 		g->input.up = 0;
 	if (keycode == 115)
@@ -84,7 +88,7 @@ int	mouse_press(int button, int x, int y, t_game *g)
 {
 	(void)x;
 	(void)y;
-	if (g->state == STATE_PAUSE)
+	if (g->state != STATE_GAME)
 		return (0);
 	if (button == 1)
 		g->input.shoot = 1;
@@ -97,8 +101,6 @@ int	mouse_release(int button, int x, int y, t_game *g)
 {
 	(void)x;
 	(void)y;
-	if (g->state == STATE_PAUSE)
-		return (0);
 	if (button == 1)
 		g->input.shoot = 0;
 	if (button == 3)

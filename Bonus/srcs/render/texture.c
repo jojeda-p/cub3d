@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:30:48 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/15 14:24:59 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/16 16:00:34 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,18 @@ t_tex	get_wall_texture(t_game *g)
 	return (g->tex[1]);
 }
 
-int	ft_fog(t_game *g, int color)
+int	ft_fog(int color, double distance)
 {
 	double	factor;
 	int		r;
-	int		b;
 	int		gr;
+	int		b;
 
-	factor = 1.0 - (g->ray.perp_dist / 10.0);
+	factor = 1.0 - (distance / 10.0);
 	if (factor < 0.0)
 		factor = 0.0;
+	if (factor > 1.0)
+		factor = 1.0;
 	r = ((color >> 16) & 0xFF) * factor;
 	gr = ((color >> 8) & 0xFF) * factor;
 	b = (color & 0xFF) * factor;
@@ -93,7 +95,7 @@ int	get_tex_color(t_game *g, t_tex texture, int tex_x, int tex_y)
 			i++;
 		}
 	}
-	color = ft_fog(g, color);
+	color = ft_fog(color, g->ray.perp_dist);
 	return ((int)color);
 }
 

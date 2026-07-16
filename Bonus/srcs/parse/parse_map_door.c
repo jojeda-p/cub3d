@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_door.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 16:01:30 by josu              #+#    #+#             */
-/*   Updated: 2026/06/26 16:13:04 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/16 15:55:20 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,41 @@ void	mark_door_anim(char c, t_game *g, int x, int y)
 		g->door[g->map.door].map_y = y * g->map.tile_size + g->map.tile_size
 			/ 2;
 		g->door[g->map.door].open_progress = 0.0;
-		g->door[g->map.door].open_progress = 0.0;
 		g->door[g->map.door].target_open = 0;
 	}
 }
 
+static char	map_cell(char **map, int y, int x)
+{
+	if (y < 0 || x < 0 || !map[y])
+		return (' ');
+	if (x >= (int)ft_strlen(map[y]))
+		return (' ');
+	return (map[y][x]);
+}
+
 static int	is_valid_door(char **map, int i, int j)
 {
-	if (i == 0 || j == 0)
-		return (0);
-	if (!map[i + 1] || map[i][j + 1] == '\0')
-		return (0);
-	if (map[i - 1][j] == '1' && map[i + 1][j] == '1')
+	char	up;
+	char	down;
+	char	left;
+	char	right;
+
+	up = map_cell(map, i - 1, j);
+	down = map_cell(map, i + 1, j);
+	left = map_cell(map, i, j - 1);
+	right = map_cell(map, i, j + 1);
+	if (up == '1' && down == '1')
 		return (1);
-	if (map[i][j - 1] == '1' && map[i][j + 1] == '1')
+	if (left == '1' && right == '1')
 		return (1);
 	return (0);
 }
 
 static void	set_door_dir(t_game *g, char **map, int i, int j)
 {
-	if (map[i - 1][j] == '1' && map[i + 1][j] == '1')
+	if (map_cell(map, i - 1, j) == '1'
+		&& map_cell(map, i + 1, j) == '1')
 		g->door[g->map.door].dir = 1;
 	else
 		g->door[g->map.door].dir = 0;

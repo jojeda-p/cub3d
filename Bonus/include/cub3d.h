@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/15 15:20:55 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/16 15:46:14 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ typedef struct s_img
 	int		bpp;
 	int		line_len;
 	int		endian;
+	int		width;
+	int		height;
 }	t_img;
 
 /*
@@ -333,6 +335,8 @@ typedef struct s_config
 	int	height;
 	int	floor_color;
 	int	ceiling_color;
+	int	floor_found;
+	int	ceiling_found;
 	int	sprite;
 	int	door;
 	int	frame_counter;
@@ -417,7 +421,7 @@ typedef struct s_game
 /* ************************************************************************** */
 
 /* init.c */
-void	init_game(t_game *g);
+int		init_game(t_game *g);
 
 /* window.c */
 int		init_window(t_game *g);
@@ -466,7 +470,7 @@ int		load_textures(t_game *g);
 t_tex	get_wall_texture(t_game *g);
 int		get_tex_x(t_game *g, t_tex texture);
 int		get_tex_color(t_game *g, t_tex texture, int tex_x, int tex_y);
-int		ft_fog(t_game *g, int color);
+int		ft_fog(int color, double distance);
 
 /* map.c */
 int		temp_init_map(t_game *g, char *file);
@@ -490,8 +494,7 @@ int		parse_headline(char **matrix, t_game *g);
 int		get_texture_path(t_game *g, char *s, char *path);
 int		parse_texture_name(char *path);
 char	*clean_path(char *path);
-int		get_color_hex(char *color, char *s);
-int		check_color_number(char *color, char *s);
+int		get_color_hex(char *color, int *hex);
 
 /* parse_headline_utils2.c */
 int		check_textures(t_game *g);
@@ -512,7 +515,7 @@ int		check_door(t_game *g, char **map);
 
 /* parse_map_utis.c */
 int		valid_char(char c);
-void	malloc_grid(char **matrix, t_game *g);
+int		malloc_grid(char **matrix, t_game *g);
 int		get_width(t_game *g);
 int		get_height(t_game *g);
 void	get_dir(char dir, t_game *g);

@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 14:58:04 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/15 15:09:51 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/16 15:45:47 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,16 @@ static int	matrix_to_grid(char **matrix, t_game *g)
 	int	j;
 	int	k;
 
-	i = 6;
+	if (malloc_grid(matrix, g) != 0)
+		return (print_error(16, NULL));
+	i = g->map.init;
 	k = 0;
-	malloc_grid(matrix, g);
 	while (matrix[i])
 	{
 		j = 0;
-		while (matrix[i][j])
+		while (matrix[i][j] && matrix[i][j] != '\n')
 		{
-			if (matrix[i][j] == '\n')
-				g->map.grid[k][j] = '\0';
-			else
-				g->map.grid[k][j] = matrix[i][j];
+			g->map.grid[k][j] = matrix[i][j];
 			j++;
 		}
 		g->map.grid[k][j] = '\0';

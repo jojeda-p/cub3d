@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   progress.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 13:41:46 by josu              #+#    #+#             */
-/*   Updated: 2026/07/05 19:15:07 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/16 15:58:25 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,19 @@ static char	*get_progress_text(t_game *g)
 
 	counter = ft_itoa2(g->config.sprite_counter);
 	total = ft_itoa2(g->config.sprite);
+	if (!counter || !total)
+		return (free(counter), free(total), NULL);
 	tmp = ft_strjoin("PROGRESS : ", counter);
-	tmp2 = ft_strjoin(tmp, " / ");
-	text = ft_strjoin(tmp2, total);
 	free(counter);
-	free(total);
+	if (!tmp)
+		return (free(total), NULL);
+	tmp2 = ft_strjoin(tmp, " / ");
 	free(tmp);
+	if (!tmp2)
+		return (free(total), NULL);
+	text = ft_strjoin(tmp2, total);
 	free(tmp2);
+	free(total);
 	return (text);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   door.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 13:46:44 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/26 15:23:46 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/16 15:47:56 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,7 @@ void	update_doors(t_game *g)
 	da.pos_x = g->player.x / g->map.tile_size;
 	da.pos_y = g->player.y / g->map.tile_size;
 	while (da.i < g->config.door)
-	{
 		update_door_loop(&da, g);
-	}
 }
 
 int	load_door_texture(t_game *g)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/16 12:43:19 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/26 15:08:55 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/16 16:07:06 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,10 +130,10 @@ void	render_sprites(t_game *g)
 	int	i;
 
 	order_sprites(g);
+	check_sprite_pickup(g);
 	i = 0;
 	while (i < g->config.sprite)
 	{
-		check_sprite_pickup(g);
 		if (!g->sprite[i].collected)
 		{
 			calculate_sprite(g, i);

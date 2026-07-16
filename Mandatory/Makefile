@@ -29,20 +29,6 @@ LIBS        = $(MLX_LIB) -lm
 # ============================================================================ #
 #                                 SOURCES                                      #
 # ============================================================================ #
-# Norma: todos los .c deben estar listados explícitamente (sin wildcard)
-#
-# ⚠️  IMPORTANTE: esta lista es una PROPUESTA basada en los nombres de tus
-# archivos actuales. Solo tú sabes qué hace cada función internamente, así
-# que revisa y ajusta antes de compilar. Reglas generales del subject de
-# cub3D que usé para clasificar:
-#   - Mandatory: parseo del mapa, raycasting básico, texturas por cara,
-#     movimiento, rotación, colisiones, apertura/cierre de ventana con ESC.
-#   - Bonus (típico): puertas animadas, sprites/animaciones, minimapa,
-#     varias texturas de pared distintas por trigger, etc.
-# Archivos como pause_end.c, progress.c, crosshair.c, sprint.c o
-# weapon_state.c NO forman parte del subject estándar de cub3D: revisa si
-# realmente quieres que cuenten como mandatory o si son mejoras que deberían
-# ir a Bonus.
 
 SRC_FILES   =	main.c \
 				init/init.c \

@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 22:18:53 by julepere          #+#    #+#             */
-/*   Updated: 2026/07/15 15:15:14 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/16 15:59:33 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,11 @@ int	load_frames_loop(t_game *g, int state, char *base, char *name)
 	while (i < g->weapon.frame_count[state])
 	{
 		path = build_path(base, name, i + 1);
-		if (!path)
-			return (1);
+	if (!path)
+	{
+		free_frames_on_fail(g, state, i);
+		return (1);
+	}
 		if (load_frame(g, &g->weapon.frames[state][i], path))
 		{
 			free(path);

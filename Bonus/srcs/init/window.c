@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:38:27 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/15 14:32:28 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/16 15:41:14 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,15 @@ ademas rellena automaticamente las variales de img -> bbp, line_len y endian
 */
 static int	init_image(t_game *g)
 {
-	g->img.img = mlx_new_image(g->mlx, g->config.width, g->config.height);
+	g->img.width = g->config.width;
+	g->img.height = g->config.height;
+	g->img.img = mlx_new_image(g->mlx, g->img.width, g->img.height);
 	if (!g->img.img)
 		return (-1);
 	g->img.addr = mlx_get_data_addr(g->img.img, &g->img.bpp,
 			&g->img.line_len, &g->img.endian);
+	if (!g->img.addr)
+		return (-1);
 	return (0);
 }
 
@@ -56,17 +60,18 @@ int	init_window(t_game *g)
 	g->mlx = mlx_init();
 	if (!g->mlx)
 		return (-1);
-	g->win = mlx_new_window(g->mlx, g->config.width, g->config.height, "cub3d");
+	g->win = mlx_new_window(g->mlx, g->config.width,
+			g->config.height, "cub3d");
 	if (!g->win)
-		return (free_game(g), -1);
+		return (-1);
 	if (init_image(g) == -1)
-		return (free_game(g), -1);
+		return (-1);
 	if (load_textures(g) != 0)
-		return (free_game(g), -1);
+		return (-1);
 	if (load_sprite_textures(g) != 0)
-		return (free_game(g), -1);
+		return (-1);
 	if (load_weapon_anims(g) != 0)
-		return (free_game(g), -1);
+		return (-1);
 	mlx_loop_hook(g->mlx, render_g, g);
 	mlx_hook(g->win, 17, 0, close_window, g);
 	mlx_hook(g->win, 2, 1L << 0, key_press, g);

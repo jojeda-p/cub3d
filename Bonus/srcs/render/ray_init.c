@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 11:56:03 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/06/26 16:16:04 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/16 16:02:37 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,11 @@ void	pixel_put(t_img *img, int x, int y, int color)
 {
 	char	*dst;
 
-	if (!img || !img->addr || x < 0 || y < 0)
+	if (!img || !img->addr)
 		return ;
-	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
+	if (x < 0 || y < 0 || x >= img->width || y >= img->height)
+		return ;
+	dst = img->addr + (y * img->line_len
+			+ x * (img->bpp / 8));
 	*(unsigned int *)dst = (unsigned int)color;
 }

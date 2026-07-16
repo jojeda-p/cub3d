@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 15:01:56 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/16 13:23:12 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/16 16:05:14 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	check_textures(t_game *g)
 		return (print_error(5, "EA"));
 	if (!g->tex[3].path)
 		return (print_error(5, "WE"));
-	if (!g->config.ceiling_color)
+	if (!g->config.ceiling_found)
 		return (print_error(6, "C"));
-	if (!g->config.floor_color)
+	if (!g->config.floor_found)
 		return (print_error(6, "F"));
 	return (0);
 }

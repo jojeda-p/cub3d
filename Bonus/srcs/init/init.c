@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 17:05:46 by julepere          #+#    #+#             */
-/*   Updated: 2026/07/15 18:38:25 by julepere         ###   ########.fr       */
+/*   Updated: 2026/07/16 15:19:43 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	init_state(t_game *g)
 	g->end.img = NULL;
 }
 
-void	init_game(t_game *g)
+int	init_game(t_game *g)
 {
 	*g = (t_game){0};
 	g->config.width = 1000;
@@ -63,7 +63,6 @@ void	init_game(t_game *g)
 	g->camera.fov = 75.0;
 	g->camera.sensitivity = 0.0012;
 	g->camera.last_mouse_x = -1;
-	g->camera.fov = 75.0;
 	g->camera.walk_fov = 75.0;
 	g->camera.sprint_fov = 80.0;
 	g->player.rot_speed = 0.03;
@@ -77,5 +76,8 @@ void	init_game(t_game *g)
 	init_weapon(g);
 	init_state(g);
 	g->ray.z_buf = malloc(sizeof(double) * g->config.width);
+	if (!g->ray.z_buf)
+		return (1);
 	init_minimap(g);
+	return (0);
 }

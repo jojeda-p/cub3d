@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites_utils_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 15:30:50 by josu              #+#    #+#             */
-/*   Updated: 2026/07/05 18:23:42 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/16 16:00:59 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	get_sprite_color(t_game *g, int i, int tex_x, int tex_y)
 		return (0);
 	color = get_raw_color(tex, tex_x, tex_y);
 	if (color != 0xae17cc)
-		color = ft_fog(g, color);
+		color = ft_fog(color, g->sprite[i].transform_y);
 	return ((int)color);
 }
 

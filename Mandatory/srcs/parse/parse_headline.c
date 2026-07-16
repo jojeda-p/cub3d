@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:22:25 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/15 15:02:32 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/16 14:46:54 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,66 +42,72 @@ static int	parse_texture(char **matrix, t_game *g, char *s)
 	return (0);
 }
 
+static int	save_color(t_game *g, int value, char *s)
+{
+	if (s[0] == 'F')
+	{
+		if (g->config.floor_found)
+			return (print_error(17, s));
+		g->config.floor_color = value;
+		g->config.floor_found = 1;
+	}
+	else
+	{
+		if (g->config.ceiling_found)
+			return (print_error(17, s));
+		g->config.ceiling_color = value;
+		g->config.ceiling_found = 1;
+	}
+	return (0);
+}
+
 static int	process_color(t_game *g, char *raw, char *s)
 {
 	char	*color;
+	int		value;
 
 	color = ft_strdup(raw);
 	if (!color)
-		return (1);
+		return (print_error(16, NULL));
 	color = clean_path(color);
 	if (!color)
-		return (1);
-	if (check_color_number(color, s) == 1)
-		return (free(color), 1);
-	if (s[0] == 'F')
-		g->config.floor_color = get_color_hex(color, s);
-	else if (s[0] == 'C')
-		g->config.ceiling_color = get_color_hex(color, s);
-	if (g->config.floor_color == 1 || g->config.ceiling_color == 1)
-		return (free(color), 1);
+		return (print_error(16, NULL));
+	if (get_color_hex(color, &value) != 0)
+	{
+		free(color);
+		return (print_error(9, s));
+	}
 	free(color);
-	return (0);
+	return (save_color(g, value, s));
 }
 
 static int	parse_color(char **matrix, t_game *g, char *s)
 {
 	int	i;
+	int	found;
 
 	i = 0;
+	found = 0;
 	while (matrix[i] && i < g->map.init)
 	{
-		if (matrix[i][0] == s[0])
-			return (process_color(g, matrix[i] + 2, s));
-		i++;
-	}
-	return (print_error(6, s));
-}
-
-static void	get_map_init(char **matrix, t_game *g)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (matrix[i])
-	{
-		j = 0;
-		while (matrix[i][j])
+		if (matrix[i][0] == s[0]
+			&& (matrix[i][1] == ' ' || matrix[i][1] == '\t'))
 		{
-			if (matrix[i][j] != '1' && matrix[i][j] != ' ')
-				break ;
-			if (matrix[i][j + 1] == '\n')
-				g->map.init = i;
-			j++;
+			if (process_color(g, matrix[i] + 2, s) != 0)
+				return (1);
+			found = 1;
 		}
 		i++;
 	}
+	if (!found)
+		return (print_error(6, s));
+	return (0);
 }
 
 int	parse_headline(char **matrix, t_game *g)
 {
-	get_map_init(matrix, g);
+	if (get_map_init(matrix, g) != 0)
+		return (1);
 	if (parse_texture(matrix, g, "NO") != 0)
 		return (1);
 	if (parse_texture(matrix, g, "SO") != 0)

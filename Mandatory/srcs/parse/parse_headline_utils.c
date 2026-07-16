@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 13:32:41 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/16 13:27:07 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/16 14:51:15 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,86 +45,69 @@ int	get_texture_path(t_game *g, char *s, char *path)
 
 int	parse_texture_name(char *path)
 {
-	int	i;
+	int	len;
 
-	i = ft_strlen(path) - 1;
-	if (path[i] != 'm' || path[i - 1] != 'p' || path[i - 2] != 'x'
-		|| path[i - 3] != '.')
-		return (print_error(1, path));
+	if (!path)
+		return (1);
+	len = ft_strlen(path);
+	if (len < 4 || path[len - 4] != '.'
+		|| path[len - 3] != 'x'
+		|| path[len - 2] != 'p'
+		|| path[len - 1] != 'm')
+		return (1);
 	return (0);
 }
 
 char	*clean_path(char *path)
 {
-	int		i;
-	int		j;
 	char	*new;
+	int		start;
+	int		end;
+	int		i;
 
+	if (!path)
+		return (NULL);
+	start = 0;
+	while (path[start] == ' ' || path[start] == '\t')
+		start++;
+	end = ft_strlen(path);
+	while (end > start
+		&& (path[end - 1] == ' ' || path[end - 1] == '\t'))
+		end--;
+	new = malloc(sizeof(char) * (end - start + 1));
+	if (!new)
+		return (free(path), NULL);
 	i = 0;
-	while (path[i] && (path[i] == ' ' || path[i] == '\t'))
-		i++;
-	j = i;
-	while (path[j])
-		j++;
-	new = malloc(sizeof(char) * (j + 1));
-	j = i;
-	i = 0;
-	while (path[j])
-	{
-		new[i] = path[j];
-		i++;
-		j++;
-	}
+	while (start < end)
+		new[i++] = path[start++];
 	new[i] = '\0';
 	free(path);
 	return (new);
 }
 
-int	get_color_hex(char *color, char *s)
+static void	skip_spaces(char *color, int *i)
 {
-	int	r;
-	int	g;
-	int	b;
-	int	i;
-
-	r = ft_atoi_color(color);
-	if (r == -1)
-		return (print_error(9, s));
-	i = 0;
-	while (color[i] && ft_isnum(color[i]))
-		i++;
-	g = ft_atoi_color(color + i + 1);
-	if (g == -1)
-		return (print_error(9, s));
-	i++;
-	while (color[i] && ft_isnum(color[i]))
-		i++;
-	b = ft_atoi_color(color + i + 1);
-	if (b == -1)
-		return (print_error(9, s));
-	return ((r << 16) | (g << 8) | b);
+	while (color[*i] == ' ' || color[*i] == '\t')
+		(*i)++;
 }
 
-int check_color_number(char *color, char *s)
+int	get_component(char *color, int *i, int *value)
 {
-    int i;
+	int	digits;
 
-	i = 0;
-    while (color[i])
-    {
-        if (!ft_isnum(color[i]))
-        {
-            if (color[i+1] && !ft_isnum(color[i+1]) && color[i+2] && !ft_isnum(color[i+2]))
-                return (print_error(9, s));
-        }
-        if (ft_isnum(color[i]) && color[i+1] && ft_isnum(color[i+1])
-            && color[i+2] && ft_isnum(color[i+2]) && color[i+3] && ft_isnum(color[i+3]))
-            return (print_error(9, s));
-            
-        while (color[i] && ft_isnum(color[i]))
-            i++;
-        if (color[i])
-            i++;
-    }
-    return (0);
+	digits = 0;
+	*value = 0;
+	skip_spaces(color, i);
+	while (ft_isnum(color[*i]))
+	{
+		*value = (*value * 10) + color[*i] - '0';
+		if (*value > 255)
+			return (1);
+		(*i)++;
+		digits++;
+	}
+	skip_spaces(color, i);
+	if (digits == 0)
+		return (1);
+	return (0);
 }

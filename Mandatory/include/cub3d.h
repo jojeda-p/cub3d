@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/16 13:27:56 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/16 14:54:07 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,8 @@ typedef struct s_config
 	int	height;
 	int	floor_color;
 	int	ceiling_color;
+	int	floor_found;
+	int	ceiling_found;
 }	t_config;
 
 /*
@@ -202,12 +204,12 @@ typedef struct s_game
 /* ************************************************************************** */
 
 /* init.c */
-void	init_game(t_game *g);
+int		init_game(t_game *g);
 
 /* window.c */
 int		init_window(t_game *g);
 int		close_window(t_game *g);
-void	pixel_put(t_img *img, int x, int y, int color);
+void	pixel_put(t_game *g, int x, int y, int color);
 
 /* free.c */
 void	free_game(t_game *g);
@@ -259,11 +261,12 @@ int		parse_headline(char **matrix, t_game *g);
 int		get_texture_path(t_game *g, char *s, char *path);
 int		parse_texture_name(char *path);
 char	*clean_path(char *path);
-int		get_color_hex(char *color, char *s);
-int		check_color_number(char *color, char *s);
+int		get_component(char *color, int *i, int *value);
 
 /* parse_headline_utils2.c */
 int		check_textures(t_game *g);
+int		get_color_hex(char *color, int *hex);
+int		get_map_init(char **matrix, t_game *g);
 
 /* parse_init_map.c */
 int		init_map(t_game *g);
@@ -281,7 +284,7 @@ int		check_door(t_game *g, char **map);
 
 /* parse_map_utis.c */
 int		valid_char(char c);
-void	malloc_grid(char **matrix, t_game *g);
+int		malloc_grid(char **matrix, t_game *g);
 int		get_width(t_game *g);
 int		get_height(t_game *g);
 void	get_dir(char dir, t_game *g);

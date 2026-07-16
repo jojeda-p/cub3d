@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 13:34:06 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/16 12:39:16 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/16 14:41:22 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ static void	draw_floor_ceiling(t_game *g, int start, int end, int column)
 	i = 0;
 	while (i < start)
 	{
-		pixel_put(&g->img, column, i, g->config.ceiling_color);
+		pixel_put(g, column, i, g->config.ceiling_color);
 		i++;
 	}
 	i = end;
 	while (i < g->config.height)
 	{
-		pixel_put(&g->img, column, i, g->config.floor_color);
+		pixel_put(g, column, i, g->config.floor_color);
 		i++;
 	}
 }
@@ -55,7 +55,7 @@ static void	draw_wall_column(t_game *g, int column, t_tex texture)
 			tex_y = 0;
 		if (tex_y >= texture.height)
 			tex_y = texture.height - 1;
-		pixel_put(&g->img, column, y, get_tex_color(g, texture, tex_x, tex_y));
+		pixel_put(g, column, y, get_tex_color(g, texture, tex_x, tex_y));
 		tex_pos += step;
 		y++;
 	}

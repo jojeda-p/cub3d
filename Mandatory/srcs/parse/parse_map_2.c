@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 13:20:33 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/16 12:46:13 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/16 14:50:48 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,14 @@ static void	map_flood_fill(char **map, int x, int y, t_game *g)
 	map_flood_fill(map, x, y - 1, g);
 	map_flood_fill(map, x + 1, y, g);
 	map_flood_fill(map, x - 1, y, g);
+}
+
+int	valid_char(char c)
+{
+	if (c != ' ' && c != '0' && c != 'E' && c != 'S'
+		&& c != '1' && c != 'N' && c != 'W' && c != '\n')
+		return (0);
+	return (1);
 }
 
 static char	**alloc_grid(char **grid, int size)

@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 13:42:48 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/16 12:36:26 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/16 14:50:41 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,48 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	valid_char(char c)
+static int	count_rows(char **matrix, int start)
 {
-	if (c != ' ' && c != '0' && c != 'E' && c != 'S'
-		&& c != '1' && c != 'N' && c != 'W' && c != '\n')
-		return (0);
-	return (1);
-}
+	int	i;
+	int	k;
 
-void	malloc_grid(char **matrix, t_game *g)
-{
-	int		i;
-	int		j;
-	int		k;
-
-	i = 6;
+	i = start;
 	k = 0;
 	while (matrix[i])
 	{
 		i++;
 		k++;
 	}
-	g->map.grid = malloc(sizeof(char *) * (k + 1));
-	i = 6;
+	return (k);
+}
+
+int	malloc_grid(char **matrix, t_game *g)
+{
+	int	i;
+	int	k;
+	int	rows;
+
+	rows = count_rows(matrix, g->map.init);
+	g->map.grid = malloc(sizeof(char *) * (rows + 1));
+	if (!g->map.grid)
+		return (1);
+	i = g->map.init;
 	k = 0;
 	while (matrix[i])
 	{
-		j = ft_strlen(matrix[i]) + 1;
-		g->map.grid[k] = malloc(sizeof(char) * j);
+		g->map.grid[k] = malloc(g->map.width + 1);
+		if (!g->map.grid[k])
+		{
+			g->map.grid[k] = NULL;
+			free_matrix(g->map.grid);
+			g->map.grid = NULL;
+			return (1);
+		}
 		i++;
 		k++;
 	}
 	g->map.grid[k] = NULL;
+	return (0);
 }
 
 int	get_width(t_game *g)

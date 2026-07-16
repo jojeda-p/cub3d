@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 13:32:41 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/15 18:14:16 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/16 13:27:07 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,9 @@ int	get_color_hex(char *color, char *s)
 
 int check_color_number(char *color, char *s)
 {
-    int i = 0;
+    int i;
+
+	i = 0;
     while (color[i])
     {
         if (!ft_isnum(color[i]))

@@ -1,154 +1,51 @@
 # ============================================================================ #
-#                                 VARIABLES                                    #
+#                                 MAKEFILE RAÍZ                                #
+#         Delega la compilación en Mandatory/ (make) y Bonus/ (make bonus)     #
 # ============================================================================ #
 
-NAME        = cub3d
-
-CC          = cc
-RM          = rm -f
-
-CFLAGS      = -Wall -Wextra -Werror
-DEPFLAGS    = -MMD -MP
-
-SRC_DIR     = srcs
-OBJ_DIR     = objects
-INC_DIR     = include
-
-# ============================================================================ #
-#                            MINILIBX (linux)                                  #
-# ============================================================================ #
-
-MLX_DIR     = include/minilibx-linux
-MLX_LIB     = -L$(MLX_DIR) -lmlx -lXext -lX11
-
-INCLUDES    = -I$(INC_DIR) -I$(MLX_DIR)
-LIBS        = $(MLX_LIB) -lm
-
-# ============================================================================ #
-#                                 SOURCES                                     #
-# ============================================================================ #
-# Norma: todos los .c deben estar listados explícitamente (sin wildcard)
-
-SRC_FILES   =	main.c \
-				init/init.c \
-				init/free.c \
-				init/pause_end.c \
-				render/ray_init.c \
-				render/raycasting.c \
-				render/texture.c \
-				render/sprites.c \
-				render/sprites_utils.c \
-				render/sprites_utils_2.c \
-				render/load_sprites.c \
-				render/door.c \
-				render/door_aux.c \
-				render/draw_door.c \
-				render/draw_door_2.c \
-				render/progress.c \
-				render/crosshair.c \
-				utils/utils.c \
-				utils/utils2.c \
-				movement/movement.c \
-				movement/directions.c \
-				movement/update_movement.c \
-				input/input.c \
-				init/window.c \
-				parse/parse.c \
-				parse/parse_error.c \
-				parse/parse_headline_utils.c \
-				parse/parse_headline_utils2.c \
-				parse/parse_headline.c \
-				parse/parse_matrix.c \
-				parse/parse_init_map.c \
-				parse/parse_map.c \
-				parse/parse_map_utils.c \
-				parse/parse_map_2.c \
-				parse/parse_map_door.c \
-				minimap/minimap.c \
-				minimap/minimap_utils.c \
-				animations/animations_utils.c \
-				animations/animations_utils_2.c \
-				animations/animations_logic.c \
-				animations/weapon_state.c \
-				animations/sprint.c \
-				animations/blocking_state.c \
-				animations/load_animations.c \
-				animations/animations.c
-
-
-SRCS        = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
-OBJS        = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
-DEPS        = $(OBJS:.o=.d)
+MANDATORY_DIR = Mandatory
+BONUS_DIR     = Bonus
 
 # ============================================================================ #
 #                                  COLORES                                     #
 # ============================================================================ #
 
 DEF_COLOR   = \033[0;39m
-GRAY        = \033[0;90m
 RED         = \033[0;91m
 GREEN       = \033[0;92m
 YELLOW      = \033[0;93m
-BLUE        = \033[0;94m
-MAGENTA     = \033[0;95m
 CYAN        = \033[0;96m
-WHITE       = \033[0;97m
 
 # ============================================================================ #
 #                                   REGLAS                                     #
 # ============================================================================ #
 
-all: $(NAME)
+# make -> compila SOLO la parte mandatory (comportamiento por defecto)
+all:
+	@echo "$(CYAN)==> Compilando parte MANDATORY...$(DEF_COLOR)"
+	@$(MAKE) --no-print-directory -C $(MANDATORY_DIR)
 
-$(NAME): $(OBJS) $(MLX_DIR)/libmlx.a
-	@echo "$(YELLOW)Enlazando objetos...$(DEF_COLOR)"
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBS)
-	@echo "$(GREEN)✨ Cub3d compilado con éxito! ✨$(DEF_COLOR)"
-	@$(call PRINT_ASCII_ART)
+# make bonus -> compila SOLO la parte bonus
+bonus:
+	@echo "$(CYAN)==> Compilando parte BONUS...$(DEF_COLOR)"
+	@$(MAKE) --no-print-directory -C $(BONUS_DIR)
 
-# Compila MLX automáticamente (y falla con mensaje si no existe la carpeta)
-$(MLX_DIR)/libmlx.a:
-	@if [ ! -d $(MLX_DIR) ]; then \
-		echo "$(RED)Error: MiniLibX directory '$(MLX_DIR)' not found.$(DEF_COLOR)"; \
-		echo "$(YELLOW)Clona o copia MiniLibX dentro de '$(MLX_DIR)' y vuelve a ejecutar make.$(DEF_COLOR)"; \
-		exit 1; \
-	fi
-	@echo "$(MAGENTA)Compilando MiniLibX...$(DEF_COLOR)"
-	@$(MAKE) -C $(MLX_DIR)
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(dir $@)
-	@echo "$(CYAN)Compilando: $(GRAY)$<$(DEF_COLOR)"
-	@$(CC) $(CFLAGS) $(DEPFLAGS) $(INCLUDES) -c $< -o $@
-
+# make clean -> limpia objetos de AMBAS partes (si existen)
 clean:
-	@echo "$(RED)Limpiando archivos objeto...$(DEF_COLOR)"
-	@$(RM) $(OBJS) $(DEPS)
+	@$(MAKE) --no-print-directory -C $(MANDATORY_DIR) clean
+	@$(MAKE) --no-print-directory -C $(BONUS_DIR) clean
 
-fclean: clean
-	@echo "$(RED)Eliminando ejecutable...$(DEF_COLOR)"
-	@$(RM) $(NAME)
+# make fclean -> limpia objetos + ejecutables de AMBAS partes
+fclean:
+	@$(MAKE) --no-print-directory -C $(MANDATORY_DIR) fclean
+	@$(MAKE) --no-print-directory -C $(BONUS_DIR) fclean
 
+# make re -> recompila mandatory (comportamiento por defecto, igual que "all")
 re: fclean all
 
-.PHONY: all clean fclean re
+# make re_bonus -> recompila bonus
+re_bonus:
+	@$(MAKE) --no-print-directory -C $(BONUS_DIR) fclean
+	@$(MAKE) --no-print-directory -C $(BONUS_DIR)
 
--include $(DEPS)
-
-# ============================================================================ #
-#                                 ASCII ART                                    #
-# ============================================================================ #
-
-define PRINT_ASCII_ART
-echo "$(BLUE)"
-echo " ▄████████ ███    █▄  ▀█████████▄   ▄██████▄  ████████▄  "
-echo "███    ███ ███    ███   ███    ███ ██      ██ ███   ▀███ "
-echo "███    █▀  ███    ███   ███    ███         ██ ███    ███ "
-echo "███        ███    ███  ▄███▄▄▄██▀      ▄███▀  ███    ███ "
-echo "███        ███    ███ ▀▀███▀▀▀██▄         ▀█▄ ███    ███ "
-echo "███    █▄  ███    ███   ███    ██▄ ██      ██ ███    ███ "
-echo "███    ███ ███    ███   ███    ███ ██      ██ ███   ▄███ "
-echo "████████▀  ████████▀  ▄█████████▀   ▀██████▀  ████████▀  "
-echo ""
-echo "$(DEF_COLOR)"
-endef
+.PHONY: all bonus clean fclean re re_bonus

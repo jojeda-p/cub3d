@@ -1,0 +1,147 @@
+# ============================================================================ #
+#                          MAKEFILE - MANDATORY                                #
+#              Colocar este archivo dentro de la carpeta Mandatory/            #
+#                          (renombrarlo a "Makefile")                          #
+# ============================================================================ #
+
+NAME        = ../cub3d
+
+CC          = cc
+RM          = rm -f
+
+CFLAGS      = -Wall -Wextra -Werror
+DEPFLAGS    = -MMD -MP
+
+SRC_DIR     = srcs
+OBJ_DIR     = objects
+INC_DIR     = include
+
+# ============================================================================ #
+#                            MINILIBX (linux)                                  #
+# ============================================================================ #
+
+MLX_DIR     = include/minilibx-linux
+MLX_LIB     = -L$(MLX_DIR) -lmlx -lXext -lX11
+
+INCLUDES    = -I$(INC_DIR) -I$(MLX_DIR)
+LIBS        = $(MLX_LIB) -lm
+
+# ============================================================================ #
+#                                 SOURCES                                      #
+# ============================================================================ #
+# Norma: todos los .c deben estar listados explícitamente (sin wildcard)
+#
+# ⚠️  IMPORTANTE: esta lista es una PROPUESTA basada en los nombres de tus
+# archivos actuales. Solo tú sabes qué hace cada función internamente, así
+# que revisa y ajusta antes de compilar. Reglas generales del subject de
+# cub3D que usé para clasificar:
+#   - Mandatory: parseo del mapa, raycasting básico, texturas por cara,
+#     movimiento, rotación, colisiones, apertura/cierre de ventana con ESC.
+#   - Bonus (típico): puertas animadas, sprites/animaciones, minimapa,
+#     varias texturas de pared distintas por trigger, etc.
+# Archivos como pause_end.c, progress.c, crosshair.c, sprint.c o
+# weapon_state.c NO forman parte del subject estándar de cub3D: revisa si
+# realmente quieres que cuenten como mandatory o si son mejoras que deberían
+# ir a Bonus.
+
+SRC_FILES   =	main.c \
+				init/init.c \
+				init/free.c \
+				init/window.c \
+				render/ray_init.c \
+				render/raycasting.c \
+				render/texture.c \
+				utils/utils.c \
+				utils/utils2.c \
+				movement/movement.c \
+				movement/directions.c \
+				movement/update_movement.c \
+				input/input.c \
+				parse/parse.c \
+				parse/parse_error.c \
+				parse/parse_headline_utils.c \
+				parse/parse_headline_utils2.c \
+				parse/parse_headline.c \
+				parse/parse_matrix.c \
+				parse/parse_init_map.c \
+				parse/parse_map.c \
+				parse/parse_map_utils.c \
+				parse/parse_map_2.c
+
+
+SRCS        = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
+OBJS        = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
+DEPS        = $(OBJS:.o=.d)
+
+# ============================================================================ #
+#                                  COLORES                                     #
+# ============================================================================ #
+
+DEF_COLOR   = \033[0;39m
+GRAY        = \033[0;90m
+RED         = \033[0;91m
+GREEN       = \033[0;92m
+YELLOW      = \033[0;93m
+BLUE        = \033[0;94m
+MAGENTA     = \033[0;95m
+CYAN        = \033[0;96m
+WHITE       = \033[0;97m
+
+# ============================================================================ #
+#                                   REGLAS                                     #
+# ============================================================================ #
+
+all: $(NAME)
+
+$(NAME): $(OBJS) $(MLX_DIR)/libmlx.a
+	@echo "$(YELLOW)Enlazando objetos (mandatory)...$(DEF_COLOR)"
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBS)
+	@echo "$(GREEN)✨ Cub3d (mandatory) compilado con éxito! ✨$(DEF_COLOR)"
+	@$(call PRINT_ASCII_ART)
+
+# Compila MLX automáticamente (y falla con mensaje si no existe la carpeta)
+$(MLX_DIR)/libmlx.a:
+	@if [ ! -d $(MLX_DIR) ]; then \
+		echo "$(RED)Error: MiniLibX directory '$(MLX_DIR)' not found.$(DEF_COLOR)"; \
+		echo "$(YELLOW)Clona o copia MiniLibX dentro de '$(MLX_DIR)' y vuelve a ejecutar make.$(DEF_COLOR)"; \
+		exit 1; \
+	fi
+	@echo "$(MAGENTA)Compilando MiniLibX...$(DEF_COLOR)"
+	@$(MAKE) -C $(MLX_DIR)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	@echo "$(CYAN)Compilando: $(GRAY)$<$(DEF_COLOR)"
+	@$(CC) $(CFLAGS) $(DEPFLAGS) $(INCLUDES) -c $< -o $@
+
+clean:
+	@echo "$(RED)Limpiando archivos objeto (mandatory)...$(DEF_COLOR)"
+	@$(RM) $(OBJS) $(DEPS)
+
+fclean: clean
+	@echo "$(RED)Eliminando ejecutable (mandatory)...$(DEF_COLOR)"
+	@$(RM) $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re
+
+-include $(DEPS)
+
+# ============================================================================ #
+#                                 ASCII ART                                    #
+# ============================================================================ #
+
+define PRINT_ASCII_ART
+echo "$(BLUE)"
+echo " ▄████████ ███    █▄  ▀█████████▄   ▄██████▄  ████████▄  "
+echo "███    ███ ███    ███   ███    ███ ██      ██ ███   ▀███ "
+echo "███    █▀  ███    ███   ███    ███         ██ ███    ███ "
+echo "███        ███    ███  ▄███▄▄▄██▀      ▄███▀  ███    ███ "
+echo "███        ███    ███ ▀▀███▀▀▀██▄         ▀█▄ ███    ███ "
+echo "███    █▄  ███    ███   ███    ██▄ ██      ██ ███    ███ "
+echo "███    ███ ███    ███   ███    ███ ██      ██ ███   ▄███ "
+echo "████████▀  ████████▀  ▄█████████▀   ▀██████▀  ████████▀  "
+echo ""
+echo "$(DEF_COLOR)"
+endef

@@ -12,20 +12,19 @@ RM          = rm -f
 CFLAGS      = -Wall -Wextra -Werror
 DEPFLAGS    = -MMD -MP
 
-SRC_DIR     = srcs
+SRC_DIR		= srcs
 OBJ_DIR     = objects
-INC_DIR     = include
+INC_DIR		= include
 
 # ============================================================================ #
 #                            MINILIBX (linux)                                  #
 # ============================================================================ #
 
-MLX_DIR     = include/minilibx-linux
-MLX_LIB     = -L$(MLX_DIR) -lmlx -lXext -lX11
+MLX_DIR		= ../include/minilibx-linux
+MLX_LIB		= -L$(MLX_DIR) -lmlx -lXext -lX11
 
-INCLUDES    = -I$(INC_DIR) -I$(MLX_DIR)
-LIBS        = $(MLX_LIB) -lm
-
+INCLUDES	= -I$(INC_DIR) -I$(MLX_DIR)
+LIBS		= $(MLX_LIB) -lm
 # ============================================================================ #
 #                                 SOURCES                                      #
 # ============================================================================ #

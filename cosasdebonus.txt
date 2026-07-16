@@ -1,0 +1,16 @@
+-minimapa.
+-colision que no bloquea contra las paredes
+-sistema relista de fisicas de inercia
+-aumento realista de peso e influencia directa en el movimiento al recoger objectos
+-animaciones de armas con transiciones inteligentes
+	-al sprintar solo puedes SPECIAL y RECARGA
+	-las animaciones se transicionan dinamicamente
+	-apuntado cancela sprint
+-sprint solo hacia alante
+-(FOV al sprintar)
+-puertas apertura y cierre automatico
+
+
+Cosas pendientes:
+-aumento de peso
+-sprint mientras apuntas

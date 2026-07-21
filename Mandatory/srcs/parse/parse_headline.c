@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_headline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:22:25 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/16 14:46:54 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/21 20:15:11 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ static int	parse_color(char **matrix, t_game *g, char *s)
 int	parse_headline(char **matrix, t_game *g)
 {
 	if (get_map_init(matrix, g) != 0)
+		return (1);
+	if (validate_header(matrix, g) != 0)
 		return (1);
 	if (parse_texture(matrix, g, "NO") != 0)
 		return (1);

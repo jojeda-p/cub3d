@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/16 14:54:07 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/21 20:14:37 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,6 +267,7 @@ int		get_component(char *color, int *i, int *value);
 int		check_textures(t_game *g);
 int		get_color_hex(char *color, int *hex);
 int		get_map_init(char **matrix, t_game *g);
+int		validate_header(char **matrix, t_game *g);
 
 /* parse_init_map.c */
 int		init_map(t_game *g);

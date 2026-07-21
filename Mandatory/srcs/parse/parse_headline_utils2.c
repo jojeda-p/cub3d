@@ -3,15 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   parse_headline_utils2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 15:01:56 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/16 14:47:57 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/21 20:44:34 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <stdio.h>
+
+int	validate_header(char **matrix, t_game *g)
+{
+	int	i;
+
+	i = 0;
+	while (i < g->map.init)
+	{
+		if (matrix[i][0] == '\0')
+			;
+		else if ((matrix[i][0] == 'N' && matrix[i][1] == 'O'
+				&& (matrix[i][2] == ' ' || matrix[i][2] == '\t'))
+			|| (matrix[i][0] == 'S' && matrix[i][1] == 'O'
+				&& (matrix[i][2] == ' ' || matrix[i][2] == '\t'))
+			|| (matrix[i][0] == 'E' && matrix[i][1] == 'A'
+				&& (matrix[i][2] == ' ' || matrix[i][2] == '\t'))
+			|| (matrix[i][0] == 'W' && matrix[i][1] == 'E'
+				&& (matrix[i][2] == ' ' || matrix[i][2] == '\t'))
+			|| (matrix[i][0] == 'F'
+				&& (matrix[i][1] == ' ' || matrix[i][1] == '\t'))
+			|| (matrix[i][0] == 'C'
+				&& (matrix[i][1] == ' ' || matrix[i][1] == '\t')))
+			;
+		else
+			return (print_error(10, "header"));
+		i++;
+	}
+	return (0);
+}
 
 int	check_textures(t_game *g)
 {

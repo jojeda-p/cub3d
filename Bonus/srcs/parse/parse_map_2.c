@@ -3,16 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 13:20:33 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/21 13:36:52 by julepere         ###   ########.fr       */
+/*   Updated: 2026/07/21 14:09:09 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 #include <stdio.h>
 #include <stdlib.h>
+
+int	valid_char(char c)
+{
+	if (c != ' ' && c != '0' && c != 'E' && c != 'S' && c != 'A'
+		&& c != '1' && c != 'N' && c != 'W' && c != '\n' && c != 'D')
+		return (0);
+	return (1);
+}
 
 static void	map_flood_fill(char **map, int x, int y, t_game *g)
 {

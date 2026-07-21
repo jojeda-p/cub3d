@@ -6,11 +6,11 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 13:03:29 by julepere          #+#    #+#             */
-/*   Updated: 2026/07/10 21:22:31 by julepere         ###   ########.fr       */
+/*   Updated: 2026/07/21 13:36:52 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 #include "mlx.h"
 #include <math.h>
 
@@ -18,7 +18,7 @@ void	move_forward(t_game *g)
 {
 	double	accel;
 
-	accel = g->player.force / g->player.mass;
+	accel = (g->player.force / g->player.mass) * 1.0;
 	g->player.vel_x += g->player.dir_x * accel;
 	g->player.vel_y += g->player.dir_y * accel;
 }
@@ -27,7 +27,7 @@ void	move_backward(t_game *g)
 {
 	double	accel;
 
-	accel = g->player.force / g->player.mass;
+	accel = (g->player.force / g->player.mass) * 0.6;
 	g->player.vel_x -= g->player.dir_x * accel;
 	g->player.vel_y -= g->player.dir_y * accel;
 }
@@ -36,7 +36,7 @@ void	move_left(t_game *g)
 {
 	double	accel;
 
-	accel = g->player.force / g->player.mass;
+	accel = (g->player.force / g->player.mass) * 0.8;
 	g->player.vel_x += g->player.dir_y * accel;
 	g->player.vel_y -= g->player.dir_x * accel;
 }
@@ -45,7 +45,7 @@ void	move_right(t_game *g)
 {
 	double	accel;
 
-	accel = g->player.force / g->player.mass;
+	accel = (g->player.force / g->player.mass) * 0.8;
 	g->player.vel_x -= g->player.dir_y * accel;
 	g->player.vel_y += g->player.dir_x * accel;
 }

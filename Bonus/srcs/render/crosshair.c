@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   crosshair.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 21:26:10 by julepere          #+#    #+#             */
-/*   Updated: 2026/07/15 12:38:50 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/21 13:43:52 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	draw_crosshair(t_game *g)
 {
@@ -19,6 +19,8 @@ void	draw_crosshair(t_game *g)
 	int	offset;
 	int	color;
 
+	if (g->weapon.state == AIM || g->weapon.state == AIM_IN)
+		return ;
 	center_x = g->config.width / 2;
 	center_y = g->config.height / 2;
 	color = 0xFFFFFF;

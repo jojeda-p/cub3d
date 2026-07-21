@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:10:05 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/16 15:48:53 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/21 13:36:52 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 #include <math.h>
 #include "mlx.h"
 #include <stdio.h>
@@ -21,13 +21,22 @@
 static void	apply_physics(t_game *g)
 {
 	double	speed;
+	double	d;
+	double	current_max;
 
+	d = (g->player.vel_x * g->player.dir_x + g->player.vel_y * g->player.dir_y);
+	if (d > 0.1)
+		current_max = g->player.max_speed;
+	else if (d < -0.1)
+		current_max = g->player.max_speed * 0.55;
+	else
+		current_max = g->player.max_speed * 0.75;
 	speed = sqrt(g->player.vel_x * g->player.vel_x
 			+ g->player.vel_y * g->player.vel_y);
-	if (speed > g->player.max_speed)
+	if (speed > current_max)
 	{
-		g->player.vel_x = (g->player.vel_x / speed) * g->player.max_speed;
-		g->player.vel_y = (g->player.vel_y / speed) * g->player.max_speed;
+		g->player.vel_x = (g->player.vel_x / speed) * current_max;
+		g->player.vel_y = (g->player.vel_y / speed) * current_max;
 	}
 	g->player.vel_x *= (1.0 - g->player.friction);
 	g->player.vel_y *= (1.0 - g->player.friction);

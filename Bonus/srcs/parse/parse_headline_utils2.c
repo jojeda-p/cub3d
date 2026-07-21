@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_headline_utils2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 15:01:56 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/16 16:05:14 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/21 13:36:52 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	check_textures(t_game *g)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   progress.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 13:41:46 by josu              #+#    #+#             */
-/*   Updated: 2026/07/16 15:58:25 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/21 13:36:52 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 #include <stdlib.h>
 #include "mlx.h"
 

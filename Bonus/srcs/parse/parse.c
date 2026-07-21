@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 17:42:35 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/16 16:05:45 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/21 13:36:52 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 #include <fcntl.h>
 #include <stdio.h>
 #include <errno.h>

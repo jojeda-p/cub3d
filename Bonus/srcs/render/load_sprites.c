@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   load_sprites.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 13:10:50 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/15 17:33:56 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/21 13:36:52 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 #include "mlx.h"
 #include <stdio.h>
 

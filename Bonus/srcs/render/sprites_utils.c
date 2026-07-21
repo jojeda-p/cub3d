@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   sprites_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/19 10:31:27 by josu              #+#    #+#             */
-/*   Updated: 2026/07/05 18:05:02 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/21 13:36:52 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 #include <math.h>
 
 int	get_sprite_tex_x(t_game *g, int x, int i)

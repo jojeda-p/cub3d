@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   sprites_utils_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 15:30:50 by josu              #+#    #+#             */
-/*   Updated: 2026/07/16 16:00:59 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/21 13:36:52 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 #include <stdlib.h>
 
 static int	valid_sprite_pixel(t_tex *tex, int tex_x, int tex_y)

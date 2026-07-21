@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   draw_door.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 15:10:28 by josu              #+#    #+#             */
-/*   Updated: 2026/06/26 15:21:59 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/21 13:36:52 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 #include <math.h>
 
 static int	door_cast_out(t_game *g, t_door_aux *da)

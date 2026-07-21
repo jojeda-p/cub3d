@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 17:05:46 by julepere          #+#    #+#             */
-/*   Updated: 2026/07/16 15:19:43 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/21 13:36:51 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -69,7 +69,8 @@ int	init_game(t_game *g)
 	g->player.accel = 0.1;
 	g->player.force = 28.0;
 	g->player.mass = 100.0;
-	g->player.friction = 0.07;
+	g->player.friction = 0.12;
+	g->player.dir_friction = 0.82;
 	g->player.walk_speed = 1.8;
 	g->player.sprint_speed = 2.9;
 	g->player.max_speed = g->player.walk_speed;

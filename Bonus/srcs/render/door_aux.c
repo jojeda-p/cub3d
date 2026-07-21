@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   door_aux.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 15:13:15 by josu              #+#    #+#             */
-/*   Updated: 2026/06/26 15:26:59 by josu             ###   ########.fr       */
+/*   Updated: 2026/07/21 13:36:52 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 #include <math.h>
 
 void	calculate_door_projection(t_game *g, int i)

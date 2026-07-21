@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/19 10:31:27 by josu              #+#    #+#             */
-/*   Updated: 2026/07/21 13:36:52 by julepere         ###   ########.fr       */
+/*   Updated: 2026/07/21 13:57:16 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	check_sprite_pickup(t_game *g)
 			{
 				g->sprite[i].collected = 1;
 				g->config.sprite_counter++;
+				g->player.mass += 50.0;
 				tile_x = (int)(g->sprite[i].x / g->map.tile_size);
 				tile_y = (int)(g->sprite[i].y / g->map.tile_size);
 				g->map.grid[tile_y][tile_x] = '0';

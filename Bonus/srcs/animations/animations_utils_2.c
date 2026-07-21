@@ -6,7 +6,7 @@
 /*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/05 14:07:12 by julepere          #+#    #+#             */
-/*   Updated: 2026/07/21 13:36:52 by julepere         ###   ########.fr       */
+/*   Updated: 2026/07/21 13:50:37 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,7 @@ int	is_moving(t_game *g)
 
 int	is_sprinting(t_game *g)
 {
-	return (g->input.shift && g->input.up);
+	return (g->input.shift && g->input.up
+		&& g->weapon.state != AIM
+		&& g->weapon.state != AIM_IN);
 }

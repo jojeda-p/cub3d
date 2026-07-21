@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 13:42:48 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/16 14:50:41 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/21 15:06:39 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	malloc_grid(char **matrix, t_game *g)
 	k = 0;
 	while (matrix[i])
 	{
-		g->map.grid[k] = malloc(g->map.width + 1);
+		g->map.grid[k] = malloc(sizeof(char) * (ft_strlen(matrix[i]) + 1));
 		if (!g->map.grid[k])
 		{
 			g->map.grid[k] = NULL;

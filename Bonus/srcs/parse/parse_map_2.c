@@ -6,21 +6,13 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 13:20:33 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/21 14:09:09 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/21 15:21:17 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-int	valid_char(char c)
-{
-	if (c != ' ' && c != '0' && c != 'E' && c != 'S' && c != 'A'
-		&& c != '1' && c != 'N' && c != 'W' && c != '\n' && c != 'D')
-		return (0);
-	return (1);
-}
 
 static void	map_flood_fill(char **map, int x, int y, t_game *g)
 {
@@ -49,6 +41,30 @@ static void	map_flood_fill(char **map, int x, int y, t_game *g)
 	map_flood_fill(map, x, y - 1, g);
 	map_flood_fill(map, x + 1, y, g);
 	map_flood_fill(map, x - 1, y, g);
+}
+
+static int	check_all_areas(char **map, t_game *g)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if (map[y][x] == '0')
+			{
+				map_flood_fill(map, x, y, g);
+				if (g->map.open)
+					return (1);
+			}
+			x++;
+		}
+		y++;
+	}
+	return (0);
 }
 
 static char	**alloc_grid(char **grid, int size)
@@ -109,22 +125,13 @@ static char	**copy_grid(char **grid)
 int	parse_flood_fill(t_game *g)
 {
 	char	**map;
-	int		x;
-	int		y;
 
 	g->map.open = 0;
 	map = copy_grid(g->map.grid);
 	if (!map)
-		return (print_error(13, "map"));
-	x = (int)(g->player.x / g->map.tile_size - 0.5);
-	y = (int)(g->player.y / g->map.tile_size - 0.5);
-	map_flood_fill(map, x, y, g);
-	if (g->map.open)
+		return (print_error(16, NULL));
+	if (check_all_areas(map, g))
 		return (free_matrix(map), print_error(13, "map"));
-	if (g->map.anim != 0 || g->map.door != 0)
-		return (free_matrix(map), print_error(14, "map"));
-	if (check_door(g, g->map.grid) == 1)
-		return (free_matrix(map), print_error(15, "map"));
 	free_matrix(map);
 	return (0);
 }

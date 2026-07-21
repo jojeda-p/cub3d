@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_movement.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 13:16:48 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/21 13:36:52 by julepere         ###   ########.fr       */
+/*   Updated: 2026/07/21 15:19:11 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	update_speed_limit(t_game *g)
 	g->camera.plane_y = g->player.dir_x * scale;
 }
 
+// mlx_mouse_hide(g->mlx, g->win);
 void	update_player(t_game *g)
 {
 	int		forward;
@@ -53,7 +54,6 @@ void	update_player(t_game *g)
 	angle = 0;
 	forward = (g->input.up != 0) - (g->input.down != 0);
 	strafe = (g->input.right != 0) - (g->input.left != 0);
-	mlx_mouse_hide(g->mlx, g->win);
 	if (forward == 1)
 		move_forward(g);
 	else if (forward == -1)

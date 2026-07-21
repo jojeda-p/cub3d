@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 13:44:51 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/21 13:36:52 by julepere         ###   ########.fr       */
+/*   Updated: 2026/07/21 15:20:58 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,12 @@ char	*ft_itoa(int n)
 		n /= 10;
 	}
 	return (ft_strdup(&buf[i]));
+}
+
+int	valid_char(char c)
+{
+	if (c != ' ' && c != '0' && c != 'E' && c != 'S' && c != 'A'
+		&& c != '1' && c != 'N' && c != 'W' && c != '\n' && c != 'D')
+		return (0);
+	return (1);
 }

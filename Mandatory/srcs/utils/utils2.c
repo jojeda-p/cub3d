@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 13:44:51 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/16 13:27:49 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/21 15:18:01 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,12 @@ char	*join_free(char *s1, char *s2)
 	result = ft_strjoin(s1, s2);
 	free(s1);
 	return (result);
+}
+
+int	valid_char(char c)
+{
+	if (c != ' ' && c != '0' && c != 'E' && c != 'S'
+		&& c != '1' && c != 'N' && c != 'W' && c != '\n')
+		return (0);
+	return (1);
 }

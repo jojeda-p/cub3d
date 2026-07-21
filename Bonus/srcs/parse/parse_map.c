@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 14:58:04 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/21 13:36:52 by julepere         ###   ########.fr       */
+/*   Updated: 2026/07/21 15:22:39 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,11 @@ int	parse_map(char **matrix, t_game *g)
 		return (1);
 	}
 	if (parse_flood_fill(g) == 1)
+	{
+		free_matrix(g->map.grid);
+		g->map.grid = NULL;
 		return (1);
+	}
 	load_sprite(g);
 	load_door(g);
 	return (0);

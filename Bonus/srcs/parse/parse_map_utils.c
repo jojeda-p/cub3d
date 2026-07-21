@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 13:42:48 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/21 14:08:54 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/21 16:12:40 by julepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,10 @@ void	get_dir(char dir, t_game *g)
 	}
 	else if (dir == 'W')
 	{
-		g->player.dir = 0;
+		g->player.dir = 3.141592654;
 	}
 	else if (dir == 'E')
 	{
-		g->player.dir = 3.141592654;
+		g->player.dir = 0;
 	}
 }

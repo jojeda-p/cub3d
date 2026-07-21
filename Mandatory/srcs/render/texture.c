@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:30:48 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/16 13:11:15 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/21 16:29:10 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ t_tex	get_wall_texture(t_game *g)
 	if (g->ray.side == 0)
 	{
 		if (g->ray.step_x == 1)
-			return (g->tex[3]);
-		return (g->tex[2]);
+			return (g->tex[2]);
+		return (g->tex[3]);
 	}
 	if (g->ray.step_y == 1)
-		return (g->tex[0]);
-	return (g->tex[1]);
+		return (g->tex[1]);
+	return (g->tex[0]);
 }
 
 int	ft_fog(t_game *g, int color)

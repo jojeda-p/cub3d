@@ -3,24 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 13:42:48 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/21 13:36:52 by julepere         ###   ########.fr       */
+/*   Updated: 2026/07/21 14:08:54 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-int	valid_char(char c)
-{
-	if (c != ' ' && c != '0' && c != 'E' && c != 'S' && c != 'A'
-		&& c != '1' && c != 'N' && c != 'W' && c != '\n' && c != 'D')
-		return (0);
-	return (1);
-}
 
 static void	get_map_size(char **matrix, t_game *g)
 {

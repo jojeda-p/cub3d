@@ -3,24 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 16:17:15 by josu              #+#    #+#             */
-/*   Updated: 2026/07/21 13:36:51 by julepere         ###   ########.fr       */
+/*   Updated: 2026/07/21 13:59:17 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 #include <stdlib.h>
 #include "mlx.h"
-
-static void	destroy_tex(t_game *g, t_tex *tex)
-{
-	if (g->mlx && tex->img)
-		mlx_destroy_image(g->mlx, tex->img);
-	tex->img = NULL;
-	tex->addr = NULL;
-}
 
 static void	free_textures(t_game *g)
 {

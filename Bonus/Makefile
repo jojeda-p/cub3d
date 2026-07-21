@@ -35,6 +35,7 @@ LIBS		= $(MLX_LIB) -lm
 SRC_FILES   =	main.c \
 				init/init.c \
 				init/free.c \
+				init/free_aux.c \
 				init/pause_end.c \
 				render/ray_init.c \
 				render/raycasting.c \
@@ -61,6 +62,7 @@ SRC_FILES   =	main.c \
 				parse/parse_headline_utils.c \
 				parse/parse_headline_utils2.c \
 				parse/parse_headline.c \
+				parse/parse_color.c \
 				parse/parse_matrix.c \
 				parse/parse_init_map.c \
 				parse/parse_map.c \

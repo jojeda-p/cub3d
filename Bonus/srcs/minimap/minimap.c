@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 14:15:16 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/21 13:51:56 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/07/21 13:55:55 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ static void	draw_player(t_game *g)
 		i++;
 	}
 }
-
-
 
 /* 	rx/y - pixel del centro del minimapa, donde se encuentra el personaje
 	i - contador de pixeles avanzados del rayo en la direccion dir_x/y

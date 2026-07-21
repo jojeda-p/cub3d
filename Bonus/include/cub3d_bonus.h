@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 17:39:39 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/21 13:16:29 by julepere         ###   ########.fr       */
+/*   Updated: 2026/07/21 14:11:30 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 /* ************************************************************************** */
 /*                                 ENUMS                                      */
@@ -433,6 +433,9 @@ void	pixel_put(t_img *img, int x, int y, int color);
 /* free.c */
 void	free_game(t_game *g);
 
+/* free_aux.c */
+void	destroy_tex(t_game *g, t_tex *tex);
+
 /* input.c */
 int		key_press(int keycode, t_game *g);
 int		key_release(int keycode, t_game *g);
@@ -495,7 +498,7 @@ int		parse_headline(char **matrix, t_game *g);
 int		get_texture_path(t_game *g, char *s, char *path);
 int		parse_texture_name(char *path);
 char	*clean_path(char *path);
-int		get_color_hex(char *color, int *hex);
+int		get_component(char *color, int *i, int *value);
 
 /* parse_headline_utils2.c */
 int		check_textures(t_game *g);
@@ -513,6 +516,10 @@ int		parse_flood_fill(t_game *g);
 /* parse_map_door.c */
 void	mark_door_anim(char c, t_game *g, int x, int y);
 int		check_door(t_game *g, char **map);
+
+/* parse_color.c */
+int		parse_color(char **matrix, t_game *g, char *s);
+int		get_color_hex(char *color, int *hex);
 
 /* parse_map_utis.c */
 int		valid_char(char c);

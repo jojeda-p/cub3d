@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 14:15:16 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/21 13:36:52 by julepere         ###   ########.fr       */
+/*   Updated: 2026/07/21 13:51:56 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static void	draw_ray(t_game *g)
 	g->mm.offset_x = (g->player.x / g->map.tile_size) * g->mm.scale;
 	g->mm.offset_y = (g->player.y / g->map.tile_size) * g->mm.scale;
 	i = 0;
-	while (i < 80)
+	while (i < 45)
 	{
 		tilex = div_floor((int)(rx + g->player.dir_x * i) - g->mm.margin_x
 				- g->mm.width / 2 + (int)g->mm.offset_x, g->mm.scale);

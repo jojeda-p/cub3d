@@ -13,14 +13,14 @@ CFLAGS      = -Wall -Wextra -Werror
 DEPFLAGS    = -MMD -MP
 
 SRC_DIR		= srcs
-OBJ_DIR     = objects
+OBJ_DIR     = ../objects/mandatory
 INC_DIR		= include
 
 # ============================================================================ #
 #                            MINILIBX (linux)                                  #
 # ============================================================================ #
 
-MLX_DIR		= ../include/minilibx-linux
+MLX_DIR		= ../minilibx-linux
 MLX_LIB		= -L$(MLX_DIR) -lmlx -lXext -lX11
 
 INCLUDES	= -I$(INC_DIR) -I$(MLX_DIR)
@@ -102,7 +102,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 clean:
 	@echo "$(RED)Limpiando archivos objeto (mandatory)...$(DEF_COLOR)"
-	@$(RM) $(OBJS) $(DEPS)
+	@$(RM) -r $(OBJ_DIR)
 
 fclean: clean
 	@echo "$(RED)Eliminando ejecutable (mandatory)...$(DEF_COLOR)"

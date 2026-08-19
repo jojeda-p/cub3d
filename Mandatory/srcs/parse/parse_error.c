@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:14:37 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/08/19 14:30:00 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/08/19 15:38:52 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	print_error_2(int code, char *s)
 	if (code == 20)
 		return (printf("Error\ninvalid element before the map.\n"), 1);
 	if (code == 21)
-		return (printf("Error\ncontent found after the map.\n"), 1);
+		return (printf("Error\nmap must be the last element in the file.\n"), 1);
 	return (1);
 }
 

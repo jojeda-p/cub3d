@@ -2,7 +2,7 @@
 objects/
 
 # Ignore executable
-cub3d
+cub3D
 
 # Ignore MiniLibX build artifacts
 minilibx-linux/

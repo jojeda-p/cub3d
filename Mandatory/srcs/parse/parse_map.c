@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 14:58:04 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/08/19 15:03:24 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/08/19 15:37:27 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,12 @@ static int	check_map_tail(char **matrix, int start)
 	int	i;
 
 	i = start;
-	while (matrix[i] && !(matrix[i][0] == '\n'
-		&& matrix[i][1] == '\0'))
+	while (matrix[i])
+	{
+		if (matrix[i][0] == '\n' && matrix[i][1] == '\0')
+			return (print_error(21, NULL));
 		i++;
-	while (matrix[i] && matrix[i][0] == '\n'
-		&& matrix[i][1] == '\0')
-		i++;
-	if (matrix[i])
-		return (print_error(21, NULL));
+	}
 	return (0);
 }
 

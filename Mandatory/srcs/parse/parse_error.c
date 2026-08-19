@@ -6,7 +6,7 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:14:37 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/16 14:42:09 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/08/19 14:30:00 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,47 +16,51 @@
 static int	print_error_2(int code, char *s)
 {
 	if (code == 11)
-		return (printf("Error: wrong number of arguments.\n"), 1);
+		return (printf("Error\nwrong number of arguments.\n"), 1);
 	if (code == 12)
-		return (printf("Error: wrong spawn.\n"), 1);
+		return (printf("Error\nwrong spawn.\n"), 1);
 	if (code == 13)
-		return (printf("Error: map not closed.\n"), 1);
+		return (printf("Error\nmap not closed.\n"), 1);
 	if (code == 14)
-		return (printf("Error: object outside the map.\n"), 1);
+		return (printf("Error\nobject outside the map.\n"), 1);
 	if (code == 15)
-		return (printf("Error: wrong door position.\n"), 1);
+		return (printf("Error\nwrong door position.\n"), 1);
 	if (code == 16)
-		return (printf("Error: memory allocation failed.\n"), 1);
+		return (printf("Error\nmemory allocation failed.\n"), 1);
 	if (code == 17)
-		return (printf("Error: %s color is repeated.\n", s), 1);
+		return (printf("Error\n%s color is repeated.\n", s), 1);
 	if (code == 18)
-		return (printf("Error: %s could not be opened.\n", s), 1);
+		return (printf("Error\n%s could not be opened.\n", s), 1);
 	if (code == 19)
-		return (printf("Error: map not found.\n"), 1);
+		return (printf("Error\nmap not found.\n"), 1);
+	if (code == 20)
+		return (printf("Error\ninvalid element before the map.\n"), 1);
+	if (code == 21)
+		return (printf("Error\ncontent found after the map.\n"), 1);
 	return (1);
 }
 
 int	print_error(int code, char *s)
 {
 	if (code == 1)
-		return (printf("Error: %s has wrong file type.\n", s), 1);
+		return (printf("Error\n%s has wrong file type.\n", s), 1);
 	if (code == 2)
-		return (printf("Error: %s permission denied.\n", s), 1);
+		return (printf("Error\n%s permission denied.\n", s), 1);
 	if (code == 3)
-		return (printf("Error: %s file not found.\n", s), 1);
+		return (printf("Error\n%s file not found.\n", s), 1);
 	if (code == 4)
-		return (printf("Error: %s is a directory.\n", s), 1);
+		return (printf("Error\n%s is a directory.\n", s), 1);
 	if (code == 5)
-		return (printf("Error: texture %s not found.\n", s), 1);
+		return (printf("Error\ntexture %s not found.\n", s), 1);
 	if (code == 6)
-		return (printf("Error: %s color not found.\n", s), 1);
+		return (printf("Error\n%s color not found.\n", s), 1);
 	if (code == 7)
-		return (printf("Error: %s texture has wrong file type.\n", s), 1);
+		return (printf("Error\n%s texture has wrong file type.\n", s), 1);
 	if (code == 8)
-		return (printf("Error: %s texture is repeated.\n", s), 1);
+		return (printf("Error\n%s texture is repeated.\n", s), 1);
 	if (code == 9)
-		return (printf("Error: %s color has wrong format.\n", s), 1);
+		return (printf("Error\n%s color has wrong format.\n", s), 1);
 	if (code == 10)
-		return (printf("Error: forbidden character found in %s.\n", s), 1);
+		return (printf("Error\nforbidden character found in %s.\n", s), 1);
 	return (print_error_2(code, s));
 }

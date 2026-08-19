@@ -6,14 +6,13 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 13:32:41 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/16 14:51:15 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/08/19 14:30:00 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <stdlib.h>
 
-/*pone el path en la estructura final y comprueba que no se repita la textura*/
 int	get_texture_path(t_game *g, char *s, char *path)
 {
 	if (s[0] == 'N' && g->tex[0].found == 0)
@@ -68,11 +67,11 @@ char	*clean_path(char *path)
 	if (!path)
 		return (NULL);
 	start = 0;
-	while (path[start] == ' ' || path[start] == '\t')
+	while (path[start] == ' ')
 		start++;
 	end = ft_strlen(path);
-	while (end > start
-		&& (path[end - 1] == ' ' || path[end - 1] == '\t'))
+	while (end > start && (path[end - 1] == ' '
+			|| path[end - 1] == '\n'))
 		end--;
 	new = malloc(sizeof(char) * (end - start + 1));
 	if (!new)
@@ -87,7 +86,7 @@ char	*clean_path(char *path)
 
 static void	skip_spaces(char *color, int *i)
 {
-	while (color[*i] == ' ' || color[*i] == '\t')
+	while (color[*i] == ' ')
 		(*i)++;
 }
 

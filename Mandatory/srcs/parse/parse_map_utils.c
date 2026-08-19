@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 13:42:48 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/21 16:12:01 by julepere         ###   ########.fr       */
+/*   Updated: 2026/08/19 15:03:57 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 static int	count_rows(char **matrix, int start)
@@ -21,7 +20,8 @@ static int	count_rows(char **matrix, int start)
 
 	i = start;
 	k = 0;
-	while (matrix[i])
+	while (matrix[i] && !(matrix[i][0] == '\n'
+		&& matrix[i][1] == '\0'))
 	{
 		i++;
 		k++;
@@ -33,15 +33,15 @@ int	malloc_grid(char **matrix, t_game *g)
 {
 	int	i;
 	int	k;
-	int	rows;
 
-	rows = count_rows(matrix, g->map.init);
-	g->map.grid = malloc(sizeof(char *) * (rows + 1));
+	g->map.grid = malloc(sizeof(char *)
+			* (count_rows(matrix, g->map.init) + 1));
 	if (!g->map.grid)
 		return (1);
 	i = g->map.init;
 	k = 0;
-	while (matrix[i])
+	while (matrix[i] && !(matrix[i][0] == '\n'
+		&& matrix[i][1] == '\0'))
 	{
 		g->map.grid[k] = malloc(sizeof(char) * (ft_strlen(matrix[i]) + 1));
 		if (!g->map.grid[k])
@@ -91,19 +91,11 @@ int	get_height(t_game *g)
 void	get_dir(char dir, t_game *g)
 {
 	if (dir == 'N')
-	{
 		g->player.dir = 4.71238898;
-	}
 	else if (dir == 'S')
-	{
 		g->player.dir = 1.570796327;
-	}
 	else if (dir == 'W')
-	{
 		g->player.dir = 3.141592654;
-	}
 	else if (dir == 'E')
-	{
 		g->player.dir = 0;
-	}
 }

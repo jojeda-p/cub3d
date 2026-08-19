@@ -6,12 +6,28 @@
 /*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 14:58:04 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/21 15:12:49 by jojeda-p         ###   ########.fr       */
+/*   Updated: 2026/08/19 15:03:24 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <stdlib.h>
+
+static int	check_map_tail(char **matrix, int start)
+{
+	int	i;
+
+	i = start;
+	while (matrix[i] && !(matrix[i][0] == '\n'
+		&& matrix[i][1] == '\0'))
+		i++;
+	while (matrix[i] && matrix[i][0] == '\n'
+		&& matrix[i][1] == '\0')
+		i++;
+	if (matrix[i])
+		return (print_error(21, NULL));
+	return (0);
+}
 
 static int	map_char_parse(char **matrix, t_game *g)
 {
@@ -19,22 +35,26 @@ static int	map_char_parse(char **matrix, t_game *g)
 	int	j;
 
 	i = g->map.init;
-	while (matrix[i])
+	while (matrix[i] && !(matrix[i][0] == '\n'
+		&& matrix[i][1] == '\0'))
 	{
 		j = 0;
 		while (matrix[i][j])
 		{
-			if (!valid_char(matrix[i][j]))
+			if (matrix[i][j] != '0' && matrix[i][j] != '1'
+				&& matrix[i][j] != 'N' && matrix[i][j] != 'S'
+				&& matrix[i][j] != 'E' && matrix[i][j] != 'W'
+				&& matrix[i][j] != ' ' && matrix[i][j] != '\n')
 				return (print_error(10, "map"));
-			if (matrix[i][j] == 'N' || matrix[i][j] == 'S' ||
-				matrix[i][j] == 'W' || matrix[i][j] == 'E')
+			if (matrix[i][j] == 'N' || matrix[i][j] == 'S'
+				|| matrix[i][j] == 'W' || matrix[i][j] == 'E')
 				g->map.spawn++;
 			j++;
 		}
 		i++;
 	}
 	if (g->map.spawn != 1)
-		return (print_error(12, "NULL"));
+		return (print_error(12, NULL));
 	return (0);
 }
 
@@ -48,7 +68,8 @@ static int	matrix_to_grid(char **matrix, t_game *g)
 		return (print_error(16, NULL));
 	i = g->map.init;
 	k = 0;
-	while (matrix[i])
+	while (matrix[i] && !(matrix[i][0] == '\n'
+		&& matrix[i][1] == '\0'))
 	{
 		j = 0;
 		while (matrix[i][j] && matrix[i][j] != '\n')
@@ -75,8 +96,8 @@ void	get_player(t_game *g)
 		j = 0;
 		while (g->map.grid[i][j])
 		{
-			if (g->map.grid[i][j] == 'N' || g->map.grid[i][j] == 'S' ||
-				g->map.grid[i][j] == 'W' || g->map.grid[i][j] == 'E')
+			if (g->map.grid[i][j] == 'N' || g->map.grid[i][j] == 'S'
+				|| g->map.grid[i][j] == 'W' || g->map.grid[i][j] == 'E')
 			{
 				g->player.y = (double)i + 0.5;
 				g->player.x = (double)j + 0.5;
@@ -93,6 +114,8 @@ void	get_player(t_game *g)
 int	parse_map(char **matrix, t_game *g)
 {
 	g->map.spawn = 0;
+	if (check_map_tail(matrix, g->map.init) != 0)
+		return (1);
 	if (map_char_parse(matrix, g) == 1)
 		return (1);
 	if (matrix_to_grid(matrix, g) == 1)

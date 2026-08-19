@@ -18,7 +18,8 @@
 
 int	parse_permisions(char *file)
 {
-	int	fd;
+	char	c;
+	int		fd;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
@@ -27,10 +28,10 @@ int	parse_permisions(char *file)
 			return (print_error(3, file));
 		if (errno == EACCES)
 			return (print_error(2, file));
-		if (errno == EISDIR)
-			return (print_error(4, file));
 		return (print_error(18, file));
 	}
+	if (read(fd, &c, 0) < 0 && errno == EISDIR)
+		return (close(fd), print_error(4, file));
 	close(fd);
 	return (0);
 }

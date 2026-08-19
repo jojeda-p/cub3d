@@ -3,44 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse_headline_utils2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 15:01:56 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/21 20:44:34 by julepere         ###   ########.fr       */
+/*   Updated: 2026/08/19 14:56:53 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <stdio.h>
-
-int	validate_header(char **matrix, t_game *g)
-{
-	int	i;
-
-	i = 0;
-	while (i < g->map.init)
-	{
-		if (matrix[i][0] == '\0')
-			;
-		else if ((matrix[i][0] == 'N' && matrix[i][1] == 'O'
-				&& (matrix[i][2] == ' ' || matrix[i][2] == '\t'))
-			|| (matrix[i][0] == 'S' && matrix[i][1] == 'O'
-				&& (matrix[i][2] == ' ' || matrix[i][2] == '\t'))
-			|| (matrix[i][0] == 'E' && matrix[i][1] == 'A'
-				&& (matrix[i][2] == ' ' || matrix[i][2] == '\t'))
-			|| (matrix[i][0] == 'W' && matrix[i][1] == 'E'
-				&& (matrix[i][2] == ' ' || matrix[i][2] == '\t'))
-			|| (matrix[i][0] == 'F'
-				&& (matrix[i][1] == ' ' || matrix[i][1] == '\t'))
-			|| (matrix[i][0] == 'C'
-				&& (matrix[i][1] == ' ' || matrix[i][1] == '\t')))
-			;
-		else
-			return (print_error(10, "header"));
-		i++;
-	}
-	return (0);
-}
 
 int	check_textures(t_game *g)
 {
@@ -82,19 +53,36 @@ int	get_color_hex(char *color, int *hex)
 int	is_map_start(char *line)
 {
 	int	i;
-	int	has_wall;
+	int	has_map_char;
 
 	i = 0;
-	has_wall = 0;
+	has_map_char = 0;
 	while (line[i] && line[i] != '\n')
 	{
-		if (line[i] != ' ' && line[i] != '1')
+		if (line[i] != ' ' && line[i] != '0' && line[i] != '1'
+			&& line[i] != 'N' && line[i] != 'S'
+			&& line[i] != 'E' && line[i] != 'W')
 			return (0);
-		if (line[i] == '1')
-			has_wall = 1;
+		if (line[i] != ' ')
+			has_map_char = 1;
 		i++;
 	}
-	return (has_wall);
+	return (has_map_char);
+}
+
+static int	valid_element(char *line)
+{
+	if (line[0] == '\n' && line[1] == '\0')
+		return (1);
+	if (((line[0] == 'N' && line[1] == 'O')
+			|| (line[0] == 'S' && line[1] == 'O')
+			|| (line[0] == 'E' && line[1] == 'A')
+			|| (line[0] == 'W' && line[1] == 'E'))
+		&& line[2] == ' ')
+		return (1);
+	if ((line[0] == 'F' || line[0] == 'C') && line[1] == ' ')
+		return (1);
+	return (0);
 }
 
 int	get_map_init(char **matrix, t_game *g)
@@ -109,6 +97,8 @@ int	get_map_init(char **matrix, t_game *g)
 			g->map.init = i;
 			return (0);
 		}
+		if (!valid_element(matrix[i]))
+			return (print_error(20, NULL));
 		i++;
 	}
 	return (print_error(19, NULL));

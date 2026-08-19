@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_headline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julepere <julepere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojeda-p <jojeda-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:22:25 by jojeda-p          #+#    #+#             */
-/*   Updated: 2026/07/21 20:15:11 by julepere         ###   ########.fr       */
+/*   Updated: 2026/08/19 14:30:00 by jojeda-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 static int	parse_texture(char **matrix, t_game *g, char *s)
@@ -22,14 +21,15 @@ static int	parse_texture(char **matrix, t_game *g, char *s)
 	i = 0;
 	while (matrix[i] && i < g->map.init)
 	{
-		if (matrix[i][0] == s[0] && matrix[i][1] == s[1])
+		if (matrix[i][0] == s[0] && matrix[i][1] == s[1]
+			&& matrix[i][2] == ' ')
 		{
-			path = ft_strdup(matrix[i] + 3);
+			path = ft_strdup(matrix[i] + 2);
 			if (!path)
-				return (1);
+				return (print_error(16, NULL));
 			path = clean_path(path);
 			if (!path)
-				return (1);
+				return (print_error(16, NULL));
 			if (parse_texture_name(path) == 1)
 				return (free(path), print_error(7, s));
 			if (parse_permisions(path) != 0)
@@ -90,10 +90,9 @@ static int	parse_color(char **matrix, t_game *g, char *s)
 	found = 0;
 	while (matrix[i] && i < g->map.init)
 	{
-		if (matrix[i][0] == s[0]
-			&& (matrix[i][1] == ' ' || matrix[i][1] == '\t'))
+		if (matrix[i][0] == s[0] && matrix[i][1] == ' ')
 		{
-			if (process_color(g, matrix[i] + 2, s) != 0)
+			if (process_color(g, matrix[i] + 1, s) != 0)
 				return (1);
 			found = 1;
 		}
@@ -107,8 +106,6 @@ static int	parse_color(char **matrix, t_game *g, char *s)
 int	parse_headline(char **matrix, t_game *g)
 {
 	if (get_map_init(matrix, g) != 0)
-		return (1);
-	if (validate_header(matrix, g) != 0)
 		return (1);
 	if (parse_texture(matrix, g, "NO") != 0)
 		return (1);
